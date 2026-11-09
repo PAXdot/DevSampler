@@ -1,0 +1,68 @@
+/* HeroUI v3 accent + textarea styling re-bind for the 21st.dev preview sandbox.
+   The marketplace sandbox neutralizes HeroUI's --primary / --accent / --muted to
+   shadcn-neutral values, which makes the focus ring invisible and placeholders
+   washed out. These unlayered + !important rules beat the @heroui/styles layer and
+   reproduce the docs "Customizing the component classes" look from heroui.com. */
+
+:root,
+.light,
+[data-theme="light"] {
+  --accent: oklch(0.6204 0.195 253.83) !important;
+  --focus: oklch(0.6204 0.195 253.83) !important;
+  --primary: oklch(0.6204 0.195 253.83) !important;
+  --muted: oklch(0.46 0.02 285.94) !important;
+}
+
+.dark,
+[data-theme="dark"] {
+  --accent: oklch(0.6204 0.195 253.83) !important;
+  --focus: oklch(0.6204 0.195 253.83) !important;
+  --primary: oklch(0.6204 0.195 253.83) !important;
+  --muted: oklch(0.80 0.02 286) !important;
+}
+
+/* Placeholder + helper text visible (HeroUI's own muted is paler) */
+.textarea::placeholder,
+.input::placeholder {
+  color: var(--muted) !important;
+  opacity: 1 !important;
+}
+
+/* Reproduce the docs base field styling for textarea + input */
+.textarea,
+.input {
+  border-radius: 0.5rem !important;
+  border: 1px solid var(--border) !important;
+  background-color: var(--surface) !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.4 !important;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+.textarea:hover,
+.input:hover {
+  background-color: var(--surface-secondary) !important;
+  border-color: color-mix(in oklab, var(--border) 80%, transparent) !important;
+}
+
+.textarea:focus,
+.textarea:focus-visible,
+.textarea[data-focused],
+.textarea[data-focus-visible],
+.input:focus,
+.input:focus-visible,
+.input[data-focused],
+.input[data-focus-visible] {
+  outline: none !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 20%, transparent) !important;
+}
+
+.textarea[data-invalid],
+.textarea[aria-invalid="true"],
+.input[data-invalid],
+.input[aria-invalid="true"] {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--danger) 20%, transparent) !important;
+}

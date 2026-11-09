@@ -1,0 +1,71 @@
+/* Meridian Café — old-money ivory / espresso / burgundy / brass
+   Source: index.html design tokens, mapped to shadcn-standard names. */
+:root {
+  --background: 43 39% 93%;
+  --foreground: 30 29% 11%;
+  --card: 45 55% 98%;
+  --card-foreground: 30 29% 11%;
+  --popover: 45 55% 98%;
+  --popover-foreground: 30 29% 11%;
+  --primary: 351 50% 25%;
+  --primary-foreground: 40 42% 94%;
+  --secondary: 43 35% 90%;
+  --secondary-foreground: 30 29% 11%;
+  --muted: 43 35% 90%;
+  --muted-foreground: 35 16% 31%;
+  --accent: 41 31% 51%;
+  --accent-foreground: 30 29% 11%;
+  --destructive: 0 62% 38%;
+  --destructive-foreground: 40 42% 94%;
+  --border: 44 40% 77%;
+  --input: 44 40% 77%;
+  --ring: 351 50% 25%;
+  --chart-1: 351 50% 25%;
+  --chart-2: 41 31% 51%;
+  --chart-3: 30 29% 11%;
+  --chart-4: 43 39% 93%;
+  --chart-5: 351 30% 45%;
+  --sidebar: 43 35% 90%;
+  --sidebar-foreground: 30 29% 11%;
+  --sidebar-primary: 351 50% 25%;
+  --sidebar-primary-foreground: 40 42% 94%;
+  --sidebar-accent: 43 30% 86%;
+  --sidebar-accent-foreground: 30 29% 11%;
+  --sidebar-border: 44 40% 77%;
+  --sidebar-ring: 351 50% 25%;
+  --radius: 1rem;
+}
+.dark {
+  --background: 30 29% 11%;
+  --foreground: 40 42% 94%;
+  --card: 24 20% 14%;
+  --card-foreground: 40 42% 94%;
+  --popover: 24 20% 14%;
+  --popover-foreground: 40 42% 94%;
+  --primary: 352 51% 29%;
+  --primary-foreground: 40 42% 94%;
+  --secondary: 24 20% 14%;
+  --secondary-foreground: 40 42% 94%;
+  --muted: 24 20% 14%;
+  --muted-foreground: 37 14% 68%;
+  --accent: 42 43% 59%;
+  --accent-foreground: 30 29% 11%;
+  --destructive: 0 62% 55%;
+  --destructive-foreground: 30 29% 11%;
+  --border: 30 17% 23%;
+  --input: 30 17% 23%;
+  --ring: 42 43% 59%;
+  --chart-1: 352 51% 29%;
+  --chart-2: 42 43% 59%;
+  --chart-3: 40 42% 94%;
+  --chart-4: 351 35% 45%;
+  --chart-5: 30 17% 23%;
+  --sidebar: 24 20% 12%;
+  --sidebar-foreground: 40 42% 94%;
+  --sidebar-primary: 352 51% 29%;
+  --sidebar-primary-foreground: 40 42% 94%;
+  --sidebar-accent: 24 20% 14%;
+  --sidebar-accent-foreground: 40 42% 94%;
+  --sidebar-border: 30 17% 23%;
+  --sidebar-ring: 42 43% 59%;
+}

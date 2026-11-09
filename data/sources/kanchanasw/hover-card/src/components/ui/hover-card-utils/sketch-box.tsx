@@ -1,0 +1,238 @@
+"use client";
+
+import { useBaseRoughness } from "./use-sketch-defaults";
+import {
+  Children,
+  forwardRef,
+  memo,
+  useRef,
+  type CSSProperties,
+  type HTMLAttributes,
+  type MutableRefObject,
+  type ReactNode,
+} from "react";
+import { Slot, Slottable } from "@radix-ui/react-slot";
+import {
+  DRAW_IN_DURATION_MS,
+  useAnimate,
+  useDrawIn,
+} from "./animations";
+import { useSketchTheme } from "./use-sketch-theme";
+import type { FillStyle, RoughShape, SketchProps } from "./types";
+import { assignRef, cn, doodleUiFontFamily } from "./utils";
+import { RoughSvg } from "./rough-svg";
+
+/**
+ * Props for {@link SketchBox}.
+ */
+export interface SketchBoxProps
+  extends SketchProps, Omit<HTMLAttributes<HTMLDivElement>, "color"> {
+  /** Child content rendered above the sketch layer. */
+  children?: ReactNode;
+  /**
+   * rough.js shape for the border.
+   * @default "rectangle"
+   */
+  shape?: RoughShape;
+  /**
+   * Fill color inside the sketch shape.
+   * @default undefined
+   */
+  fill?: string;
+  /**
+   * Pattern when `fill` is set. Defaults to solid when shadow/fill implied.
+   * @default "solid" when fill is implied
+   */
+  fillStyle?: FillStyle;
+  /**
+   * Draws an offset duplicate shape as a drop shadow.
+   * @default false
+   */
+  shadow?: boolean;
+  /** Class name on the inner content wrapper. */
+  contentClassName?: string;
+  /** Inline styles on the inner content wrapper. */
+  contentStyle?: CSSProperties;
+  /**
+   * Inset passed to {@link RoughSvg}.
+   * @default undefined ({@link DEFAULT_INSET} on RoughSvg)
+   */
+  inset?: number;
+  /**
+   * SVG path when `shape` is `"path"`.
+   * @default undefined
+   */
+  path?: string;
+  /**
+   * Sketch-in the border on mount. Defaults to the DoodleUIProvider value.
+   * @default undefined (follow provider)
+   */
+  animate?: boolean;
+  /**
+   * Override the default 400ms draw-in duration.
+   * @default 400 ({@link DRAW_IN_DURATION_MS})
+   */
+  drawInDuration?: number;
+  /**
+   * Replay draw-in when this value changes.
+   * @default undefined
+   */
+  drawInKey?: unknown;
+  /**
+   * Merge props onto the single child instead of rendering a `<div>`.
+   * @default false
+   */
+  asChild?: boolean;
+}
+
+/**
+ * Relative container that draws a {@link RoughSvg} border behind children.
+ *
+ * @example
+ * <SketchBox roughness={2} shadow>
+ *   <p>Notes</p>
+ * </SketchBox>
+ *
+ * @see Card
+ */
+export const SketchBox = memo(
+  forwardRef<HTMLDivElement, SketchBoxProps>(function SketchBox(
+    {
+      children,
+      className,
+      style,
+      contentClassName,
+      contentStyle,
+      shape = "rectangle",
+      fill,
+      fillStyle,
+      shadow = false,
+      roughness,
+      seed,
+      sketchColor,
+      bowing,
+      strokeWidth,
+      hachureGap,
+      hachureAngle,
+      fillWeight,
+      inset,
+      path,
+      animate,
+      drawInDuration = DRAW_IN_DURATION_MS,
+      drawInKey,
+      asChild = false,
+      ...rest
+    },
+    ref,
+  ) {
+    const baseRoughness = useBaseRoughness();
+    const rootRef = useRef<HTMLDivElement>(null);
+    const theme = useSketchTheme(sketchColor);
+    const resolvedInk = sketchColor ?? theme.ink;
+    const shouldAnimate = useAnimate(animate);
+    useDrawIn(rootRef, drawInDuration, shouldAnimate, drawInKey);
+
+    const hasExplicitFill = fill !== undefined;
+    const resolvedFill = hasExplicitFill ? fill : (shadow ? theme.cardBg : undefined);
+    const resolvedFillStyle: FillStyle = fillStyle ?? (resolvedFill ? "solid" : "solid");
+    const isPatternedFill = Boolean(resolvedFill && resolvedFillStyle !== "solid");
+
+    const Comp = asChild ? Slot : "div";
+
+    const sketchLayers = (
+      <>
+        {shadow ? (
+          <RoughSvg
+            shape={shape}
+            roughness={(roughness ?? baseRoughness) + 0.35}
+            seed={seed}
+            sketchColor={theme.isDark ? "rgba(0, 0, 0, 0.45)" : resolvedInk}
+            bowing={bowing}
+            fillStyle="hachure"
+            fill={theme.isDark ? theme.shadow : (resolvedInk ?? theme.ink)}
+            strokeWidth={1}
+            hachureGap={8}
+            inset={inset}
+            style={{
+              transform: "translate(5px, 6px)",
+              opacity: theme.isDark ? 0.35 : 0.16,
+            }}
+          />
+        ) : null}
+
+        {isPatternedFill ? (
+          <RoughSvg
+            shape={shape}
+            roughness={roughness}
+            seed={seed}
+            sketchColor="transparent"
+            bowing={bowing}
+            fillStyle="solid"
+            fill={theme.cardBg}
+            strokeWidth={0}
+            inset={inset}
+          />
+        ) : null}
+
+        <RoughSvg
+          shape={shape}
+          roughness={roughness}
+          seed={seed}
+          sketchColor={resolvedInk}
+          bowing={bowing}
+          fillStyle={resolvedFill ? resolvedFillStyle : undefined}
+          fill={resolvedFill}
+          strokeWidth={strokeWidth}
+          hachureGap={hachureGap ?? (isPatternedFill ? 10 : undefined)}
+          hachureAngle={hachureAngle}
+          fillWeight={fillWeight ?? (isPatternedFill ? 0.9 : undefined)}
+          inset={inset}
+          path={path}
+        />
+      </>
+    );
+
+    const content = asChild ? (
+      <Slottable>{Children.only(children)}</Slottable>
+    ) : (
+      <div
+        className={contentClassName}
+        style={{
+          position: "relative",
+          zIndex: 1,
+          fontFamily: doodleUiFontFamily,
+          color: resolvedInk,
+          ...contentStyle,
+        }}
+      >
+        {children}
+      </div>
+    );
+
+    return (
+      <Comp
+        ref={(node: HTMLDivElement | null) => {
+          (rootRef as MutableRefObject<HTMLDivElement | null>).current = node;
+          assignRef(ref, node);
+        }}
+        className={cn(className)}
+        style={{
+          position: "relative",
+          ...(asChild
+            ? {
+                fontFamily: doodleUiFontFamily,
+                color: resolvedInk,
+                ...contentStyle,
+              }
+            : null),
+          ...style,
+        }}
+        {...rest}
+      >
+        {sketchLayers}
+        {content}
+      </Comp>
+    );
+  }),
+);
+SketchBox.displayName = "SketchBox";

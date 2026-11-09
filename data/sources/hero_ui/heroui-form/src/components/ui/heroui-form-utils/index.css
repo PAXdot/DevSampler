@@ -1,0 +1,24 @@
+/* real-lib accent + neutral override — sibling (manifest.siblings).
+ * :root:root / .dark:root specificity beats the 21st marketplace base CSS
+ * regardless of load order. --muted remapped to HeroUI's gray text color. */
+@import "tailwindcss";
+
+:root:root {
+  --accent: #0485f7;
+  --accent-hover: #0473d4;
+  --accent-foreground: #ffffff;
+
+  --muted: lab(47.8738% 1.41454 -4.98644);
+  --muted-foreground: oklch(0.556 0 0);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+}
+
+.dark:root {
+  --accent: #0485f7;
+  --accent-hover: #3197ff;
+  --accent-foreground: #ffffff;
+
+  --muted: oklch(0.708 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+}

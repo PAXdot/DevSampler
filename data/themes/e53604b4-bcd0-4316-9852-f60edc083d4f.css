@@ -1,0 +1,75 @@
+/* Ironclad Precision — VariationIQ
+   Enterprise construction-claims palette: deep navy structure, construction
+   orange accent, WCAG AA throughout. Derived from the shipping app's
+   globals.css. Light and dark are both first-class. */
+
+:root {
+  --background: 225 100% 98.4%;
+  --foreground: 211.4 36.8% 11.2%;
+  --card: 0 0% 100%;
+  --card-foreground: 211.4 36.8% 11.2%;
+  --popover: 218.8 100% 96.7%;
+  --popover-foreground: 211.4 36.8% 11.2%;
+  --primary: 217.5 76.2% 8.2%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 218.8 100% 96.7%;
+  --secondary-foreground: 211.4 36.8% 11.2%;
+  --muted: 216 92.6% 94.7%;
+  --muted-foreground: 226.7 4.7% 37.8%;
+  --accent: 25.4 100% 31%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 75.5% 41.6%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 30.6% 90.4%;
+  --input: 232.5 7.4% 78.8%;
+  --ring: 23.2 100% 57.5%;
+  --chart-1: 217.5 76.2% 8.2%;
+  --chart-2: 23.2 100% 57.5%;
+  --chart-3: 141.8 86.4% 23.1%;
+  --chart-4: 220 21.6% 30%;
+  --chart-5: 0 75.5% 41.6%;
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 225 5.5% 28.6%;
+  --sidebar-primary: 217.5 76.2% 8.2%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 218.8 100% 96.7%;
+  --sidebar-accent-foreground: 211.4 36.8% 11.2%;
+  --sidebar-border: 220 30.6% 90.4%;
+  --sidebar-ring: 23.2 100% 57.5%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 220 31% 5.7%;
+  --foreground: 220 36% 95.1%;
+  --card: 221.5 26.5% 9.6%;
+  --card-foreground: 220 36% 95.1%;
+  --popover: 221.3 25% 12.5%;
+  --popover-foreground: 220 36% 95.1%;
+  --primary: 221.8 35.4% 31%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 221.3 25% 12.5%;
+  --secondary-foreground: 220 36% 95.1%;
+  --muted: 220 22.5% 15.7%;
+  --muted-foreground: 220 10.1% 53.3%;
+  --accent: 25.4 100% 31%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 4.8 100% 68.4%;
+  --destructive-foreground: 4.4 54.7% 14.7%;
+  --border: 220.9 20.8% 20.8%;
+  --input: 221.5 17.8% 28.6%;
+  --ring: 23.8 100% 62%;
+  --chart-1: 221.8 35.4% 31%;
+  --chart-2: 23.8 100% 62%;
+  --chart-3: 142.3 69.4% 55.1%;
+  --chart-4: 221.4 24.4% 46.7%;
+  --chart-5: 4.8 100% 68.4%;
+  --sidebar-background: 221.5 26.5% 9.6%;
+  --sidebar-foreground: 220 16.4% 71.4%;
+  --sidebar-primary: 221.8 35.4% 31%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 221.3 25% 12.5%;
+  --sidebar-accent-foreground: 220 36% 95.1%;
+  --sidebar-border: 220.9 20.8% 20.8%;
+  --sidebar-ring: 23.8 100% 62%;
+}

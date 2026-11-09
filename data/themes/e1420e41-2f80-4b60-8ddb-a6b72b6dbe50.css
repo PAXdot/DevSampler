@@ -1,0 +1,38 @@
+/* Mint accent — calm, fresh, healthcare / sustainability ready. */
+/* Apply by adding data-theme="mint" to <html>. */
+
+:root {
+  --background: oklch(0.99 0.005 165);
+  --foreground: oklch(0.16 0.02 165);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.02 165);
+  --primary: oklch(0.7 0.16 165);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.015 165);
+  --secondary-foreground: oklch(0.2 0.04 165);
+  --muted: oklch(0.96 0.015 165);
+  --muted-foreground: oklch(0.5 0.04 165);
+  --accent: oklch(0.93 0.04 165);
+  --accent-foreground: oklch(0.2 0.04 165);
+  --border: oklch(0.9 0.025 165);
+  --input: oklch(0.9 0.025 165);
+  --ring: oklch(0.7 0.16 165);
+}
+
+.dark {
+  --background: oklch(0.14 0.025 165);
+  --foreground: oklch(0.97 0.01 165);
+  --card: oklch(0.2 0.03 165);
+  --card-foreground: oklch(0.97 0.01 165);
+  --primary: oklch(0.78 0.15 165);
+  --primary-foreground: oklch(0.14 0.025 165);
+  --secondary: oklch(0.22 0.03 165);
+  --secondary-foreground: oklch(0.97 0.01 165);
+  --muted: oklch(0.22 0.03 165);
+  --muted-foreground: oklch(0.7 0.02 165);
+  --accent: oklch(0.28 0.05 165);
+  --accent-foreground: oklch(0.97 0.01 165);
+  --border: oklch(0.27 0.04 165);
+  --input: oklch(0.27 0.04 165);
+  --ring: oklch(0.78 0.15 165);
+}

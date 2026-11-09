@@ -1,0 +1,96 @@
+"use client";
+
+import { useContext, useMemo } from "react";
+import { DoodleUIContext } from "./doodle-ui-provider";
+import {
+  DEFAULT_BOWING,
+  DEFAULT_INK,
+  DEFAULT_ROUGHNESS,
+  DEFAULT_STROKE_WIDTH,
+  type FillStyle,
+  type SketchProps,
+} from "./types";
+
+export interface SketchDefaults {
+  roughness?: number;
+  bowing?: number;
+  strokeWidth?: number;
+  sketchColor?: string;
+  fillStyle?: FillStyle;
+}
+
+export function useSketchDefaults(): SketchDefaults {
+  const ctx = useContext(DoodleUIContext);
+  return useMemo(
+    () => ({
+      roughness: ctx?.roughness,
+      bowing: ctx?.bowing,
+      strokeWidth: ctx?.strokeWidth,
+      sketchColor: ctx?.sketchColor,
+      fillStyle: ctx?.fillStyle,
+    }),
+    [ctx?.roughness, ctx?.bowing, ctx?.strokeWidth, ctx?.sketchColor, ctx?.fillStyle],
+  );
+}
+
+export function useBaseRoughness(): number {
+  return useSketchDefaults().roughness ?? DEFAULT_ROUGHNESS;
+}
+
+export function mergeSketchProps(
+  props: SketchProps,
+  defaults: SketchDefaults,
+  css?: Partial<SketchProps>,
+): SketchProps & { roughness: number; bowing: number; strokeWidth: number } {
+  const roughness =
+    props.roughness ??
+    defaults.roughness ??
+    parseCssNumber(css?.roughness, DEFAULT_ROUGHNESS);
+  const bowing =
+    props.bowing ?? defaults.bowing ?? parseCssNumber(css?.bowing, DEFAULT_BOWING);
+  const strokeWidth =
+    props.strokeWidth ??
+    defaults.strokeWidth ??
+    parseCssNumber(css?.strokeWidth, DEFAULT_STROKE_WIDTH);
+  const sketchColor =
+    props.sketchColor ?? defaults.sketchColor ?? css?.sketchColor ?? undefined;
+  const fillStyle = props.fillStyle ?? defaults.fillStyle ?? css?.fillStyle;
+
+  return {
+    ...props,
+    roughness,
+    bowing,
+    strokeWidth,
+    sketchColor,
+    fillStyle,
+  };
+}
+
+function parseCssNumber(value: unknown, fallback: number): number {
+  if (typeof value === "number" && !Number.isNaN(value)) return value;
+  if (typeof value === "string") {
+    const n = parseFloat(value);
+    if (!Number.isNaN(n)) return n;
+  }
+  return fallback;
+}
+
+export function readSketchCssVars(element: Element | null): Partial<SketchProps> {
+  if (!element || typeof window === "undefined") return {};
+  const style = getComputedStyle(element);
+  const roughness = style.getPropertyValue("--doodle-ui-roughness").trim();
+  const bowing = style.getPropertyValue("--doodle-ui-bowing").trim();
+  const strokeWidth = style.getPropertyValue("--doodle-ui-stroke-width").trim();
+  const sketchColor = style.getPropertyValue("--doodle-ui-stroke-color").trim();
+  const fillStyle = style.getPropertyValue("--doodle-ui-fill-style").trim() as FillStyle;
+
+  return {
+    roughness: roughness ? parseFloat(roughness) : undefined,
+    bowing: bowing ? parseFloat(bowing) : undefined,
+    strokeWidth: strokeWidth ? parseFloat(strokeWidth) : undefined,
+    sketchColor: sketchColor || undefined,
+    fillStyle: fillStyle || undefined,
+  };
+}
+
+export { DEFAULT_INK };

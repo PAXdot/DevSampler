@@ -1,0 +1,81 @@
+/* ssych — design tokens as a shadcn theme.
+   Source: src/index.css. The project is DARK-FIRST (its :root is the dark set,
+   .light the variant); 21st expects :root = light, .dark = dark, so the two
+   blocks are swapped here. Values are the project's own. Tokens the project
+   does not name under shadcn's names are filled from real system values:
+     primary        the BTN_PRIMARY recipe (white pill, ink label)
+     accent / ring  --color-accent-400 rgb(90,170,255), the one accent
+     destructive    --chart-down, with --on-danger as its measured ink
+     muted          the --secondary surface (the project's own --muted is a text tone)
+     popover        the card
+     radius         0.625rem — shadcn new-york default, matches the 10px usages */
+:root {
+  --background: #ffffff;
+  --foreground: #0b0e15;
+  --card: #ffffff;
+  --card-foreground: #0b0e15;
+  --popover: #ffffff;
+  --popover-foreground: #0b0e15;
+  --primary: #0b0e15;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(0, 0, 0, 0.05);
+  --secondary-foreground: #0b0e15;
+  --muted: rgba(0, 0, 0, 0.05);
+  --muted-foreground: #5a636b;
+  --accent: rgb(90, 170, 255);
+  --accent-foreground: #0b0e15;
+  --destructive: #d0433f;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.08);
+  --input: rgba(0, 0, 0, 0.08);
+  --ring: rgb(90, 170, 255);
+  --radius: 0.625rem;
+  --chart-1: #2b7fd6;
+  --chart-2: #2f9e70;
+  --chart-3: #a85f3b;
+  --chart-4: #9a9d00;
+  --chart-5: #9c5ba6;
+  --sidebar: #f8fafc;
+  --sidebar-foreground: #0b0e15;
+  --sidebar-primary: #0b0e15;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(0, 0, 0, 0.05);
+  --sidebar-accent-foreground: #0b0e15;
+  --sidebar-border: rgba(0, 0, 0, 0.08);
+  --sidebar-ring: rgb(90, 170, 255);
+}
+.dark {
+  --background: #08090e;
+  --foreground: #ffffff;
+  --card: #080b12;
+  --card-foreground: #ffffff;
+  --popover: #080b12;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #0b0e15;
+  --secondary: rgba(255, 255, 255, 0.06);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.06);
+  --muted-foreground: #868f97;
+  --accent: rgb(90, 170, 255);
+  --accent-foreground: #0b0e15;
+  --destructive: #e06a6a;
+  --destructive-foreground: #0b0e15;
+  --border: rgba(255, 255, 255, 0.05);
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: rgb(90, 170, 255);
+  --radius: 0.625rem;
+  --chart-1: #489ffa;
+  --chart-2: #4dbe95;
+  --chart-3: #c27c58;
+  --chart-4: #e9ec89;
+  --chart-5: #c88fcf;
+  --sidebar: #0a0e16;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #0b0e15;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-ring: rgb(90, 170, 255);
+}

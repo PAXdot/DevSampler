@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/*
+ * HeroUI TimeField accent override.
+ *
+ * The 21st-vite template ships a shadcn `:root { --accent: oklch(97% 0 0) }`
+ * (a near-white grey) and `.dark { --accent: oklch(26.9% 0 0) }`. Those win the
+ * cascade over @heroui/styles' blue `--accent`, so the focus highlight
+ * (`bg-accent-soft` on a focused segment) and the focus ring render GREY instead
+ * of the HeroUI blue you see on heroui.com.
+ *
+ * HeroUI derives every accent-soft token from `--accent` via color-mix:
+ *   --accent-soft            = color-mix(in oklab, var(--accent) 15%, transparent)
+ *   --accent-soft-foreground = color-mix(in oklab, var(--accent) 70%, var(--foreground) 30%)
+ * so forcing `--accent` to the real HeroUI blue makes the soft highlight + focus
+ * ring + focused-segment text all match the docs exactly, in both themes.
+ *
+ * `!important` on the custom property is what makes this beat the template `:root`
+ * regardless of stylesheet source order.
+ */
+
+:root,
+.light,
+html.light,
+.dark,
+html.dark,
+html {
+  --accent: #0485f7 !important;          /* HeroUI blue, rgba(4,133,247) — theme-independent */
+  --accent-foreground: #ffffff !important;
+}
+
+/*
+ * HeroUI TimeField muted (description + icon) override.
+ *
+ * HeroUI uses `--muted` as a FOREGROUND token: `[data-slot="description"]` and
+ * `.text-muted` (the Clock / ChevronDown prefix/suffix icons) and
+ * `--field-placeholder: var(--muted)` all resolve to `color: var(--muted)`.
+ *
+ * The 21st-vite shadcn template instead treats `--muted` as a BACKGROUND token:
+ *   :root  { --muted: oklch(97% 0 0) }     (near-white)
+ *   .dark  { --muted: oklch(26.9% 0 0) }   (near-black grey)
+ * Those win the cascade over @heroui/styles, so on light the description/icons
+ * are near-white-on-white (invisible) and on dark near-black-on-dark (invisible).
+ *
+ * Restore HeroUI's own theme-aware muted grey (verified against heroui.com
+ * computed `--muted`: light lab(47.87 1.41 -4.99), dark lab(65.65 1.53 -5.42)).
+ * `--muted` is theme-DEPENDENT, so unlike --accent it must be split per theme.
+ * It stays a secondary, readable grey — not pure black/white.
+ */
+:root,
+.light,
+html.light {
+  --muted: oklch(55.17% 0.0138 285.94) !important;   /* HeroUI light grey */
+}
+
+.dark,
+html.dark {
+  --muted: oklch(70.5% 0.015 286.067) !important;    /* HeroUI dark grey */
+}

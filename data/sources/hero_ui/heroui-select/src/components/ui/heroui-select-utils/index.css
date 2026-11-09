@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/*
+ * HeroUI Select accent override.
+ *
+ * The 21st-vite template ships a shadcn `:root { --accent: oklch(97% 0 0) }`
+ * (near-white grey) and `.dark { --accent: oklch(26.9% 0 0) }`. Those win the
+ * cascade over @heroui/styles' blue `--accent`, so the focus ring on the
+ * trigger and the selected-option highlight + ItemIndicator checkmark (all
+ * derived from `--accent`) render GREY instead of the HeroUI blue you see on
+ * heroui.com.
+ *
+ * Verified against heroui.com computed `--accent`: lab(54.53 3.32 -66.53),
+ * i.e. rgb(4,133,247) = #0485f7. `--accent` is theme-independent.
+ * `!important` on the custom property beats the unlayered template `:root`
+ * regardless of stylesheet source order.
+ */
+:root,
+.light,
+html.light,
+.dark,
+html.dark,
+html {
+  --accent: #0485f7 !important;          /* HeroUI blue, rgb(4,133,247) */
+  --accent-foreground: #ffffff !important;
+}
+
+/*
+ * HeroUI Select muted (placeholder + indicator + description) override.
+ *
+ * HeroUI uses `--muted` as a FOREGROUND token. Verified on heroui.com, all of
+ * these resolve to `color: var(--muted)` = lab(47.87 1.41 -4.99):
+ *   .select__value[data-placeholder="true"]  (the "Select one" placeholder)
+ *   .select__indicator                        (the ChevronDown arrow)
+ *   [data-slot="description"] / .description   (the help text under the field)
+ *   ListBox.Section > Header                   (section titles)
+ *   .text-muted                                (assorted secondary copy)
+ *
+ * The 21st-vite shadcn template instead treats `--muted` as a BACKGROUND token:
+ *   :root  { --muted: oklch(97% 0 0) }     (near-white)
+ *   .dark  { --muted: oklch(26.9% 0 0) }   (near-black grey)
+ * Those win the cascade over @heroui/styles, so on light the placeholder /
+ * indicator / description go near-white-on-white (invisible) and on dark
+ * near-black-on-dark (invisible).
+ *
+ * Restore HeroUI's own theme-aware muted grey (light lab(47.87 1.41 -4.99),
+ * dark lab(65.65 1.53 -5.42)). `--muted` is theme-DEPENDENT, so unlike
+ * --accent it must be split per theme. Stays a readable secondary grey.
+ */
+:root,
+.light,
+html.light {
+  --muted: oklch(55.17% 0.0138 285.94) !important;   /* HeroUI light grey */
+}
+
+.dark,
+html.dark {
+  --muted: oklch(70.5% 0.015 286.067) !important;    /* HeroUI dark grey */
+}

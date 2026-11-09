@@ -1,0 +1,77 @@
+/**
+ * NEXA — dark fintech design study theme
+ * Extracted from kosh-landing (inspired by koshmoney.com patterns; original brand).
+ * shadcn/Tailwind CSS variables for 21st.dev theme library.
+ */
+
+/* Light surface (for theme previews / dual-mode consumers) */
+:root {
+  --background: #f7f9fc;
+  --foreground: #08090a;
+  --card: #ffffff;
+  --card-foreground: #08090a;
+  --popover: #ffffff;
+  --popover-foreground: #08090a;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #e8eaed;
+  --secondary-foreground: #08090a;
+  --muted: #eef0f3;
+  --muted-foreground: #5c6370;
+  --accent: #e8eaed;
+  --accent-foreground: #08090a;
+  --destructive: #fb2c36;
+  --border: rgba(8, 9, 10, 0.12);
+  --input: rgba(8, 9, 10, 0.1);
+  --ring: #2563eb;
+  --chart-1: #2563eb;
+  --chart-2: #30d158;
+  --chart-3: #c07eff;
+  --chart-4: #ffd236;
+  --chart-5: #77d4ff;
+  --radius: 1rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #08090a;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef0f3;
+  --sidebar-accent-foreground: #08090a;
+  --sidebar-border: rgba(8, 9, 10, 0.1);
+  --sidebar-ring: #2563eb;
+}
+
+/* Dark-first NEXA / fintech marketing tokens (source of truth in product) */
+.dark {
+  --background: #08090a;
+  --foreground: #f7f9fc;
+  --card: #121214;
+  --card-foreground: #f7f9fc;
+  --popover: #121214;
+  --popover-foreground: #f7f9fc;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #272727a3;
+  --secondary-foreground: #ffffff;
+  --muted: #1a1b1e;
+  --muted-foreground: rgba(255, 255, 255, 0.65);
+  --accent: #1a1b1e;
+  --accent-foreground: #f7f9fc;
+  --destructive: #ff6568;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #2563eb;
+  --chart-1: #2563eb;
+  --chart-2: #30d158;
+  --chart-3: #c07eff;
+  --chart-4: #ffd236;
+  --chart-5: #77d4ff;
+  --radius: 1rem;
+  --sidebar: #121214;
+  --sidebar-foreground: #f7f9fc;
+  --sidebar-primary: #2563eb;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a1b1e;
+  --sidebar-accent-foreground: #f7f9fc;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #2563eb;
+}

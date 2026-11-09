@@ -1,0 +1,77 @@
+/* Al-Heloul Al-Thakiah — 21st theme
+   Mapped from project tokens in src/index.css
+   Light: --bg #eceeea, --surface #f7f8f5, --ink #0b0c0b,
+          --muted #6b716c, --accent #6a9a6e, --cta #d14c44
+*/
+
+:root {
+  --background: #eceeea;
+  --foreground: #0b0c0b;
+  --card: #f7f8f5;
+  --card-foreground: #0b0c0b;
+  --popover: #f7f8f5;
+  --popover-foreground: #0b0c0b;
+  --primary: #6a9a6e;
+  --primary-foreground: #ffffff;
+  --secondary: #e4e8e3;
+  --secondary-foreground: #0b0c0b;
+  --muted: #e4e8e3;
+  --muted-foreground: #6b716c;
+  --accent: #dfeadf;
+  --accent-foreground: #0b0c0b;
+  --destructive: #d14c44;
+  --destructive-foreground: #ffffff;
+  --border: rgba(11, 12, 11, 0.08);
+  --input: rgba(11, 12, 11, 0.12);
+  --ring: #6a9a6e;
+  --radius: 2rem;
+  --chart-1: #6a9a6e;
+  --chart-2: #d14c44;
+  --chart-3: #4f7a54;
+  --chart-4: #8f6b4a;
+  --chart-5: #3d5c6e;
+  --sidebar: #f7f8f5;
+  --sidebar-foreground: #0b0c0b;
+  --sidebar-primary: #6a9a6e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e4e8e3;
+  --sidebar-accent-foreground: #0b0c0b;
+  --sidebar-border: rgba(11, 12, 11, 0.08);
+  --sidebar-ring: #6a9a6e;
+}
+
+.dark {
+  --background: #0d100e;
+  --foreground: #f7f8f5;
+  --card: #151a16;
+  --card-foreground: #f7f8f5;
+  --popover: #151a16;
+  --popover-foreground: #f7f8f5;
+  --primary: #7eae82;
+  --primary-foreground: #0b0c0b;
+  --secondary: #1c231e;
+  --secondary-foreground: #f7f8f5;
+  --muted: #1c231e;
+  --muted-foreground: #9aa39c;
+  --accent: #243028;
+  --accent-foreground: #f7f8f5;
+  --destructive: #e0645c;
+  --destructive-foreground: #ffffff;
+  --border: rgba(247, 248, 245, 0.12);
+  --input: rgba(247, 248, 245, 0.16);
+  --ring: #7eae82;
+  --radius: 2rem;
+  --chart-1: #7eae82;
+  --chart-2: #e0645c;
+  --chart-3: #a3c4a5;
+  --chart-4: #c4a484;
+  --chart-5: #7a9aab;
+  --sidebar: #111511;
+  --sidebar-foreground: #f7f8f5;
+  --sidebar-primary: #7eae82;
+  --sidebar-primary-foreground: #0b0c0b;
+  --sidebar-accent: #1c231e;
+  --sidebar-accent-foreground: #f7f8f5;
+  --sidebar-border: rgba(247, 248, 245, 0.12);
+  --sidebar-ring: #7eae82;
+}

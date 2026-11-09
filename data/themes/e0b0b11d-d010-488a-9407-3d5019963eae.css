@@ -1,0 +1,71 @@
+/* ProMotor Wow — experimental theme tokens (separate from main site) */
+:root {
+  --background: 228 33% 3%;
+  --foreground: 210 20% 96%;
+  --card: 228 28% 6%;
+  --card-foreground: 210 20% 96%;
+  --popover: 228 28% 6%;
+  --popover-foreground: 210 20% 96%;
+  --primary: 221 87% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 228 20% 12%;
+  --secondary-foreground: 210 20% 96%;
+  --muted: 228 20% 12%;
+  --muted-foreground: 215 12% 62%;
+  --accent: 221 87% 53%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 228 14% 16%;
+  --input: 228 14% 16%;
+  --ring: 221 87% 58%;
+  --chart-1: 221 87% 58%;
+  --chart-2: 221 70% 45%;
+  --chart-3: 215 12% 62%;
+  --chart-4: 228 20% 18%;
+  --chart-5: 0 0% 100%;
+  --sidebar: 228 28% 6%;
+  --sidebar-foreground: 210 20% 96%;
+  --sidebar-primary: 221 87% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 20% 12%;
+  --sidebar-accent-foreground: 210 20% 96%;
+  --sidebar-border: 228 14% 16%;
+  --sidebar-ring: 221 87% 58%;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: 228 33% 3%;
+  --foreground: 210 20% 96%;
+  --card: 228 28% 6%;
+  --card-foreground: 210 20% 96%;
+  --popover: 228 28% 6%;
+  --popover-foreground: 210 20% 96%;
+  --primary: 221 87% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 228 20% 12%;
+  --secondary-foreground: 210 20% 96%;
+  --muted: 228 20% 12%;
+  --muted-foreground: 215 12% 62%;
+  --accent: 221 70% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 228 14% 16%;
+  --input: 228 14% 16%;
+  --ring: 221 87% 58%;
+  --chart-1: 221 87% 58%;
+  --chart-2: 221 70% 45%;
+  --chart-3: 215 12% 62%;
+  --chart-4: 228 20% 18%;
+  --chart-5: 0 0% 100%;
+  --sidebar: 228 28% 6%;
+  --sidebar-foreground: 210 20% 96%;
+  --sidebar-primary: 221 87% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 20% 12%;
+  --sidebar-accent-foreground: 210 20% 96%;
+  --sidebar-border: 228 14% 16%;
+  --sidebar-ring: 221 87% 58%;
+}

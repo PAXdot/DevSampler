@@ -1,0 +1,91 @@
+/* Sinyal Cohiba — Trading Signal Platform Theme
+   Gold-on-dark OLED night mode + clean sage light mode
+   Accent: #C8A000 (Deep Trading Gold) */
+
+:root {
+  /* Brand surfaces */
+  --background: 0 0% 100%;
+  --foreground: 220 20% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 20% 10%;
+
+  /* Primary: Trading Gold */
+  --primary: 38 92% 50%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary & muted */
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 220 20% 10%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 20% 40%;
+
+  /* Accent */
+  --accent: 210 40% 96%;
+  --accent-foreground: 220 20% 10%;
+
+  /* Status */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+
+  /* Chrome */
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 38 92% 50%;
+  --radius: 0.5rem;
+
+  /* Brand-specific tokens */
+  --brand-background: #FFFFFF;
+  --brand-surface: #F9FAFB;
+  --brand-card-bg: #FFFFFF;
+  --brand-border: #E5E7EB;
+  --brand-accent: #C8A000;
+  --brand-accent-muted: rgba(200, 160, 0, 0.08);
+  --brand-text-primary: #111827;
+  --brand-text-secondary: #6B7280;
+  --brand-text-accent: #B45309;
+  --brand-equity-line: #D4AF37;
+}
+
+.dark {
+  /* Brand surfaces — OLED Night Mode */
+  --background: 222 47% 6%;
+  --foreground: 40 30% 95%;
+  --card: 222 30% 10%;
+  --card-foreground: 40 30% 95%;
+
+  /* Primary: Trading Gold */
+  --primary: 38 92% 50%;
+  --primary-foreground: 222 47% 6%;
+
+  /* Secondary & muted */
+  --secondary: 222 20% 18%;
+  --secondary-foreground: 40 30% 95%;
+  --muted: 222 20% 18%;
+  --muted-foreground: 222 10% 55%;
+
+  /* Accent */
+  --accent: 38 92% 50%;
+  --accent-foreground: 222 47% 6%;
+
+  /* Status */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 40 30% 95%;
+
+  /* Chrome */
+  --border: 222 20% 18%;
+  --input: 222 20% 18%;
+  --ring: 38 92% 50%;
+  --radius: 0.75rem;
+
+  /* Brand-specific tokens */
+  --brand-background: #0B0E11;
+  --brand-surface: #080A0D;
+  --brand-card-bg: #151921;
+  --brand-border: #1E2432;
+  --brand-accent: #C8A000;
+  --brand-accent-muted: rgba(200, 160, 0, 0.06);
+  --brand-text-primary: #F5F0E8;
+  --brand-text-secondary: #6B7280;
+  --brand-text-accent: #E0B800;
+  --brand-equity-line: #E5C158;
+}

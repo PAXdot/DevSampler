@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/*
+ * HeroUI Dropdown accent + muted override — shipped as a sibling
+ * (manifest.siblings), imported by the component from
+ * @/components/ui/heroui-dropdown-utils/index.css.
+ *
+ * SPECIFICITY: the 21st-vite marketplace harness defines its shadcn tokens on a
+ * single `:root` (specificity 0,1,0) in base-index.css. To win regardless of
+ * stylesheet load order we use `:root:root` (specificity 0,2,0) which beats it.
+ * Theme is split so the light rule never clobbers dark:
+ *   light -> :root:root:not(.dark)
+ *   dark  -> :root:root.dark, html.dark
+ * All overrides are !important to also beat any inline/layered token.
+ *
+ * MEASURED on heroui.com (computed CSS custom properties, Dropdown docs page):
+ *   --accent  light & dark = lab(54.5335 3.31545 -66.5298) = rgb(4,133,247) = #0485f7
+ *             (selected Dropdown.Item highlight + Dropdown.ItemIndicator checkmark)
+ *   --muted   light = lab(47.8738 1.41454 -4.98644)
+ *             dark  = lab(65.6464 1.53497 -5.42429)
+ *             (item icons, Kbd shortcuts, Header section titles, Description text,
+ *              .text-muted secondary copy)
+ *
+ * The 21st template instead sets --accent to a grey (oklch ~97% light / ~26.9%
+ * dark) and treats --muted as a near-white/near-black BACKGROUND token, so
+ * without this override the selected highlight + checkmark render grey and the
+ * icons/shortcuts/headers/descriptions become near-invisible. Popover surface,
+ * item text, hover bg, separator, danger-red, and section bg all come from
+ * HeroUI's own un-overridden tokens (--surface/--foreground/--default/--border/
+ * --danger), which the template leaves intact, so they already match.
+ */
+
+:root:root:not(.dark) {
+  --accent: #0485f7 !important;          /* HeroUI blue, rgb(4,133,247) */
+  --accent-hover: #0473d4 !important;
+  --accent-foreground: #ffffff !important;
+
+  --muted: lab(47.8738% 1.41454 -4.98644) !important;   /* HeroUI light muted text */
+  --color-muted: var(--muted) !important;
+}
+
+:root:root.dark,
+html.dark {
+  --accent: #0485f7 !important;          /* HeroUI blue, rgb(4,133,247) */
+  --accent-hover: #3197ff !important;
+  --accent-foreground: #ffffff !important;
+
+  --muted: lab(65.6464% 1.53497 -5.42429) !important;   /* HeroUI dark muted text */
+  --color-muted: var(--muted) !important;
+}

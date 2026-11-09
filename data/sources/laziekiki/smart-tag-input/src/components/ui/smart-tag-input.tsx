@@ -1,0 +1,34 @@
+import { useId, useMemo, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react"
+
+const suggestions = ["React", "TypeScript", "UX", "Design systems", "Accessibility", "Motion", "Research", "Product"]
+const styles = `
+*{box-sizing:border-box}.smart-tag-input{--bg:#f5f5f3;--panel:#fff;--ink:#1b1b1a;--muted:#8a8a86;--line:#dededb;width:min(100%,560px);padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--ink);font-family:Arial,Helvetica,sans-serif;box-shadow:0 18px 50px rgb(28 28 25 / 6%)}.sti-top{display:flex;align-items:center;justify-content:space-between;margin:0 1px 10px;font-size:13px;font-weight:600}.sti-top span{color:var(--muted);font-size:12px;font-weight:400;font-variant-numeric:tabular-nums}.sti-shell{display:flex;align-items:center;min-height:54px;padding:7px 9px 7px 10px;border:1px solid #d5d5d1;border-radius:10px;background:var(--panel);transition:border-color .18s ease,box-shadow .18s ease}.sti-shell.focused{border-color:#bdbdb8;box-shadow:0 0 0 3px #eeeeeb,inset 0 0 0 1px #f7f7f5}.sti-tokens{display:flex;flex:1;align-items:center;flex-wrap:wrap;gap:6px;min-width:0}.sti-token{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 7px 0 9px;border:1px solid #dadad6;border-radius:7px;color:#343432;background:#f6f6f4;font-size:12px;font-weight:600;animation:sti-in .2s cubic-bezier(.2,.8,.2,1);transition:background .15s ease,color .15s ease,border-color .15s ease}.sti-token.selected{border-color:#262625;color:#fff;background:#262625}.sti-token button{width:16px;height:16px;padding:0;border:0;color:inherit;background:transparent;font-size:17px;line-height:12px;opacity:.48;cursor:pointer}.sti-token button:hover{opacity:1}.sti-input{min-width:112px;flex:1 1 112px;height:30px;padding:0 3px;border:0;outline:0;color:var(--ink);font:13px Arial,Helvetica,sans-serif;background:transparent}.sti-input::placeholder{color:#989894}.sti-key{display:grid;width:26px;height:26px;place-items:center;margin-left:8px;border:1px solid var(--line);border-radius:6px;color:#858580;font-size:14px}.sti-suggestions{display:grid;grid-template-columns:70px 1fr;gap:8px;max-height:0;margin-top:0;overflow:hidden;opacity:0;transform:translateY(-4px);transition:max-height .2s ease,margin .2s ease,opacity .16s ease,transform .2s ease}.sti-suggestions.visible{max-height:110px;margin-top:12px;opacity:1;transform:translateY(0)}.sti-suggestions>span{padding-top:7px;color:var(--muted);font-size:11px}.sti-suggestions>div{display:flex;flex-wrap:wrap;gap:6px}.sti-suggestions button{display:inline-flex;align-items:center;gap:5px;height:27px;padding:0 8px;border:1px solid transparent;border-radius:6px;color:#676762;background:#f6f6f4;font:11px Arial,Helvetica,sans-serif;cursor:pointer;transition:color .14s ease,background .14s ease}.sti-suggestions button:hover{color:#fff;background:#242423}.sti-suggestions b{margin-left:2px;font-size:14px;font-weight:400}@keyframes sti-in{from{opacity:0;transform:scale(.92) translateY(2px)}to{opacity:1;transform:scale(1) translateY(0)}}.dark .smart-tag-input{--bg:#171716;--panel:#20201e;--ink:#efefeb;--muted:#858580;--line:#353532;box-shadow:none}.dark .sti-shell{border-color:#464641;background:#191918}.dark .sti-shell.focused{border-color:#8b8b84;box-shadow:0 0 0 3px rgb(235 235 228 / 8%),inset 0 0 0 1px rgb(255 255 255 / 3%)}.dark .sti-input::placeholder{color:#777773}.dark .sti-token{border-color:#41413d;color:#e9e9e5;background:#2a2a28}.dark .sti-token.selected{border-color:#edede7;color:#1c1c1a;background:#edede7}.dark .sti-suggestions button{color:#aaa9a3;background:#292927}.dark .sti-suggestions button:hover{color:#1d1d1b;background:#edede7}@media(max-width:520px){.smart-tag-input{padding:17px;border-radius:14px}.sti-suggestions{grid-template-columns:1fr;gap:5px}.sti-suggestions>span{padding-top:0}}@media(prefers-reduced-motion:reduce){.smart-tag-input *{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+`
+
+const clean = (value: string) => value.trim().replace(/\s+/g, " ")
+
+export function SmartTagInput() {
+  const inputId = useId()
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [tags, setTags] = useState(["React", "TypeScript", "UX"])
+  const [query, setQuery] = useState("")
+  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [focused, setFocused] = useState(false)
+  const available = useMemo(() => suggestions.filter((item) => !tags.some((tag) => tag.toLowerCase() === item.toLowerCase())).filter((item) => item.toLowerCase().includes(query.toLowerCase())).slice(0, 4), [query, tags])
+  const add = (raw: string) => {
+    const value = clean(raw)
+    if (!value || tags.length >= 5 || tags.some((tag) => tag.toLowerCase() === value.toLowerCase())) return
+    setTags((current) => [...current, value]); setQuery(""); setSelectedTag(null)
+  }
+  const remove = (tag: string) => { setTags((current) => current.filter((item) => item !== tag)); setSelectedTag(null); inputRef.current?.focus() }
+  const keyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if ((event.key === "Enter" || event.key === ",") && query.trim()) { event.preventDefault(); add(query); return }
+    if (event.key === "Escape") { setQuery(""); setSelectedTag(null); return }
+    if (event.key === "Backspace" && !query) selectedTag ? remove(selectedTag) : setSelectedTag(tags.at(-1) ?? null)
+  }
+  const paste = (event: ClipboardEvent<HTMLInputElement>) => {
+    const values = event.clipboardData.getData("text").split(/[,\n]/).map(clean).filter(Boolean)
+    if (values.length > 1) { event.preventDefault(); values.forEach(add) }
+  }
+  return <><style>{styles}</style><section className="smart-tag-input" aria-label="Smart tag input"><div className="sti-top"><label htmlFor={inputId}>Topics</label><span aria-live="polite">{tags.length} / 5</span></div><div className={`sti-shell ${focused ? "focused" : ""}`} onMouseDown={() => inputRef.current?.focus()}><div className="sti-tokens">{tags.map((tag) => <span className={`sti-token ${selectedTag === tag ? "selected" : ""}`} key={tag}>{tag}<button type="button" onClick={() => remove(tag)} aria-label={`Remove ${tag}`}>×</button></span>)}<input className="sti-input" ref={inputRef} id={inputId} value={query} onChange={(event) => { setQuery(event.target.value); setSelectedTag(null) }} onKeyDown={keyDown} onPaste={paste} onFocus={() => setFocused(true)} onBlur={() => window.setTimeout(() => setFocused(false), 120)} placeholder="Add a topic" disabled={tags.length >= 5} /></div><span className="sti-key" aria-hidden="true">↵</span></div><div className={`sti-suggestions ${focused && available.length && tags.length < 5 ? "visible" : ""}`}><span>Suggested</span><div>{available.map((item) => <button type="button" key={item} onMouseDown={(event) => event.preventDefault()} onClick={() => add(item)}>{item}<b>+</b></button>)}</div></div></section></>
+}

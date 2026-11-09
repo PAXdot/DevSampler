@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+ * HeroUI Tooltip token overrides for the 21st.dev marketplace sandbox.
+ *
+ * The tooltip BUBBLE itself (background / text / radius / shadow) is driven by
+ * HeroUI's own `--surface` / `--background` / `--foreground` tokens, which the
+ * 21st-vite shadcn template does NOT clobber — so the bubble already renders
+ * correctly (verified on heroui.com):
+ *   light: bg lab(100 0 0) white, text lab(8.34 .61 -2.13), radius 12px,
+ *          layered soft drop-shadow.
+ *   dark:  bg lab(8.34 .61 -2.13) (--surface), text white (--foreground),
+ *          radius 12px, inset white/30% 1px hairline.
+ *
+ * What the template DOES break are two tokens the tooltip demos rely on:
+ *   --accent  → the custom-styled demo's `bg-accent text-accent-foreground`
+ *               bubble, and any focus ring.
+ *   --muted   → the "Hover buttons" caption (placement demo) and the
+ *               `text-muted` secondary copy inside the custom-trigger demo.
+ *
+ * CRITICAL: the 21st marketplace base CSS defines these on a plain `:root`,
+ * which ties on specificity with our `:root`. Use `:root:root` (doubled) so
+ * our rule wins the cascade regardless of source order, and back it with
+ * !important. Applied across every theme selector the sandbox might toggle.
+ */
+
+/* --accent is theme-INDEPENDENT on HeroUI: rgb(4,133,247) = #0485f7,
+   verified computed lab(54.53 3.32 -66.53) light AND dark. */
+:root:root,
+.light,
+html.light,
+.dark,
+html.dark,
+html {
+  --accent: #0485f7 !important;            /* HeroUI blue */
+  --accent-foreground: #ffffff !important;
+}
+
+/* --muted is HeroUI's secondary FOREGROUND grey and IS theme-dependent.
+   light computed lab(47.87 1.41 -4.99); dark lab(65.65 1.53 -5.42).
+   The template instead uses --muted as a near-white/near-black BACKGROUND,
+   which makes the captions invisible — restore HeroUI's readable grey. */
+/* NOTE on specificity: `:root:root` is two pseudo-classes → (0,2,0), which
+ * (surprisingly) BEATS a single `.dark` class (0,1,0). So a plain
+ * `:root:root { --muted: light }` would override `.dark { --muted: dark }` and
+ * force the light grey even in dark mode. To keep --muted theme-correct we (a)
+ * exclude dark from the light rule with :not(.dark), and (b) raise the dark
+ * rule to the same (0,2,0) doubled specificity so it wins on a .dark root. */
+:root:root:not(.dark),
+html:root:not(.dark) {
+  --muted: oklch(55.17% 0.0138 285.94) !important;   /* HeroUI light grey */
+}
+
+:root:root.dark,
+html.dark.dark {
+  --muted: oklch(70.5% 0.015 286.067) !important;    /* HeroUI dark grey */
+}

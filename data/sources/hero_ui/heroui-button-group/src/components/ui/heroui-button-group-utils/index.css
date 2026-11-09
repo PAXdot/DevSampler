@@ -1,0 +1,30 @@
+/* real-lib accent + neutral override — shipped as a sibling (manifest.siblings).
+ * Uses :root:root / .dark:root (specificity 2) so it BEATS the 21st marketplace
+ * harness tokens (base-index.css :root, specificity 1) regardless of CSS load
+ * order — a plain :root loses the order battle and the overrides never apply.
+ *
+ * --muted: HeroUI v3 uses var(--muted) as its muted *text* color (Modal.Body,
+ * captions, etc). 21st's token system defines --muted as a near-white *bg*,
+ * which turns HeroUI body text near-invisible. Restore HeroUI's medium gray.
+ * See sources/heroui.md ("Accent / theme override"). */
+@import "tailwindcss";
+
+:root:root {
+  --accent: #0485f7;
+  --accent-hover: #0473d4;
+  --accent-foreground: #ffffff;
+
+  --muted: lab(47.8738% 1.41454 -4.98644);
+  --muted-foreground: oklch(0.556 0 0);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+}
+
+.dark:root {
+  --accent: #0485f7;
+  --accent-hover: #3197ff;
+  --accent-foreground: #ffffff;
+
+  --muted: oklch(0.708 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+}

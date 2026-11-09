@@ -1,0 +1,90 @@
+import type { Dict, Normalizer } from './types'
+
+const isHandler = (key: string) => /^on[A-Z]/.test(key)
+
+/**
+ * Canonical props are React-cased (`readOnly`, `maxLength`); outside React they
+ * are plain attributes, whose names are lowercase.
+ */
+const ATTRIBUTE_NAMES: Record<string, string> = {
+  tabIndex: 'tabindex',
+  readOnly: 'readonly',
+  htmlFor: 'for',
+  maxLength: 'maxlength',
+  minLength: 'minlength',
+  autoComplete: 'autocomplete',
+  inputMode: 'inputmode',
+  spellCheck: 'spellcheck',
+  dateTime: 'datetime',
+}
+
+/**
+ * `style` is canonical as an object keyed by CSS property names — custom
+ * properties such as a slider's fill, or the geometry of a virtual row: data,
+ * never a look. React takes the object in camelCase; an attribute needs the
+ * declaration text.
+ */
+const styleText = (style: Dict) =>
+  Object.entries(style)
+    .filter(([, value]) => value !== undefined && value !== null)
+    .map(([name, value]) => `${name}: ${value}`)
+    .join('; ')
+
+/** React names style properties in camelCase; a custom property keeps its name. */
+const reactStyle = (style: Dict) => {
+  const out: Dict = {}
+  for (const [name, value] of Object.entries(style)) {
+    if (value === undefined || value === null) continue
+    out[name.startsWith('--') ? name : name.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())] = value
+  }
+  return out
+}
+
+/** Drop `undefined` (absent) and `false` (absent boolean attribute). */
+const isAbsent = (v: unknown) => v === undefined || v === null || v === false
+
+/**
+ * Props that frameworks set as DOM PROPERTIES, where `false` is a value, not
+ * an absence. A controlled checkbox rendered without `checked` when unchecked is
+ * not controlled at all: React warns and Svelte leaves the old state in place.
+ * The DOM normalizer still drops it — there `checked` is an attribute, and the
+ * attribute is only the default.
+ */
+const KEEP_FALSE = new Set(['checked'])
+const isAbsentProp = (key: string, v: unknown) => isAbsent(v) && !(v === false && KEEP_FALSE.has(key))
+
+/**
+ * React: handler keys and camelCase DOM props are already correct; only the
+ * historical renames need doing.
+ */
+export const reactNormalizer: Normalizer = (props: Dict) => {
+  const out: Dict = {}
+  for (const [key, value] of Object.entries(props)) {
+    if (isAbsentProp(key, value)) continue
+    if (key === 'class') out.className = value
+    else if (key === 'style' && typeof value === 'object') out.style = reactStyle(value)
+    else if (key === 'for') out.htmlFor = value
+    // React names the native `input` event `onChange`, and a controlled input
+    // without onChange is read-only in React. Same event, React's word for it.
+    else if (key === 'onInput') out.onChange = value
+    // React's onBlur and onFocus already bubble — they are focusout and focusin.
+    else if (key === 'onFocusOut') out.onBlur = value
+    else if (key === 'onFocusIn') out.onFocus = value
+    else out[key] = value
+  }
+  return out
+}
+
+/**
+ * Canonical handler keys are React's. Most lower-case into the DOM event's name
+ * (`onKeyDown` is `keydown`); these few are named otherwise in the DOM.
+ */
+const EVENT_NAMES: Record<string, string> = {
+  onDoubleClick: 'dblclick',
+}
+const eventName = (key: string) => EVENT_NAMES[key] ?? key.slice(2).toLowerCase()
+
+export type DomProps = {
+  attrs: Record<string, string>
+  listeners: Record<string, (event: any) => void>
+}

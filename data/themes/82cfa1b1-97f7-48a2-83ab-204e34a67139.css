@@ -1,0 +1,72 @@
+/* Quantum Satis Clinic - тёплая бежевая тема (Playfair + Manrope)
+   Сгенерировано из фирменной палитры сайта; тёмный вариант в тон бренду. */
+:root {
+  --background: 37 45% 94%;
+  --foreground: 22 24% 13%;
+  --card: 36 100% 99%;
+  --card-foreground: 22 24% 13%;
+  --popover: 36 100% 99%;
+  --popover-foreground: 22 24% 13%;
+  --primary: 28 29% 38%;
+  --primary-foreground: 36 100% 99%;
+  --secondary: 37 40% 90%;
+  --secondary-foreground: 22 24% 13%;
+  --muted: 37 40% 90%;
+  --muted-foreground: 28 15% 31%;
+  --accent: 35 49% 82%;
+  --accent-foreground: 28 30% 28%;
+  --destructive: 5 59% 44%;
+  --destructive-foreground: 36 100% 99%;
+  --border: 36 35% 85%;
+  --input: 36 35% 85%;
+  --ring: 28 29% 38%;
+  --chart-1: 30 26% 48%;
+  --chart-2: 33 37% 56%;
+  --chart-3: 28 30% 28%;
+  --chart-4: 35 49% 82%;
+  --chart-5: 35 31% 77%;
+  --sidebar-background: 36 65% 95%;
+  --sidebar-foreground: 22 24% 13%;
+  --sidebar-primary: 28 29% 38%;
+  --sidebar-primary-foreground: 36 100% 99%;
+  --sidebar-accent: 37 40% 90%;
+  --sidebar-accent-foreground: 28 30% 28%;
+  --sidebar-border: 36 35% 85%;
+  --sidebar-ring: 28 29% 38%;
+  --radius: 1rem;
+}
+.dark {
+  --background: 26 29% 11%;
+  --foreground: 37 45% 94%;
+  --card: 27 30% 15%;
+  --card-foreground: 37 45% 94%;
+  --popover: 27 30% 15%;
+  --popover-foreground: 37 45% 94%;
+  --primary: 33 37% 56%;
+  --primary-foreground: 26 29% 11%;
+  --secondary: 28 29% 18%;
+  --secondary-foreground: 37 45% 94%;
+  --muted: 28 29% 18%;
+  --muted-foreground: 35 28% 70%;
+  --accent: 28 30% 28%;
+  --accent-foreground: 35 49% 82%;
+  --destructive: 9 69% 60%;
+  --destructive-foreground: 26 29% 11%;
+  --border: 30 32% 18%;
+  --input: 30 32% 18%;
+  --ring: 33 37% 56%;
+  --chart-1: 33 37% 56%;
+  --chart-2: 35 31% 77%;
+  --chart-3: 30 26% 48%;
+  --chart-4: 35 49% 82%;
+  --chart-5: 31 27% 43%;
+  --sidebar-background: 27 30% 15%;
+  --sidebar-foreground: 37 45% 94%;
+  --sidebar-primary: 33 37% 56%;
+  --sidebar-primary-foreground: 26 29% 11%;
+  --sidebar-accent: 28 30% 28%;
+  --sidebar-accent-foreground: 35 49% 82%;
+  --sidebar-border: 30 32% 18%;
+  --sidebar-ring: 33 37% 56%;
+  --radius: 1rem;
+}

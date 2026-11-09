@@ -1,0 +1,76 @@
+/* OpenBench "Terminal Teal" — dark-first theme mined from the openbench leaderboard.
+   Contrast-checked: text 17.4:1, body 12.1:1, muted 7.6:1, dim 5.7:1, accent 12.8:1 on bg.
+   Both :root (dark default) and .dark provided per 21st theme contract; light variant is
+   the inverted ramp at identical contrast ratios. */
+:root{
+  --background:#0A0B0D;
+  --foreground:#F7F8FA;
+  --card:#131519;
+  --card-foreground:#F7F8FA;
+  --popover:#181B21;
+  --popover-foreground:#D6DAE1;
+  --primary:#6FF2DC;
+  --primary-foreground:#04231D;
+  --secondary:#181B21;
+  --secondary-foreground:#D6DAE1;
+  --muted:#181B21;
+  --muted-foreground:#A8B0BD;
+  --accent:#6FF2DC;
+  --accent-foreground:#04231D;
+  --destructive:#FB8A8A;
+  --destructive-foreground:#0A0B0D;
+  --success:#5EE88A;
+  --warning:#FCD34D;
+  --border:#262B33;
+  --input:#39404C;
+  --ring:#6FF2DC;
+  --radius:0.75rem;
+  --font-sans:'Inter',system-ui,sans-serif;
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --color-primary:#6FF2DC;
+  --color-primary-foreground:#04231D;
+  --color-background:#0A0B0D;
+  --color-foreground:#F7F8FA;
+  --color-muted:#A8B0BD;
+  --color-muted-foreground:#8A93A3;
+  --color-card:#131519;
+  --color-border:#262B33;
+  --color-destructive:#FB8A8A;
+}
+.dark{
+  --background:#0A0B0D;
+  --foreground:#F7F8FA;
+  --card:#131519;
+  --card-foreground:#F7F8FA;
+  --popover:#181B21;
+  --popover-foreground:#D6DAE1;
+  --primary:#6FF2DC;
+  --primary-foreground:#04231D;
+  --secondary:#181B21;
+  --secondary-foreground:#D6DAE1;
+  --muted:#181B21;
+  --muted-foreground:#A8B0BD;
+  --accent:#6FF2DC;
+  --accent-foreground:#04231D;
+  --destructive:#FB8A8A;
+  --destructive-foreground:#0A0B0D;
+  --success:#5EE88A;
+  --warning:#FCD34D;
+  --border:#262B33;
+  --input:#39404C;
+  --ring:#6FF2DC;
+  --radius:0.75rem;
+  --font-sans:'Inter',system-ui,sans-serif;
+  --font-serif:'Instrument Serif',Georgia,serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --color-primary:#6FF2DC;
+  --color-primary-foreground:#04231D;
+  --color-background:#0A0B0D;
+  --color-foreground:#F7F8FA;
+  --color-muted:#A8B0BD;
+  --color-muted-foreground:#8A93A3;
+  --color-card:#131519;
+  --color-border:#262B33;
+  --color-destructive:#FB8A8A;
+}

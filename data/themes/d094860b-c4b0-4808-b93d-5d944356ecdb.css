@@ -1,0 +1,60 @@
+/* AI Dimensie — brand theme (Electric Cyan #36d8ff + Neon Violet #b06cff + Mint #2de6a6)
+   Canonical source: aidimension-ui/apps/ui/app/globals.css
+   Aesthetic: Bloomberg Terminal x modern SaaS — dark by default.
+   Activate by adding data-theme="ai-dimensie-brand" (or importing as the root :root defaults). */
+
+:root {
+  --background: #070415;
+  --foreground: #ffffff;
+  --card: #171126;
+  --card-foreground: #ffffff;
+  --popover: #171126;
+  --popover-foreground: #ffffff;
+  --primary: #36d8ff;
+  --primary-foreground: #070415;
+  --secondary: #171126;
+  --secondary-foreground: #ffffff;
+  --accent: #b06cff;
+  --accent-foreground: #ffffff;
+  --muted: #1a1a2e;
+  --muted-foreground: #a4a0b8;
+  --destructive: #ff5d7a;
+  --destructive-foreground: #ffffff;
+  --border: rgba(54, 216, 255, 0.12);
+  --input: rgba(54, 216, 255, 0.12);
+  --ring: #36d8ff;
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --az-brand-gradient: linear-gradient(135deg, #36d8ff 0%, #b06cff 100%);
+  --az-brand-gradient-soft: linear-gradient(135deg, rgba(54, 216, 255, 0.12) 0%, rgba(176, 108, 255, 0.12) 100%);
+  --az-violet-gradient: linear-gradient(135deg, #b06cff 0%, #7d3ed8 100%);
+  --az-cyan-gradient: linear-gradient(135deg, #36d8ff 0%, #1aa3c0 100%);
+  --az-mint-gradient: linear-gradient(135deg, #2de6a6 0%, #36d8ff 100%);
+  --az-tri-stop: linear-gradient(120deg, #36d8ff 0%, #b06cff 50%, #2de6a6 100%);
+}
+
+.dark {
+  --background: #070415;
+  --foreground: #ffffff;
+  --card: #171126;
+  --card-foreground: #ffffff;
+  --popover: #171126;
+  --popover-foreground: #ffffff;
+  --primary: #36d8ff;
+  --primary-foreground: #070415;
+  --secondary: #171126;
+  --secondary-foreground: #ffffff;
+  --accent: #b06cff;
+  --accent-foreground: #ffffff;
+  --muted: #1a1a2e;
+  --muted-foreground: #a4a0b8;
+  --destructive: #ff5d7a;
+  --destructive-foreground: #ffffff;
+  --border: rgba(54, 216, 255, 0.12);
+  --input: rgba(54, 216, 255, 0.12);
+  --ring: #36d8ff;
+}

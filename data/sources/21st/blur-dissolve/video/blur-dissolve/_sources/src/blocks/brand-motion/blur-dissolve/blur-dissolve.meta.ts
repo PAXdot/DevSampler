@@ -1,0 +1,25 @@
+// Built with Remotion - https://remotion.pro/license
+import { defineVideoMeta } from "../../../kit/spec";
+
+export const meta = defineVideoMeta({
+  spec: "21st.video/1",
+  kind: "transition",
+  category: "transition/dissolve",
+  tags: ["transition", "blur", "dissolve", "soft", "calm", "explainer", "default"],
+  engines: { remotion: ">=4.0.479 <5" },
+  timing: {
+    fps: 30,
+    duration: { default: 12, min: 6, max: 30 },
+    stretch: "scale",
+    phases: { in: 0, out: 0 },
+    markers: { settled: 0 },
+    // Default 12-frame overlap=.3: incoming focus starts at .35, outgoing blur ends at .65.
+    beats: [0, 4, 8, 11],
+  },
+  layout: { aspects: ["16:9", "9:16", "1:1"], mode: "responsive", fill: "frame", safeArea: "none", transparent: true, backdrop: ["background", "nextBackground"] },
+  slots: [{ key: "beforeTitle", type: "text", maxChars: 32, lines: 2, role: "label" }, { key: "afterTitle", type: "text", maxChars: 32, lines: 2, role: "label" }, { key: "nextLabel", type: "text", maxChars: 32, lines: 2, role: "label" }],
+  brand: { previewAccent: "colors.primary", textColor: "colors.text", fontFamily: "fonts.heading", bodyFontFamily: "fonts.body",  background: "colors.background", nextBackground: "colors.background" },
+  render: { deterministic: true, clientRenderable: true, webgl: false, requiresGpu: false },
+  preview: { poster: { frame: 30 }, hover: [0, 60] },
+  provenance: { origin: "own", license: "MIT", sourceUrl: "21st first-party (TransitionPresentation; motion study of V10 and V15, research 2026-10-05)" },
+});

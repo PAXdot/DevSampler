@@ -1,0 +1,76 @@
+/*
+ * Car Style Detailing: Premium Shine, as shadcn theme tokens for 21st.dev.
+ * Dark (.dark) is the live site palette from tailwind.config.ts.
+ * Light (:root) is a warm ivory companion with the same gold and silver accents.
+ */
+:root {
+  --background: #FAF8F3;
+  --foreground: #0B0B0C;
+  --card: #FFFFFF;
+  --card-foreground: #0B0B0C;
+  --popover: #FFFFFF;
+  --popover-foreground: #0B0B0C;
+  --primary: #C9A54C;
+  --primary-foreground: #0B0B0C;
+  --secondary: #EDEBE6;
+  --secondary-foreground: #26262A;
+  --muted: #F0EDE6;
+  --muted-foreground: #5C5C60;
+  --accent: #F3EBD6;
+  --accent-foreground: #6B5420;
+  --destructive: #D13438;
+  --destructive-foreground: #FFFFFF;
+  --border: #E4E0D6;
+  --input: #D9D4C8;
+  --ring: #A8873A;
+  --chart-1: #C9A54C;
+  --chart-2: #8E9297;
+  --chart-3: #A8873A;
+  --chart-4: #26262A;
+  --chart-5: #E6C877;
+  --sidebar: #F5F2EA;
+  --sidebar-foreground: #0B0B0C;
+  --sidebar-primary: #C9A54C;
+  --sidebar-primary-foreground: #0B0B0C;
+  --sidebar-accent: #F3EBD6;
+  --sidebar-accent-foreground: #6B5420;
+  --sidebar-border: #E4E0D6;
+  --sidebar-ring: #A8873A;
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #0B0B0C;
+  --foreground: #F2F2F2;
+  --card: #141416;
+  --card-foreground: #F2F2F2;
+  --popover: #141416;
+  --popover-foreground: #F2F2F2;
+  --primary: #C9A54C;
+  --primary-foreground: #0B0B0C;
+  --secondary: #1C1C1F;
+  --secondary-foreground: #BFC3C7;
+  --muted: #1C1C1F;
+  --muted-foreground: #9A9A9A;
+  --accent: #26262A;
+  --accent-foreground: #E6C877;
+  --destructive: #E5484D;
+  --destructive-foreground: #F2F2F2;
+  --border: #26262A;
+  --input: #2E2E33;
+  --ring: #C9A54C;
+  --chart-1: #C9A54C;
+  --chart-2: #BFC3C7;
+  --chart-3: #E6C877;
+  --chart-4: #8E9297;
+  --chart-5: #A8873A;
+  --sidebar: #141416;
+  --sidebar-foreground: #F2F2F2;
+  --sidebar-primary: #C9A54C;
+  --sidebar-primary-foreground: #0B0B0C;
+  --sidebar-accent: #1C1C1F;
+  --sidebar-accent-foreground: #E6C877;
+  --sidebar-border: #26262A;
+  --sidebar-ring: #C9A54C;
+  --radius: 0.75rem;
+}

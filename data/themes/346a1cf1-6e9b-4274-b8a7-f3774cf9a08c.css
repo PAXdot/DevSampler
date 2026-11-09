@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  --background: 40 40% 96%;
+  --foreground: 145 65% 15%;
+  --card: 40 40% 98%;
+  --card-foreground: 145 65% 15%;
+  --popover: 40 40% 96%;
+  --popover-foreground: 145 65% 15%;
+  --primary: 145 65% 25%;
+  --primary-foreground: 40 40% 96%;
+  --secondary: 0 70% 40%;
+  --secondary-foreground: 40 40% 96%;
+  --muted: 40 20% 88%;
+  --muted-foreground: 40 20% 40%;
+  --accent: 0 70% 40%;
+  --accent-foreground: 40 40% 96%;
+  --destructive: 0 70% 40%;
+  --destructive-foreground: 40 40% 96%;
+  --border: 40 30% 85%;
+  --input: 40 30% 85%;
+  --ring: 145 65% 25%;
+  --radius: 0rem;
+}
+
+.dark {
+  --background: 145 65% 8%;
+  --foreground: 40 40% 95%;
+  --card: 145 65% 10%;
+  --card-foreground: 40 40% 95%;
+  --popover: 145 65% 8%;
+  --popover-foreground: 40 40% 95%;
+  --primary: 45 80% 50%;
+  --primary-foreground: 145 65% 10%;
+  --secondary: 0 70% 45%;
+  --secondary-foreground: 40 40% 95%;
+  --muted: 145 40% 15%;
+  --muted-foreground: 40 20% 65%;
+  --accent: 0 70% 45%;
+  --accent-foreground: 40 40% 95%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 40 40% 95%;
+  --border: 145 40% 20%;
+  --input: 145 40% 20%;
+  --ring: 45 80% 50%;
+}

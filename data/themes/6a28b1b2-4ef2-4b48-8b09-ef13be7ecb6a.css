@@ -1,0 +1,63 @@
+:root {
+  --background: 0 0% 2%;
+  --foreground: 0 0% 98%;
+  
+  --card: 0 0% 3%;
+  --card-foreground: 0 0% 98%;
+ 
+  --popover: 0 0% 3%;
+  --popover-foreground: 0 0% 98%;
+ 
+  --primary: 185 100% 50%; /* Cyan #00F0FF */
+  --primary-foreground: 0 0% 0%;
+ 
+  --secondary: 345 100% 50%; /* Hyper Pink #FF003C */
+  --secondary-foreground: 0 0% 98%;
+ 
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+ 
+  --accent: 185 100% 50%;
+  --accent-foreground: 0 0% 0%;
+ 
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+ 
+  --border: 0 0% 10%;
+  --input: 0 0% 10%;
+  --ring: 185 100% 50%;
+ 
+  --radius: 3rem; /* Extreme rounded corners for liquid look */
+}
+
+.dark {
+  --background: 0 0% 2%;
+  --foreground: 0 0% 98%;
+  
+  --card: 0 0% 3%;
+  --card-foreground: 0 0% 98%;
+ 
+  --popover: 0 0% 3%;
+  --popover-foreground: 0 0% 98%;
+ 
+  --primary: 185 100% 50%; /* Cyan #00F0FF */
+  --primary-foreground: 0 0% 0%;
+ 
+  --secondary: 345 100% 50%; /* Hyper Pink #FF003C */
+  --secondary-foreground: 0 0% 98%;
+ 
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+ 
+  --accent: 185 100% 50%;
+  --accent-foreground: 0 0% 0%;
+ 
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+ 
+  --border: 0 0% 10%;
+  --input: 0 0% 10%;
+  --ring: 185 100% 50%;
+ 
+  --radius: 3rem;
+}

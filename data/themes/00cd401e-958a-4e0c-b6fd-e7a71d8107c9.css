@@ -1,0 +1,74 @@
+/* CYRO — theme for 21st.dev
+   Mapped from the project's Tailwind v4 tokens (frontend/src/app/globals.css,
+   "PALETTE COMBO 02") to shadcn-standard names. Light = Canvas Cloud + Electric
+   Blue; dark = on-brand navy with a brighter electric blue. */
+:root {
+  --background: #edf1f5;
+  --foreground: #0a0d12;
+  --card: #ffffff;
+  --card-foreground: #0a0d12;
+  --popover: #ffffff;
+  --popover-foreground: #0a0d12;
+  --primary: #0145f2;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3ff;
+  --secondary-foreground: #0138c4;
+  --muted: #e3e9f0;
+  --muted-foreground: #5b6472;
+  --accent: #dce6ff;
+  --accent-foreground: #0138c4;
+  --destructive: #e5484d;
+  --destructive-foreground: #ffffff;
+  --border: #d5dce6;
+  --input: #d5dce6;
+  --ring: #0145f2;
+  --chart-1: #0145f2;
+  --chart-2: #1f8a4c;
+  --chart-3: #c46a00;
+  --chart-4: #e5484d;
+  --chart-5: #e8b423;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0a0d12;
+  --sidebar-primary: #0145f2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef3ff;
+  --sidebar-accent-foreground: #0138c4;
+  --sidebar-border: #d5dce6;
+  --sidebar-ring: #0145f2;
+  --radius: 0.875rem;
+}
+.dark {
+  --background: #0b1020;
+  --foreground: #edf1f5;
+  --card: #121a33;
+  --card-foreground: #edf1f5;
+  --popover: #121a33;
+  --popover-foreground: #edf1f5;
+  --primary: #3b74ff;
+  --primary-foreground: #04122e;
+  --secondary: #1a2340;
+  --secondary-foreground: #dce6ff;
+  --muted: #1a2340;
+  --muted-foreground: #93a0b5;
+  --accent: #16224a;
+  --accent-foreground: #dce6ff;
+  --destructive: #ff5a5f;
+  --destructive-foreground: #0b1020;
+  --border: #26314f;
+  --input: #26314f;
+  --ring: #3b74ff;
+  --chart-1: #3b74ff;
+  --chart-2: #3ecf7a;
+  --chart-3: #e8a23a;
+  --chart-4: #ff5a5f;
+  --chart-5: #f0c64b;
+  --sidebar: #121a33;
+  --sidebar-foreground: #edf1f5;
+  --sidebar-primary: #3b74ff;
+  --sidebar-primary-foreground: #04122e;
+  --sidebar-accent: #16224a;
+  --sidebar-accent-foreground: #dce6ff;
+  --sidebar-border: #26314f;
+  --sidebar-ring: #3b74ff;
+  --radius: 0.875rem;
+}

@@ -1,0 +1,15 @@
+/* HeroUI Toolbar — restore the real HeroUI accent tokens.
+   The 21st marketplace sandbox neutralizes a few TOKEN VALUES
+   (--accent/--primary/--focus → near-white, --muted → near-white) and bumps
+   --radius. Everything else in @heroui/styles is already correct, so we ONLY
+   restore those tokens — that preserves the real HeroUI look: the blue accent,
+   the focus ring, and readable muted text. Theme-adapted via .light/.dark AND
+   [data-theme=*]; unlayered + !important so it beats the @heroui/styles layer. */
+:root, .light, .dark, [data-theme="light"], [data-theme="dark"] {
+  --accent: oklch(0.6204 0.195 253.83) !important;
+  --focus: oklch(0.6204 0.195 253.83) !important;
+  --primary: oklch(0.6204 0.195 253.83) !important;
+  --radius: 0.5rem !important;
+}
+:root, .light, [data-theme="light"] { --muted: oklch(0.5517 0.0138 285.94) !important; }
+.dark, [data-theme="dark"]          { --muted: oklch(0.705 0.015 286.067) !important; }

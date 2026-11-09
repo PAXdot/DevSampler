@@ -1,0 +1,82 @@
+/* ============================================================
+   THURAY — Gold Void
+   The black-void + luxury-gold design system of the Thuray
+   constellation (Pleiades) web experience.
+   Hand-drawn irregular stars, gold #C9A227 as the single
+   voltage color, warm bronze threads, zero border-radius.
+   shadcn-convention HSL tokens (hsl(var(--...)) consumers).
+   ============================================================ */
+
+:root {
+  /* canvas — pure void */
+  --background: 0 0% 2%;            /* #050505 */
+  --foreground: 45 40% 97%;         /* #F4F2EA warm star-white */
+
+  --card: 0 0% 4%;                  /* #0A0A0A */
+  --card-foreground: 45 40% 97%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 45 40% 97%;
+
+  --primary: 45 68% 47%;            /* #C9A227 luxury gold */
+  --primary-foreground: 0 0% 2%;
+  --secondary: 0 0% 10%;            /* #1A1A1A */
+  --secondary-foreground: 45 40% 97%;
+  --muted: 0 0% 55%;                /* #8B8B8B */
+  --muted-foreground: 0 0% 55%;
+  --accent: 45 68% 47% / 0.12;
+  --accent-foreground: 45 40% 97%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 2%;
+
+  --border: 45 40% 97% / 0.07;      /* hairline */
+  --input: 45 40% 97% / 0.07;
+  --ring: 45 68% 47%;               /* gold focus */
+
+  /* constellation-specific */
+  --thread: 44 63% 33%;             /* #8A6D1F bronze connector */
+  --star: 45 40% 97%;               /* white star core */
+
+  --radius: 0px;                    /* sharp = premium */
+
+  /* typography stack (loaded by the consumer) */
+  --font-display: "Amiri", serif;
+  --font-body: "Noto Naskh Arabic", serif;
+  --font-en: "Instrument Serif", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+.dark {
+  --background: 0 0% 2%;
+  --foreground: 45 40% 97%;
+  --card: 0 0% 4%;
+  --card-foreground: 45 40% 97%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 45 40% 97%;
+  --primary: 45 68% 47%;
+  --primary-foreground: 0 0% 2%;
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 45 40% 97%;
+  --muted: 0 0% 55%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 45 68% 47% / 0.12;
+  --accent-foreground: 45 40% 97%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 2%;
+  --border: 45 40% 97% / 0.07;
+  --input: 45 40% 97% / 0.07;
+  --ring: 45 68% 47%;
+  --thread: 44 63% 33%;
+  --star: 45 40% 97%;
+  --radius: 0px;
+  --font-display: "Amiri", serif;
+  --font-body: "Noto Naskh Arabic", serif;
+  --font-en: "Instrument Serif", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+/* gold accents — the only voltage color on the page */
+::selection { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+:focus-visible {
+  outline: 2px solid hsl(var(--ring) / 0.6);
+  outline-offset: 3px;
+}

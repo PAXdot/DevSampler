@@ -1,0 +1,209 @@
+"use client"
+
+import * as React from "react"
+import { createContext, useCallback, useContext, useState } from "react"
+
+import { cn } from "@/lib/utils"
+
+type TimelineContextValue = {
+  activeStep: number
+  setActiveStep: (step: number) => void
+}
+
+const TimelineContext = createContext<TimelineContextValue | undefined>(
+  undefined
+)
+
+const useTimeline = () => {
+  const context = useContext(TimelineContext)
+  if (!context) {
+    throw new Error("useTimeline must be used within a Timeline")
+  }
+  return context
+}
+
+interface TimelineProps extends React.ComponentPropsWithoutRef<"div"> {
+  defaultValue?: number
+  value?: number
+  onValueChange?: (value: number) => void
+  orientation?: "horizontal" | "vertical"
+}
+
+function Timeline({
+  defaultValue = 1,
+  value,
+  onValueChange,
+  orientation = "vertical",
+  className,
+  children,
+  ...props
+}: TimelineProps) {
+  const [activeStep, setInternalStep] = useState(defaultValue)
+
+  const setActiveStep = useCallback(
+    (step: number) => {
+      if (value === undefined) {
+        setInternalStep(step)
+      }
+      onValueChange?.(step)
+    },
+    [value, onValueChange]
+  )
+
+  const currentStep = value ?? activeStep
+
+  return (
+    <TimelineContext.Provider
+      value={{ activeStep: currentStep, setActiveStep }}
+    >
+      <div
+        className={cn(
+          "group/timeline flex data-[orientation=horizontal]:w-full data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
+          className
+        )}
+        data-orientation={orientation}
+        data-slot="timeline"
+        {...props}
+      >
+        {children}
+      </div>
+    </TimelineContext.Provider>
+  )
+}
+
+function TimelineContent({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      className={cn("text-muted-foreground text-sm", className)}
+      data-slot="timeline-content"
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+function TimelineDate({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"time">) {
+  return (
+    <time
+      className={cn(
+        "mb-1 block font-medium text-muted-foreground text-xs group-data-[orientation=vertical]/timeline:max-sm:h-4",
+        className
+      )}
+      data-slot="timeline-date"
+      {...props}
+    >
+      {children}
+    </time>
+  )
+}
+
+function TimelineHeader({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div className={cn(className)} data-slot="timeline-header" {...props}>
+      {children}
+    </div>
+  )
+}
+
+function TimelineIndicator({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:-translate-x-1/2 absolute size-4 rounded-full border-2 border-primary/20 group-data-[orientation=vertical]/timeline:top-0 group-data-[orientation=horizontal]/timeline:left-0 group-data-completed/timeline-item:border-primary",
+        className
+      )}
+      data-slot="timeline-indicator"
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+interface TimelineItemProps extends React.ComponentPropsWithoutRef<"div"> {
+  step: number
+}
+
+function TimelineItem({
+  step,
+  className,
+  children,
+  ...props
+}: TimelineItemProps) {
+  const { activeStep } = useTimeline()
+
+  return (
+    <div
+      className={cn(
+        "group/timeline-item relative flex flex-1 flex-col gap-0.5 group-data-[orientation=vertical]/timeline:ms-8 group-data-[orientation=horizontal]/timeline:mt-8 group-data-[orientation=horizontal]/timeline:not-last:pe-8 group-data-[orientation=vertical]/timeline:not-last:pb-6 has-[+[data-completed]]:**:data-[slot=timeline-separator]:bg-primary",
+        className
+      )}
+      data-completed={step <= activeStep || undefined}
+      data-slot="timeline-item"
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+function TimelineSeparator({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      aria-hidden
+      className={cn(
+        "group-data-[orientation=horizontal]/timeline:-top-6 group-data-[orientation=horizontal]/timeline:-translate-y-1/2 group-data-[orientation=vertical]/timeline:-left-6 group-data-[orientation=vertical]/timeline:-translate-x-1/2 absolute self-start bg-primary/10 group-last/timeline-item:hidden group-data-[orientation=horizontal]/timeline:h-0.5 group-data-[orientation=vertical]/timeline:h-[calc(100%-1rem-0.25rem)] group-data-[orientation=horizontal]/timeline:w-[calc(100%-1rem-0.25rem)] group-data-[orientation=vertical]/timeline:w-0.5 group-data-[orientation=horizontal]/timeline:translate-x-4.5 group-data-[orientation=vertical]/timeline:translate-y-4.5",
+        className
+      )}
+      data-slot="timeline-separator"
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+
+function TimelineTitle({
+  className,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<"h3">) {
+  return (
+    <h3 className={cn("font-medium text-sm", className)} data-slot="timeline-title" {...props}>
+      {children}
+    </h3>
+  )
+}
+
+export {
+  Timeline,
+  TimelineContent,
+  TimelineDate,
+  TimelineHeader,
+  TimelineIndicator,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineTitle,
+}

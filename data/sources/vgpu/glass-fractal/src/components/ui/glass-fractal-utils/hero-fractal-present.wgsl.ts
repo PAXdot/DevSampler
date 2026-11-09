@@ -1,0 +1,1 @@
+export default { version: 1, wgsl: "@group(0) @binding(0) var sceneTexture: texture_2d<f32>;\n\n@fragment fn fs_main(\n  @builtin(position) position: vec4f,\n) -> @location(0) vec4f {\n  return textureLoad(sceneTexture, vec2i(position.xy), 0);\n}\n" };

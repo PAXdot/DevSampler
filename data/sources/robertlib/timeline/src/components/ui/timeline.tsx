@@ -1,0 +1,410 @@
+import cn from "@/components/ui/timeline-utils/cn";
+import useIsHydrated from "@/components/ui/timeline-utils/use-is-hydrated";
+import { toIntlLocale } from "@/components/ui/timeline-utils/ui-format";
+import type { Locale } from "@/components/ui/timeline-utils/ui-types";
+import { useLocale } from "@/components/ui/timeline-utils/ui-context";
+import { usesHour12 } from "@/components/ui/timeline-utils/date";
+import { dateTimeZone } from "@/components/ui/timeline-utils/time-zone";
+
+export type TimelineColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "danger"
+  | "warning"
+  | "info"
+  | "neutral";
+
+export interface TimelineItem {
+  color?: TimelineColor;
+  content?: React.ReactNode;
+  description?: React.ReactNode;
+  icon?: React.ReactNode;
+  id?: string | number;
+  pending?: boolean;
+  time?: Date | string;
+  title: React.ReactNode;
+}
+
+export interface TimelineProps extends React.ComponentProps<"ol"> {
+  alternate?: boolean;
+  items: TimelineItem[];
+  loading?: boolean;
+  loadingItemsCount?: number;
+  size?: "sm" | "md";
+  timeFormat?: Intl.DateTimeFormatOptions;
+}
+
+const DEFAULT_TIME_FORMAT: Intl.DateTimeFormatOptions = {
+  dateStyle: "medium",
+  timeStyle: "short",
+};
+
+const createTimeFormat = (
+  locale: Locale,
+  options: Intl.DateTimeFormatOptions = DEFAULT_TIME_FORMAT,
+  timeZone?: string,
+) =>
+  new Intl.DateTimeFormat(toIntlLocale(locale.code), {
+    hourCycle: usesHour12(locale.formats.time) ? "h12" : "h23",
+    ...options,
+    timeZone,
+  });
+
+const sizeClasses = {
+  sm: {
+    dotOffset: "h-2",
+    dot: "h-2 w-2",
+    gap: "pb-3",
+    icon: "h-6 w-6 [&>svg]:size-3.5",
+    rail: "w-6",
+    text: "pt-0.5",
+  },
+  md: {
+    dotOffset: "h-2.75",
+    dot: "h-2.5 w-2.5",
+    gap: "pb-6",
+    icon: "h-8 w-8 [&>svg]:size-4",
+    rail: "w-8",
+    text: "pt-1.5",
+  },
+};
+
+type SizeClasses = (typeof sizeClasses)[keyof typeof sizeClasses];
+
+const dotColors: Record<TimelineColor, string> = {
+  primary: "bg-primary-500",
+  secondary: "bg-secondary-500",
+  success: "bg-success-600 dark:bg-success-500",
+  danger: "bg-danger-500",
+  warning: "bg-warning-700 dark:bg-warning-500",
+  info: "bg-info-600 dark:bg-info-500",
+  neutral: "bg-neutral-500",
+};
+
+const iconColors: Record<TimelineColor, string> = {
+  primary:
+    "border-primary-200 bg-primary-50 text-primary-600 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-300",
+  secondary:
+    "border-secondary-200 bg-secondary-50 text-secondary-600 dark:border-secondary-700 dark:bg-secondary-900 dark:text-secondary-300",
+  success:
+    "border-success-200 bg-success-50 text-success-700 dark:border-success-800 dark:bg-success-950 dark:text-success-300",
+  danger:
+    "border-danger-200 bg-danger-50 text-danger-700 dark:border-danger-800 dark:bg-danger-950 dark:text-danger-300",
+  warning:
+    "border-warning-300 bg-warning-50 text-warning-700 dark:border-warning-800 dark:bg-warning-950 dark:text-warning-300",
+  info: "border-info-200 bg-info-50 text-info-700 dark:border-info-800 dark:bg-info-950 dark:text-info-300",
+  neutral:
+    "border-neutral-200 bg-neutral-50 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-300",
+};
+
+const lineClassName = (visible: boolean, dashed: boolean) =>
+  cn(
+    "w-0.5",
+    visible &&
+      (dashed
+        ? "border-s-2 border-dashed border-neutral-300 dark:border-neutral-600"
+        : "bg-neutral-200 dark:bg-neutral-700 forced-colors:bg-[GrayText]"),
+  );
+
+const skeletonWidths = ["w-48", "w-64", "w-40", "w-56"];
+
+function TimelineMarker({
+  item,
+  sizes,
+}: {
+  item: TimelineItem;
+  sizes: SizeClasses;
+}) {
+  if (item.pending) {
+    return (
+      <span
+        className={cn(
+          "flex shrink-0 items-center justify-center rounded-full border-2 border-dashed border-neutral-300 text-neutral-500 dark:border-neutral-600 dark:text-neutral-400",
+          sizes.icon,
+        )}
+      >
+        {item.icon ?? (
+          <svg
+            className="animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              fill="currentColor"
+            />
+          </svg>
+        )}
+      </span>
+    );
+  }
+
+  const color = item.color ?? "primary";
+
+  if (item.icon) {
+    return (
+      <span
+        className={cn(
+          "flex shrink-0 items-center justify-center rounded-full border",
+          iconColors[color],
+          sizes.icon,
+        )}
+      >
+        {item.icon}
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        "shrink-0 rounded-full forced-colors:bg-[CanvasText]",
+        dotColors[color],
+        sizes.dot,
+      )}
+    />
+  );
+}
+
+const isShown = (node: React.ReactNode) =>
+  node !== undefined &&
+  node !== null &&
+  node !== "" &&
+  typeof node !== "boolean";
+
+const hasTime = (time: Date | string | undefined): time is Date | string =>
+  typeof time === "string"
+    ? time !== ""
+    : !!time && !Number.isNaN(time.getTime());
+
+function TimelineTime({
+  className,
+  time,
+  write,
+}: {
+  className?: string;
+  time: Date | string;
+  write: (time: Date) => string;
+}) {
+  if (typeof time === "string") {
+    return <span className={className}>{time}</span>;
+  }
+
+  return (
+    <time className={className} dateTime={time.toISOString()}>
+      {write(time)}
+    </time>
+  );
+}
+
+export default function Timeline({
+  alternate = false,
+  className,
+  items,
+  loading = false,
+  loadingItemsCount = 3,
+  size = "md",
+  timeFormat,
+  ...props
+}: TimelineProps) {
+  const locale = useLocale();
+  const isHydrated = useIsHydrated();
+  const sizes = sizeClasses[size];
+
+  const formats = new Map<string | undefined, Intl.DateTimeFormat>();
+  const writeTime = (time: Date) => {
+    const timeZone = timeFormat?.timeZone ?? dateTimeZone(time);
+    if (!timeZone && !isHydrated) return "";
+
+    let format = formats.get(timeZone);
+    if (!format) {
+      format = createTimeFormat(locale, timeFormat, timeZone);
+      formats.set(timeZone, format);
+    }
+    return format.format(time);
+  };
+
+  return (
+    <ol
+      aria-busy={loading || undefined}
+      role="list"
+      {...props}
+      className={cn("text-sm", className)}
+      data-orientation="vertical"
+    >
+      {loading
+        ? Array.from({ length: loadingItemsCount }, (_, index) => {
+            const isLast = index === loadingItemsCount - 1;
+
+            return (
+              <li
+                aria-hidden="true"
+                className="flex gap-3"
+                key={`skeleton-${index}`}
+              >
+                <div
+                  className={cn(
+                    "flex shrink-0 flex-col items-center",
+                    sizes.rail,
+                  )}
+                >
+                  <div className={cn("shrink-0", sizes.dotOffset)} />
+                  <span
+                    className={cn(
+                      "shrink-0 animate-pulse rounded-full bg-neutral-200 dark:bg-neutral-800",
+                      sizes.dot,
+                    )}
+                  />
+                  <div
+                    className={cn(
+                      "w-0.5 flex-1",
+                      !isLast && "bg-neutral-100 dark:bg-neutral-900",
+                    )}
+                  />
+                </div>
+                <div
+                  className={cn(
+                    "min-w-0 flex-1 space-y-2",
+                    sizes.text,
+                    !isLast && sizes.gap,
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "h-3.5 max-w-full animate-pulse rounded bg-neutral-100 dark:bg-neutral-900",
+                      skeletonWidths[index % skeletonWidths.length],
+                    )}
+                  />
+                  <div className="h-3 w-32 max-w-full animate-pulse rounded bg-neutral-100 dark:bg-neutral-900" />
+                </div>
+              </li>
+            );
+          })
+        : items.map((item, index) => {
+            const isFirst = index === 0;
+            const isLast = index === items.length - 1;
+            const isLeft = alternate && index % 2 === 1;
+            const hasIconMarker = !!item.icon || !!item.pending;
+            const previous = items[index - 1];
+            const next = items[index + 1];
+
+            const time = hasTime(item.time) ? item.time : undefined;
+
+            return (
+              <li
+                className={cn(
+                  "flex gap-3",
+                  alternate &&
+                    "md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-x-4",
+                )}
+                key={item.id ?? index}
+              >
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    "flex shrink-0 flex-col items-center",
+                    sizes.rail,
+                    alternate && "md:col-start-2 md:row-start-1",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "shrink-0",
+                      !hasIconMarker && sizes.dotOffset,
+                      lineClassName(
+                        !isFirst,
+                        !!item.pending || !!previous?.pending,
+                      ),
+                    )}
+                  />
+                  <TimelineMarker item={item} sizes={sizes} />
+                  <div
+                    className={cn(
+                      "flex-1",
+                      lineClassName(!isLast, !!item.pending || !!next?.pending),
+                    )}
+                  />
+                </div>
+
+                <div
+                  className={cn(
+                    "min-w-0 flex-1",
+                    sizes.text,
+                    !isLast && sizes.gap,
+                    alternate &&
+                      (isLeft
+                        ? "md:col-start-1 md:row-start-1 md:text-end"
+                        : "md:col-start-3 md:row-start-1"),
+                  )}
+                >
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                    <div
+                      className={cn(
+                        "min-w-0 grow font-medium",
+                        item.pending
+                          ? "text-neutral-500 dark:text-neutral-400"
+                          : "text-neutral-900 dark:text-neutral-100",
+                      )}
+                    >
+                      {item.title}
+                      {item.pending && (
+                        <span className="sr-only">
+                          , {locale.messages.ui.timeline.pending}
+                        </span>
+                      )}
+                    </div>
+                    {time !== undefined && (
+                      <TimelineTime
+                        className={cn(
+                          "shrink-0 text-xs whitespace-nowrap text-neutral-500 dark:text-neutral-400",
+                          alternate && "md:hidden",
+                        )}
+                        time={time}
+                        write={writeTime}
+                      />
+                    )}
+                  </div>
+                  {isShown(item.description) && (
+                    <div className="mt-0.5 text-neutral-500 dark:text-neutral-400">
+                      {item.description}
+                    </div>
+                  )}
+                  {isShown(item.content) && (
+                    <div className="mt-2">{item.content}</div>
+                  )}
+                </div>
+
+                {alternate && time !== undefined && (
+                  <div
+                    className={cn(
+                      "hidden md:block",
+                      sizes.text,
+                      isLeft
+                        ? "md:col-start-3 md:row-start-1"
+                        : "md:col-start-1 md:row-start-1 md:text-end",
+                    )}
+                  >
+                    <TimelineTime
+                      className="text-xs leading-5 whitespace-nowrap text-neutral-500 dark:text-neutral-400"
+                      time={time}
+                      write={writeTime}
+                    />
+                  </div>
+                )}
+              </li>
+            );
+          })}
+    </ol>
+  );
+}

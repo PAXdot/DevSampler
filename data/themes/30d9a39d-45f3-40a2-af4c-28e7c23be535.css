@@ -1,0 +1,111 @@
+/*
+ * qprofile - Neon Cyber
+ *
+ * Adapted from "Neon Cyber remix" by gustavo.raimundo:
+ * https://21st.dev/community/themes/neon-cyber-remix-1784052082337
+ *
+ * The `.dark` block is what qprofile actually ships (the site is dark-only).
+ * Three values differ from the source, each to clear WCAG AA on this base:
+ * --signal/--primary split into two violets, --secondary-foreground darkened,
+ * and prose set on #f0f0f0 rather than the neon green.
+ *
+ * The `:root` block is a generated light counterpart - hue and chroma held,
+ * lightness inverted - so the theme previews in both modes. It ships nowhere
+ * in the product.
+ *
+ * Compiled for 21st.dev by Quentin Casares.
+ */
+
+:root {
+  --background: #f6f4fb;
+  --foreground: #00734a;
+  --card: #ffffff;
+  --card-foreground: #16121f;
+  --popover: #ffffff;
+  --popover-foreground: #00734a;
+  --primary: #8c00c7;
+  --primary-foreground: #ffffff;
+  --secondary: #00669c;
+  --secondary-foreground: #ffffff;
+  --muted: #ece8f4;
+  --muted-foreground: #5c5670;
+  --accent: #c4003f;
+  --accent-foreground: #ffffff;
+  --destructive: #c4002e;
+  --destructive-foreground: #ffffff;
+  --border: #d8d2e6;
+  --input: #ffffff;
+  --ring: #8c00c7;
+  --chart-1: #8c00c7;
+  --chart-2: #00734a;
+  --chart-3: #00669c;
+  --chart-4: #c4003f;
+  --chart-5: #7a7f00;
+  --radius: 0rem;
+  --sidebar: #efeaf8;
+  --sidebar-foreground: #3c3650;
+  --sidebar-primary: #8c00c7;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e2dcf0;
+  --sidebar-accent-foreground: #00734a;
+  --sidebar-border: #d8d2e6;
+  --sidebar-ring: #00669c;
+  --font-sans: "Rajdhani", sans-serif;
+  --font-serif: "Rajdhani", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --shadow-color: #8c00c7;
+  --shadow-opacity: 0.25;
+  --shadow-blur: 12px;
+  --shadow-spread: 2px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 0px;
+  --letter-spacing: 0.1em;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: #0d0221;
+  --foreground: #00ff9f;
+  --card: #1a1b2e;
+  --card-foreground: #f0f0f0;
+  --popover: #1a1b2e;
+  --popover-foreground: #00ff9f;
+  --primary: #bc13fe;
+  --primary-foreground: #ffffff;
+  --secondary: #00b8ff;
+  --secondary-foreground: #04121c;
+  --muted: #262635;
+  --muted-foreground: #888899;
+  --accent: #ff0055;
+  --accent-foreground: #ffffff;
+  --destructive: #ff003c;
+  --destructive-foreground: #ffffff;
+  --border: #3d3d5c;
+  --input: #1a1b2e;
+  --ring: #bc13fe;
+  --chart-1: #bc13fe;
+  --chart-2: #00ff9f;
+  --chart-3: #00b8ff;
+  --chart-4: #ff0055;
+  --chart-5: #f7ff00;
+  --radius: 0rem;
+  --sidebar: #09091a;
+  --sidebar-foreground: #a0a0b0;
+  --sidebar-primary: #bc13fe;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #262635;
+  --sidebar-accent-foreground: #00ff9f;
+  --sidebar-border: #1f1f33;
+  --sidebar-ring: #00b8ff;
+  --font-sans: "Rajdhani", sans-serif;
+  --font-serif: "Orbitron", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --shadow-color: #bc13fe;
+  --shadow-opacity: 0.6;
+  --shadow-blur: 20px;
+  --shadow-spread: 4px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 0px;
+  --letter-spacing: 0.15em;
+  --spacing: 0.25rem;
+}

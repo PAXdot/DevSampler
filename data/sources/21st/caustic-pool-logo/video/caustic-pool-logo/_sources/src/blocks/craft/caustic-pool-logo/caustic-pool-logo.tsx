@@ -1,0 +1,23 @@
+// Built with Remotion - https://remotion.pro/license
+import React,{useLayoutEffect,useMemo,useRef,useState} from "react";
+import type {z} from "zod";
+import {AbsoluteFill,cancelRender,continueRender,delayRender,useCurrentFrame} from "remotion";
+import {brandFontStack,fitFontSize,useLayout,withAlpha} from "../../../kit/index";
+import {simplex3} from "../_lib/noise";
+import {SAMPLE_LOGO} from "../_lib/samples";
+import type {schema} from "./caustic-pool-logo.schema";
+const ease=(x:number)=>{const t=Math.max(0,Math.min(1,x));return t*t*(3-2*t);};
+export const Component: React.FC<z.infer<typeof schema>>=({logo,caption,primary,secondary,color,background,fontFamily,seed})=>{
+ const f=Math.min(135,useCurrentFrame()),{width:w,height:h,portrait}=useLayout(),canvas=useRef<HTMLCanvasElement>(null),scratch=useRef<HTMLCanvasElement|null>(null),[asset,setAsset]=useState<HTMLImageElement|null>(null),[handle]=useState(()=>delayRender("pool logo")),noise=useMemo(()=>simplex3(seed),[seed]);
+ useLayoutEffect(()=>{let alive=true;const img=new Image();img.crossOrigin="anonymous";img.onload=()=>{if(alive)setAsset(img);continueRender(handle);};img.onerror=()=>cancelRender(new Error("Pool logo could not load"));img.src=logo.trim()||SAMPLE_LOGO;return()=>{alive=false;};},[logo,handle]);
+ const raster=useMemo(()=>{if(!asset)return null;const c=document.createElement("canvas");c.width=600;c.height=Math.round(600*asset.naturalHeight/asset.naturalWidth);const cx=c.getContext("2d",{willReadFrequently:true});if(!cx)return null;cx.drawImage(asset,0,0,c.width,c.height);cx.globalCompositeOperation="source-in";cx.fillStyle=color;cx.fillRect(0,0,c.width,c.height);return c;},[asset,color]);
+ useLayoutEffect(()=>{const ctx=canvas.current?.getContext("2d",{willReadFrequently:true});if(!ctx||!asset||!raster)return;ctx.clearRect(0,0,w,h);const x=w*.075,y=h*.09,pw=w*.85,ph=h*.68,settle=ease((f-65)/70),time=(f*.018)*(1-settle*.72),amp=(1-settle)*Math.min(w,h)*.012;
+ ctx.save();ctx.beginPath();ctx.roundRect(x,y,pw,ph,Math.min(w,h)*.04);ctx.clip();ctx.fillStyle=withAlpha(primary,.075);ctx.fillRect(x,y,pw,ph);
+ const wash=ctx.createLinearGradient(x,y,x+pw,y+ph);wash.addColorStop(0,withAlpha(secondary,.10));wash.addColorStop(.5,withAlpha(primary,.015));wash.addColorStop(1,withAlpha(primary,.16));ctx.fillStyle=wash;ctx.fillRect(x,y,pw,ph);
+ const maxW=w*(portrait?.65:.34),maxH=h*(portrait?.42:.47),scale=Math.min(maxW/asset.naturalWidth,maxH/asset.naturalHeight),iw=asset.naturalWidth*scale,ih=asset.naturalHeight*scale,ix=(w-iw)/2,iy=y+ph*.5-ih/2;
+ const pixelScale=ih/raster.height;for(let row=0;row<raster.height;row+=3){const sh=Math.min(3,raster.height-row),shift=noise(row/raster.height*4,time,.3)*amp;ctx.drawImage(raster,0,row,raster.width,sh,ix+shift,iy+row*pixelScale,iw,sh*pixelScale+.6);}
+ if(!scratch.current)scratch.current=document.createElement("canvas");const small=scratch.current;small.width=240;small.height=Math.round(240*ph/pw);const sc=small.getContext("2d",{willReadFrequently:true});if(sc){const img=sc.createImageData(small.width,small.height);for(let sy=0;sy<small.height;sy++)for(let sx=0;sx<small.width;sx++){const nx=sx/34,ny=sy/34,warped=noise(nx*.65,ny*.65,time)*.75,a=noise(nx+warped,ny-warped,time*.7),b=noise(nx*1.6-.7,ny*1.6+.3,-time*.6),ridge=Math.pow(Math.max(0,1-Math.abs(a+b*.25)*9),3),edge=Math.pow(Math.max(0,1-Math.abs(a-b*.21)*12),5),alpha=(ridge*.53+edge*.25)*(.20+.80*(1-settle*.78)),i=(sy*small.width+sx)*4;img.data[i]=255;img.data[i+1]=255;img.data[i+2]=255;img.data[i+3]=alpha*255;}sc.putImageData(img,0,0);sc.globalCompositeOperation="source-in";sc.fillStyle=secondary;sc.fillRect(0,0,small.width,small.height);sc.globalCompositeOperation="source-over";ctx.globalCompositeOperation="screen";ctx.drawImage(small,x,y,pw,ph);ctx.globalCompositeOperation="source-over";}
+ ctx.strokeStyle=withAlpha(color,.22);ctx.lineWidth=Math.min(w,h)*.0013;ctx.beginPath();ctx.roundRect(x,y,pw,ph,Math.min(w,h)*.04);ctx.stroke();ctx.restore();},[f,w,h,portrait,asset,raster,noise,primary,secondary,color]);
+ const font=fitFontSize({chars:caption.length,boxW:w*.80,boxH:h*.12,max:h*.042,min:h*.031,lines:2,charEm:.52,lineHeight:1.2});
+ return <AbsoluteFill style={{background:background==="transparent"?undefined:background}}><canvas data-21st-slot="logo" ref={canvas} width={w} height={h} style={{position:"absolute",inset:0,width:w,height:h}}/><div data-21st-slot="caption" style={{position:"absolute",left:w*.10,top:h*.83,width:w*.8,fontFamily:brandFontStack(fontFamily),fontSize:font,lineHeight:1.2,color,textAlign:"center",opacity:ease((f-76)/30)}}>{caption}</div></AbsoluteFill>;
+};

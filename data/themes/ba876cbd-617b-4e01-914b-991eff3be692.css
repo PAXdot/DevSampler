@@ -1,0 +1,49 @@
+/* Echelon Fleet Systems — console theme.
+   Dark-first operations console: charcoal ground, mint brand fill on dark,
+   emerald accent on light. Tokens as shipped in src/app/globals.css. */
+
+:root {
+  --background: #fbfbfb;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #0B5B3E;
+  --primary-foreground: #ffffff;
+  --secondary: #ffffff;
+  --secondary-foreground: #404040;
+  --muted: #f2f2ee;
+  --muted-foreground: #5f5f5f;
+  --accent: #0B5B3E;
+  --accent-foreground: #ffffff;
+  --destructive: #991b1b;
+  --destructive-foreground: #fbfbfb;
+  --border: #e6e6e3;
+  --input: #e6e6e3;
+  --ring: #0B5B3E;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --card: #282828;
+  --card-foreground: #ffffff;
+  --popover: #282828;
+  --popover-foreground: #ffffff;
+  --primary: #71E0A4;
+  --primary-foreground: #1a1a1a;
+  --secondary: #282828;
+  --secondary-foreground: #d9d6cc;
+  --muted: #262626;
+  --muted-foreground: #a3a39b;
+  --accent: #71E0A4;
+  --accent-foreground: #1a1a1a;
+  --destructive: #f87171;
+  --destructive-foreground: #1a1a1a;
+  --border: #2f2f2f;
+  --input: #2f2f2f;
+  --ring: #71E0A4;
+  --radius: 0.5rem;
+}

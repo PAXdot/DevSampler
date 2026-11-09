@@ -1,0 +1,102 @@
+/*
+ * Engeloc — painel operacional de logística e locação.
+ * Tokens extraídos do app (src/index.css, Header, WorkshopInsights, LoginPage).
+ * O modo escuro é derivado: mesma matiz/croma, luminância invertida.
+ */
+:root {
+  --background: #F4F6F9;
+  --foreground: #1A1A1A;
+
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+
+  /* Vermelho Engeloc — ações primárias, filete dos títulos, foco. */
+  --primary: #D32F2F;
+  --primary-foreground: #FFFFFF;
+
+  /* Chapa escura — cabeçalhos de tabela, botões técnicos (ODBC/SQL). */
+  --secondary: #1E1E1E;
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+
+  /* Âmbar — governança, acessos e selos de destaque. */
+  --accent: #FBBF24;
+  --accent-foreground: #1A1A1A;
+
+  --destructive: #B91C1C;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E2E8F0;
+  --input: #CBD5E1;
+  --ring: #D32F2F;
+
+  /* Paleta categórica dos gráficos: distinta em tom e em luminância. */
+  --chart-1: #334155;
+  --chart-2: #D97706;
+  --chart-3: #0284C7;
+  --chart-4: #059669;
+  --chart-5: #B91C1C;
+
+  --sidebar: #111827;
+  --sidebar-foreground: #D1D5DB;
+  --sidebar-primary: #D32F2F;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1F2937;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #1F2937;
+  --sidebar-ring: #FBBF24;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #101418;
+  --foreground: #E8EBEF;
+
+  --card: #171B21;
+  --card-foreground: #E8EBEF;
+
+  --popover: #171B21;
+  --popover-foreground: #E8EBEF;
+
+  --primary: #EF5350;
+  --primary-foreground: #14181C;
+
+  --secondary: #232A33;
+  --secondary-foreground: #E8EBEF;
+
+  --muted: #1C222A;
+  --muted-foreground: #94A3B8;
+
+  --accent: #FBBF24;
+  --accent-foreground: #1A1A1A;
+
+  --destructive: #F87171;
+  --destructive-foreground: #14181C;
+
+  --border: #2A323C;
+  --input: #39424E;
+  --ring: #EF5350;
+
+  --chart-1: #94A3B8;
+  --chart-2: #F59E0B;
+  --chart-3: #38BDF8;
+  --chart-4: #34D399;
+  --chart-5: #F87171;
+
+  --sidebar: #0C1014;
+  --sidebar-foreground: #CBD5E1;
+  --sidebar-primary: #D32F2F;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1B222B;
+  --sidebar-accent-foreground: #F8FAFC;
+  --sidebar-border: #1F2731;
+  --sidebar-ring: #FBBF24;
+
+  --radius: 0.5rem;
+}

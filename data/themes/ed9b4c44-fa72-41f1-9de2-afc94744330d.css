@@ -1,0 +1,15 @@
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.78 0.16 195);
+  --primary-foreground: oklch(0.13 0.04 200);
+  --border: oklch(0.922 0 0);
+}
+
+.dark {
+  --background: oklch(0.13 0.025 200);
+  --foreground: oklch(0.97 0.01 195);
+  --primary: oklch(0.82 0.16 195);
+  --primary-foreground: oklch(0.13 0.04 200);
+  --border: oklch(0.27 0.04 200);
+}

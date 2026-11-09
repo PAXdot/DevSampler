@@ -1,0 +1,13 @@
+// Built with Remotion - https://remotion.pro/license
+
+import React from "react";
+import type {z} from "zod";
+import {AbsoluteFill,Img,useCurrentFrame} from "remotion";
+import {brandFontStack,fitFontSize,useLayout,withAlpha} from "../../../kit/index";
+import {SAMPLE_LOGO} from "../_lib/samples";
+import type {schema} from "./trampoline-mesh.schema";
+const ease=(v:number)=>{const t=Math.max(0,Math.min(1,v));return t*t*(3-2*t);};
+export const Component:React.FC<z.infer<typeof schema>>=({logo,caption,primary,secondary,color,background,fontFamily})=>{
+ const f=Math.min(135,useCurrentFrame()),{width:w,height:h,portrait}=useLayout(),s=Math.min(w,h),cy=h*(portrait?.58:.58),mw=w*.72,mh=h*(portrait?.31:.34),hit=Math.max(0,f-30),damp=hit>0?Math.sin(hit*.15)*Math.exp(-hit*.035):0,depth=s*.15*damp,size=s*.35,drop=f<30?-h*.4*(1-ease(f/30)):Math.min(0,-damp*s*.16),font=fitFontSize({chars:caption.length,boxW:w*.82,boxH:h*.14,max:h*.044,min:h*.032,lines:2,charEm:.55}),project=(u:number,v:number)=>({x:w*.5+u*mw*.5+v*mw*.13,y:cy+v*mh*.5+depth*Math.exp(-(u*u+v*v)*4)});
+ return <AbsoluteFill style={{background:background==='transparent'?undefined:background}}><svg width={w} height={h} style={{position:'absolute',inset:0}}>{[-1,1].flatMap(u=>[-1,1].map(v=>{const p=project(u,v);return <path key={u+','+v} d={`M${p.x},${p.y}V${p.y+mh*.25}`} stroke={color} strokeWidth={s*.012}/>;}))}{Array.from({length:17},(_,i)=>{const u=i/8-1;return <React.Fragment key={i}><path d={Array.from({length:35},(_,j)=>{const p=project(u,j/17-1);return `${j?'L':'M'}${p.x},${p.y}`;}).join(' ')} fill='none' stroke={withAlpha(primary,.66)} strokeWidth={s*.002}/><path d={Array.from({length:35},(_,j)=>{const p=project(j/17-1,u);return `${j?'L':'M'}${p.x},${p.y}`;}).join(' ')} fill='none' stroke={withAlpha(secondary,.75)} strokeWidth={s*.002}/></React.Fragment>;})}<path d={[[ -1,-1],[1,-1],[1,1],[-1,1],[-1,-1]].map(([u,v],i)=>{const p=project(u!,v!);return `${i?'L':'M'}${p.x},${p.y}`;}).join(' ')} fill='none' stroke={color} strokeWidth={s*.008}/><ellipse cx={w*.5} cy={cy+depth*.7} rx={size*.37} ry={s*.025} fill={withAlpha(color,.14)}/></svg><div data-21st-slot="logo" style={{position:'absolute',left:(w-size)/2,top:cy-size*.96+drop+Math.max(0,depth*.55),width:size,height:size,transform:`rotate(${damp*9}deg)`,opacity:ease(f/15)}}><Img src={logo||SAMPLE_LOGO} style={{width:'100%',height:'100%',objectFit:'contain'}}/></div><div data-21st-slot="caption" style={{position:'absolute',left:w*.09,top:h*.86,width:w*.82,fontFamily:brandFontStack(fontFamily),fontSize:font,lineHeight:1.25,color,textAlign:'center',opacity:ease((f-85)/45)}}>{caption}</div></AbsoluteFill>;
+};

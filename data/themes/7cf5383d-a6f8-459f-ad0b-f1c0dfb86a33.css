@@ -1,0 +1,73 @@
+/* Parkway Halo theme for 21st.dev.
+ * Verbatim export of the `:root` and `.dark` token blocks from
+ * src/app/globals.css (Parkway, all-blue Halo system on white).
+ * Do not edit here. Change globals.css and re-export. See README.md. */
+
+:root {
+  --background: oklch(0.985 0.005 242.8);   /* whisper of Ice over white */
+  --foreground: oklch(0.212 0.058 264.5);   /* Midnight #0B1733 */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.212 0.058 264.5);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.212 0.058 264.5);
+  --primary: oklch(0.212 0.058 264.5);      /* Midnight #0B1733 */
+  --primary-foreground: oklch(0.99 0.003 247.9);
+  --secondary: oklch(0.967 0.009 242.8);    /* Ice #EFF5FA */
+  --secondary-foreground: oklch(0.25 0.07 264.5);
+  --muted: oklch(0.967 0.009 242.8);        /* Ice #EFF5FA */
+  --muted-foreground: oklch(0.533 0.061 248.3); /* AA-safe slate #50708F */
+  --accent: oklch(0.931 0.020 245.6);       /* light-blue tint #DEEAF5 */
+  --accent-foreground: oklch(0.25 0.07 264.5);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.928 0.011 244.5);       /* quiet hairline #E4EAF1 (design-refresh) */
+  --input: oklch(0.895 0.024 246.0);        /* inputs keep more definition #D2DFEC */
+  --ring: oklch(0.379 0.138 265.5);         /* Cobalt #1E3A8A */
+  --chart-1: oklch(0.379 0.138 265.5);      /* Cobalt */
+  --chart-2: oklch(0.77 0.15 75);           /* amber (functional) */
+  --chart-3: oklch(0.572 0.063 249.7);      /* Slate Blue #5B7B9C */
+  --chart-4: oklch(0.55 0.18 280);          /* indigo */
+  --chart-5: oklch(0.70 0.14 40);           /* coral (functional) */
+  --radius: 0.625rem;
+  --sidebar: oklch(0.212 0.058 264.5);      /* Midnight */
+  --sidebar-foreground: oklch(0.931 0.020 245.6);
+  --sidebar-primary: oklch(0.379 0.138 265.5); /* Cobalt */
+  --sidebar-primary-foreground: oklch(0.99 0.003 247.9);
+  --sidebar-accent: oklch(0.28 0.07 264.5);
+  --sidebar-accent-foreground: oklch(0.931 0.020 245.6);
+  --sidebar-border: oklch(0.30 0.06 264.5);
+  --sidebar-ring: oklch(0.809 0.044 240.9); /* Light Blue, visible on Midnight */
+}
+
+.dark {
+  --background: oklch(0.212 0.058 264.5);   /* Midnight */
+  --foreground: oklch(0.931 0.020 245.6);
+  --card: oklch(0.26 0.06 264.5);
+  --card-foreground: oklch(0.931 0.020 245.6);
+  --popover: oklch(0.26 0.06 264.5);
+  --popover-foreground: oklch(0.931 0.020 245.6);
+  --primary: oklch(0.809 0.044 240.9);      /* Light Blue on dark */
+  --primary-foreground: oklch(0.212 0.058 264.5);
+  --secondary: oklch(0.30 0.06 264.5);
+  --secondary-foreground: oklch(0.931 0.020 245.6);
+  --muted: oklch(0.30 0.06 264.5);
+  --muted-foreground: oklch(0.72 0.045 245);
+  --accent: oklch(0.30 0.06 264.5);
+  --accent-foreground: oklch(0.931 0.020 245.6);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0.02 250 / 12%);
+  --input: oklch(1 0.02 250 / 15%);
+  --ring: oklch(0.809 0.044 240.9);
+  --chart-1: oklch(0.602 0.083 267.7);      /* ramp 400 #5E7FB4 */
+  --chart-2: oklch(0.80 0.14 75);
+  --chart-3: oklch(0.68 0.05 249.7);
+  --chart-4: oklch(0.60 0.16 280);
+  --chart-5: oklch(0.75 0.14 40);
+  --sidebar: oklch(0.17 0.05 264.5);
+  --sidebar-foreground: oklch(0.931 0.020 245.6);
+  --sidebar-primary: oklch(0.602 0.083 267.7);
+  --sidebar-primary-foreground: oklch(0.99 0.003 247.9);
+  --sidebar-accent: oklch(0.25 0.06 264.5);
+  --sidebar-accent-foreground: oklch(0.931 0.020 245.6);
+  --sidebar-border: oklch(1 0.02 250 / 10%);
+  --sidebar-ring: oklch(0.809 0.044 240.9);
+}

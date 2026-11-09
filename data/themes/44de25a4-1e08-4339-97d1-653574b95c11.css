@@ -1,0 +1,101 @@
+/* ==========================================================================
+   Tricolor Care — тема сайта частного пансионата «Надежда Есть»
+   Палитра российского триколора в логике государственных сервисов:
+   белый — воздух, синий — опора и все действия, красный — редкий акцент.
+   Токены переведены в стандартные имена shadcn/ui.
+   Источник: css/style.css этого проекта.
+   ========================================================================== */
+
+:root {
+  --background: #F5F7FA;
+  --foreground: #0B1F33;
+
+  --card: #FFFFFF;
+  --card-foreground: #0B1F33;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #0B1F33;
+
+  --primary: #0D4CD3;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #E3ECFD;
+  --secondary-foreground: #0A3AA8;
+
+  --muted: #EDF1F7;
+  --muted-foreground: #5E6E88;
+
+  --accent: #EE3F58;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #C42B41;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #DDE3ED;
+  --input: #DDE3ED;
+  --ring: #0D4CD3;
+
+  --chart-1: #0D4CD3;
+  --chart-2: #EE3F58;
+  --chart-3: #0A2A66;
+  --chart-4: #3A72E8;
+  --chart-5: #FF7286;
+
+  --sidebar: #0A2A66;
+  --sidebar-foreground: #F2F6FF;
+  --sidebar-primary: #3A72E8;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #0D3B8F;
+  --sidebar-accent-foreground: #F2F6FF;
+  --sidebar-border: #133A7D;
+  --sidebar-ring: #6E9BFF;
+
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: #070E1B;
+  --foreground: #E9F0FA;
+
+  --card: #101E33;
+  --card-foreground: #E9F0FA;
+
+  --popover: #101E33;
+  --popover-foreground: #E9F0FA;
+
+  --primary: #6E9BFF;
+  --primary-foreground: #05101F;
+
+  --secondary: #132747;
+  --secondary-foreground: #9BBAFF;
+
+  --muted: #0E1A2E;
+  --muted-foreground: #A8BAD2;
+
+  --accent: #FF7286;
+  --accent-foreground: #2A0E14;
+
+  --destructive: #E04A61;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #22344F;
+  --input: #22344F;
+  --ring: #6E9BFF;
+
+  --chart-1: #6E9BFF;
+  --chart-2: #FF7286;
+  --chart-3: #9BBAFF;
+  --chart-4: #3A72E8;
+  --chart-5: #FF9AA8;
+
+  --sidebar: #05101F;
+  --sidebar-foreground: #E9F0FA;
+  --sidebar-primary: #6E9BFF;
+  --sidebar-primary-foreground: #05101F;
+  --sidebar-accent: #0A1E3D;
+  --sidebar-accent-foreground: #E9F0FA;
+  --sidebar-border: #22344F;
+  --sidebar-ring: #6E9BFF;
+
+  --radius: 0.875rem;
+}

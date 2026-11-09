@@ -1,0 +1,74 @@
+/* Parcare Lifestyle theme for 21st.dev, mapped from the .pl26 tokens on
+ * parcarelifestyle.com. Sky blue system on white, Sora. Not Parkway Halo.
+ * Publish with: 21st publish-theme brand/parcare/parcare-theme.css --name "Parcare Lifestyle" --tags blue,light,healthcare
+ * Publishing is public. Nic approves before it runs. */
+
+:root {
+  --background: #F7FBFE;            /* canvas */
+  --foreground: #0E2433;            /* ink */
+  --card: #FFFFFF;
+  --card-foreground: #0E2433;
+  --popover: #FFFFFF;
+  --popover-foreground: #0E2433;
+  --primary: #00AEEF;               /* Parcare sky blue */
+  --primary-foreground: #FFFFFF;
+  --secondary: #E8F7FE;             /* tint */
+  --secondary-foreground: #0077B6;  /* deep */
+  --muted: #E4F3FF;                 /* tint B */
+  --muted-foreground: #5A6B78;      /* slate */
+  --accent: #E8F7FE;
+  --accent-foreground: #0077B6;
+  --destructive: #DC2626;
+  --border: #E3EDF3;                /* line */
+  --input: #D5E4EC;
+  --ring: #0089CF;                  /* sky */
+  --chart-1: #00AEEF;
+  --chart-2: #0077B6;
+  --chart-3: #33C1F5;
+  --chart-4: #5A6B78;
+  --chart-5: #12805B;
+  --radius: 1.125rem;               /* 18px card radius */
+  --sidebar: #0E2433;
+  --sidebar-foreground: #E8F7FE;
+  --sidebar-primary: #00AEEF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #17364B;
+  --sidebar-accent-foreground: #E8F7FE;
+  --sidebar-border: #1E4058;
+  --sidebar-ring: #33C1F5;
+  --font-sans: "Sora", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.dark {
+  --background: #0E2433;
+  --foreground: #E8F7FE;
+  --card: #15304A;
+  --card-foreground: #E8F7FE;
+  --popover: #15304A;
+  --popover-foreground: #E8F7FE;
+  --primary: #33C1F5;
+  --primary-foreground: #0E2433;
+  --secondary: #1E4058;
+  --secondary-foreground: #E8F7FE;
+  --muted: #1E4058;
+  --muted-foreground: #A9C3D2;
+  --accent: #1E4058;
+  --accent-foreground: #E8F7FE;
+  --destructive: #F87171;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.16);
+  --ring: #33C1F5;
+  --chart-1: #33C1F5;
+  --chart-2: #00AEEF;
+  --chart-3: #7FD9FA;
+  --chart-4: #A9C3D2;
+  --chart-5: #34D399;
+  --sidebar: #0A1B2A;
+  --sidebar-foreground: #E8F7FE;
+  --sidebar-primary: #33C1F5;
+  --sidebar-primary-foreground: #0E2433;
+  --sidebar-accent: #15304A;
+  --sidebar-accent-foreground: #E8F7FE;
+  --sidebar-border: rgba(255, 255, 255, 0.10);
+  --sidebar-ring: #33C1F5;
+}

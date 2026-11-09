@@ -1,0 +1,71 @@
+/* ProMotor — design tokens mapped to shadcn theme shape */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 220 23% 5%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 23% 5%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 23% 5%;
+  --primary: 221 87% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 214 20% 96%;
+  --secondary-foreground: 220 23% 5%;
+  --muted: 214 20% 96%;
+  --muted-foreground: 215 13% 40%;
+  --accent: 221 87% 53%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 13% 90%;
+  --input: 220 13% 90%;
+  --ring: 221 87% 53%;
+  --chart-1: 221 87% 53%;
+  --chart-2: 223 81% 43%;
+  --chart-3: 215 13% 40%;
+  --chart-4: 214 20% 86%;
+  --chart-5: 228 33% 3%;
+  --sidebar: 214 20% 96%;
+  --sidebar-foreground: 220 23% 5%;
+  --sidebar-primary: 221 87% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 214 20% 96%;
+  --sidebar-accent-foreground: 220 23% 5%;
+  --sidebar-border: 220 13% 90%;
+  --sidebar-ring: 221 87% 53%;
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: 228 33% 3%;
+  --foreground: 210 20% 96%;
+  --card: 228 28% 6%;
+  --card-foreground: 210 20% 96%;
+  --popover: 228 28% 6%;
+  --popover-foreground: 210 20% 96%;
+  --primary: 221 87% 53%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 228 20% 12%;
+  --secondary-foreground: 210 20% 96%;
+  --muted: 228 20% 12%;
+  --muted-foreground: 215 12% 62%;
+  --accent: 221 70% 45%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 228 14% 16%;
+  --input: 228 14% 16%;
+  --ring: 221 87% 58%;
+  --chart-1: 221 87% 58%;
+  --chart-2: 221 70% 45%;
+  --chart-3: 215 12% 62%;
+  --chart-4: 228 20% 18%;
+  --chart-5: 0 0% 100%;
+  --sidebar: 228 28% 6%;
+  --sidebar-foreground: 210 20% 96%;
+  --sidebar-primary: 221 87% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 228 20% 12%;
+  --sidebar-accent-foreground: 210 20% 96%;
+  --sidebar-border: 228 14% 16%;
+  --sidebar-ring: 221 87% 58%;
+}

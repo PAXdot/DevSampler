@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  --background: 215 15% 98%;
+  --foreground: 215 30% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 30% 15%;
+  --popover: 215 15% 98%;
+  --popover-foreground: 215 30% 15%;
+  --primary: 356 85% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 45% 92%;
+  --secondary-foreground: 215 45% 25%;
+  --muted: 215 20% 92%;
+  --muted-foreground: 215 20% 45%;
+  --accent: 215 45% 92%;
+  --accent-foreground: 215 45% 25%;
+  --destructive: 356 85% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 25% 88%;
+  --input: 215 25% 88%;
+  --ring: 356 85% 45%;
+  --radius: 0.125rem;
+}
+
+.dark {
+  --background: 215 45% 12%;
+  --foreground: 215 15% 95%;
+  --card: 215 45% 15%;
+  --card-foreground: 215 15% 95%;
+  --popover: 215 45% 12%;
+  --popover-foreground: 215 15% 95%;
+  --primary: 356 85% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 45% 22%;
+  --secondary-foreground: 215 15% 95%;
+  --muted: 215 30% 20%;
+  --muted-foreground: 215 15% 70%;
+  --accent: 215 45% 22%;
+  --accent-foreground: 215 15% 95%;
+  --destructive: 356 85% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 35% 25%;
+  --input: 215 35% 25%;
+  --ring: 356 85% 55%;
+}

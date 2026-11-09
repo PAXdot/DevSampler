@@ -1,0 +1,14 @@
+// Built with Remotion - https://remotion.pro/license
+
+import React,{useMemo} from "react";
+import type {z} from "zod";
+import {AbsoluteFill,Img,useCurrentFrame} from "remotion";
+import {brandFontStack,fitFontSize,useLayout,withAlpha} from "../../../kit/index";
+import type {schema} from "./gyroscope-logo-lock.schema";
+const ease=(v:number)=>{const t=Math.max(0,Math.min(1,v));return t*t*(3-2*t);};
+export const Component:React.FC<z.infer<typeof schema>>=({logo,caption,primary,secondary,color,background,fontFamily})=>{
+ const f=Math.min(135,useCurrentFrame()),{width:w,height:h,portrait}=useLayout(),cx=w/2,cy=h*(portrait?.43:.44),r=Math.min(w*.44,h*.38),q=ease(f/135),size=r*.95,font=fitFontSize({chars:caption.length,boxW:w*.82,boxH:h*.15,max:h*.044,min:h*.032,lines:2,charEm:.54});
+ const segments=useMemo(()=>{const all:{x1:number;y1:number;x2:number;y2:number;z:number;k:number;a:number}[]=[];for(let k=0;k<3;k++){const rx=(1-q)*(Math.PI*3+k*.3)+[.35,1.17,.5][k]!,ry=(1-q)*(Math.PI*2+k*.4)+[.7,.2,1.05][k]!,rz=(1-q)*2+k*.65,rad=r*(1-k*.16);const point=(a:number)=>{let x=Math.cos(a)*rad,y=Math.sin(a)*rad,z=0;[y,z]=[y*Math.cos(rx)-z*Math.sin(rx),y*Math.sin(rx)+z*Math.cos(rx)];[x,z]=[x*Math.cos(ry)+z*Math.sin(ry),-x*Math.sin(ry)+z*Math.cos(ry)];[x,y]=[x*Math.cos(rz)-y*Math.sin(rz),x*Math.sin(rz)+y*Math.cos(rz)];const p=1/(1-z/(r*5));return {x:cx+x*p,y:cy+y*p,z};};for(let i=0;i<150;i++){const a=i/150*Math.PI*2,b=(i+1)/150*Math.PI*2,p=point(a),n=point(b);all.push({x1:p.x,y1:p.y,x2:n.x,y2:n.y,z:(p.z+n.z)/2,k,a});}}return all.sort((a,b)=>a.z-b.z);},[q,r,cx,cy]);
+ const ring=(s:typeof segments[number],i:number)=><g key={i}><path d={`M${s.x1} ${s.y1}L${s.x2} ${s.y2}`} stroke={s.k%2?secondary:primary} strokeWidth={r*.031} strokeLinecap="round"/><path d={`M${s.x1-r*.004} ${s.y1-r*.004}L${s.x2-r*.004} ${s.y2-r*.004}`} stroke={withAlpha(color,.16+.4*(1+Math.sin(s.a))/2)} strokeWidth={r*.008} strokeLinecap="round"/></g>;
+ return <AbsoluteFill style={{background:background==="transparent"?undefined:background}}><svg width={w} height={h} style={{position:"absolute",inset:0}}>{segments.filter(s=>s.z<0).map(ring)}</svg><div data-21st-slot="logo" style={{position:"absolute",left:cx-size/2,top:cy-size/2,width:size,height:size,opacity:ease((f-38)/60)}}>{logo?<Img src={logo} style={{width:"100%",height:"100%",objectFit:"contain"}}/>:<svg viewBox="0 0 100 100" style={{width:"100%",height:"100%"}}><path d="M20 20H80V40H40V80H20Z M60 60H80V80H60Z" fill={color}/></svg>}</div><svg width={w} height={h} style={{position:"absolute",inset:0,pointerEvents:"none"}}>{segments.filter(s=>s.z>=0).map(ring)}</svg><div data-21st-slot="caption" style={{position:"absolute",left:w*.09,top:h*.84,width:w*.82,fontFamily:brandFontStack(fontFamily),fontSize:font,lineHeight:1.25,color,textAlign:"center",opacity:ease((f-96)/35)}}>{caption}</div></AbsoluteFill>;
+};

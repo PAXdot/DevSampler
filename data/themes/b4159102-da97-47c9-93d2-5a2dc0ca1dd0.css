@@ -1,0 +1,142 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Variable.woff2') format('woff2');
+  /* Static Regular weight — upgrade to a variable font file when available */
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+:root {
+  /* STONVI Premium Theme (exvorta-base) */
+  --color-bg: #F7F8F9;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #EAECEE;
+  --color-border: #D1D5DB;
+  --color-text: #111827;
+  --color-muted: #4F636A;
+  --color-primary: #242E35;
+  --color-accent: #C9B6A1;
+  --color-accent-hover: #B5A28D;
+  --color-teal: #1D9E75;
+  --color-danger: #E24B4A;
+}
+
+.dark {
+  /* STONVI Premium Theme (exvorta-base) - Dark Mode */
+  --color-bg: #111827;
+  --color-surface: #1F2937;
+  --color-surface-2: #374151;
+  --color-border: #4B5563;
+  --color-text: #F9FAFB;
+  --color-muted: #9CA3AF;
+  --color-primary: #F3F4F6;
+  --color-accent: #C9B6A1;
+  --color-accent-hover: #B5A28D;
+  --color-teal: #1D9E75;
+  --color-danger: #F87171;
+  --font-inter: 'Inter';
+  --font-vazirmatn: 'Vazirmatn';
+  --font-playfair: 'Playfair Display';
+}
+
+@theme {
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-primary: var(--color-primary);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-teal: var(--color-teal);
+  --color-danger: var(--color-danger);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-rtl: var(--font-vazirmatn), sans-serif;
+}
+
+/* 
+  CRITICAL RULE: RTL & Logical Properties
+  Do NOT use physical directional utility classes (e.g., ml-, pr-, text-left, border-l-).
+  Always use Tailwind's logical properties (e.g., ms-, pe-, text-start, border-s-) 
+  to ensure seamless RTL support.
+*/
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+}
+
+html[dir="ltr"] body {
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-vazirmatn), system-ui, -apple-system, sans-serif;
+}
+
+@media print {
+  header, footer, nav, [role="navigation"] {
+    display: none !important;
+  }
+  
+  body, html {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  * {
+    box-shadow: none !important;
+    background: transparent !important;
+    color: #000000 !important;
+    border-color: #DDDDDD !important;
+  }
+
+  .print-exact {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* ─── Locale-aware font-sans overrides ────────────────────────────────────── */
+
+/* Farsi: IRANSansX variable font */
+.font-locale-fa {
+  --font-sans: var(--font-iran-sans-x), Tahoma, Arial, sans-serif;
+  --font-serif: var(--font-iran-sans-x), Tahoma, serif;
+  --font-display: var(--font-iran-sans-x), Tahoma, serif;
+  --font-body: var(--font-iran-sans-x), Tahoma, sans-serif;
+}
+
+/* Arabic: Cairo */
+.font-locale-ar {
+  --font-sans: var(--font-cairo), Tahoma, Arial, sans-serif;
+  --font-serif: var(--font-cairo), Tahoma, serif;
+  --font-display: var(--font-cairo), Tahoma, serif;
+  --font-body: var(--font-cairo), Tahoma, sans-serif;
+}
+
+/* All other locales: Inter */
+.font-locale-default {
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+}

@@ -1,0 +1,110 @@
+/* Pop Art Paper
+ *
+ * Комиксова палитра, отпечатана върху хартия вместо върху черно: кремав лист,
+ * топло почти-черно мастило, звездно жълто за акцент и седем наситени цвята,
+ * взети от печатни етикети.
+ *
+ * Двата набора са работили в реален продукт — тъмният не е изчислен от
+ * светлия, а построен и пробван поотделно, затова наситените цветове в него
+ * са изсветлени поименно, а не завъртени по формула.
+ */
+
+:root {
+  --background: #f6f2e6;
+  --foreground: #232320;
+
+  --card: #fdfaf0;
+  --card-foreground: #232320;
+
+  --popover: #fdfaf0;
+  --popover-foreground: #232320;
+
+  /* Звездното жълто от етикетите. Черно върху него, не бяло. */
+  --primary: #ffd028;
+  --primary-foreground: #16150f;
+
+  --secondary: #efe9d6;
+  --secondary-foreground: #232320;
+
+  --muted: #efe9d6;
+  --muted-foreground: #6d675a;
+
+  --accent: #f0ead7;
+  --accent-foreground: #232320;
+
+  /* Най-силният цвят в палитрата. */
+  --destructive: #d01818;
+  --destructive-foreground: #fdfaf0;
+
+  --border: #d8cfb6;
+  --input: #d8cfb6;
+  /* Пръстенът е контурът: в поп-арта черната линия държи всичко. */
+  --ring: #16150f;
+
+  /* Диаграмите носят цветовете на етикетите. */
+  --chart-1: #d01818;
+  --chart-2: #f07800;
+  --chart-3: #b2ba12;
+  --chart-4: #189890;
+  --chart-5: #0858a8;
+
+  --sidebar: #fdfaf0;
+  --sidebar-foreground: #232320;
+  --sidebar-primary: #ffd028;
+  --sidebar-primary-foreground: #16150f;
+  --sidebar-accent: #f0ead7;
+  --sidebar-accent-foreground: #232320;
+  --sidebar-border: #d8cfb6;
+  --sidebar-ring: #16150f;
+
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: #0b0b09;
+  --foreground: #f6f2e6;
+
+  --card: #17170f;
+  --card-foreground: #f6f2e6;
+
+  --popover: #17170f;
+  --popover-foreground: #f6f2e6;
+
+  --primary: #ffd028;
+  --primary-foreground: #0b0b09;
+
+  --secondary: #221f16;
+  --secondary-foreground: #f6f2e6;
+
+  --muted: #221f16;
+  --muted-foreground: #a49d8b;
+
+  --accent: #2b2718;
+  --accent-foreground: #f6f2e6;
+
+  /* Върху черно суровото червено пада до 3.4:1 — тук е изсветленото. */
+  --destructive: #ff5a5a;
+  --destructive-foreground: #0b0b09;
+
+  --border: #3a382e;
+  --input: #3a382e;
+  --ring: #ffd028;
+
+  /* Тъмните мастила не се четат върху черно: суровото синьо е 2.1:1. */
+  --chart-1: #ff5a5a;
+  --chart-2: #ff9a2e;
+  --chart-3: #cfd83a;
+  --chart-4: #3ac9bd;
+  --chart-5: #4d9fe8;
+
+  --sidebar: #17170f;
+  --sidebar-foreground: #f6f2e6;
+  --sidebar-primary: #ffd028;
+  --sidebar-primary-foreground: #0b0b09;
+  --sidebar-accent: #2b2718;
+  --sidebar-accent-foreground: #f6f2e6;
+  --sidebar-border: #3a382e;
+  --sidebar-ring: #ffd028;
+
+  --radius: 0.75rem;
+}

@@ -1,0 +1,71 @@
+/* FamilyOS "Peach" — tokens shadcn dérivés de src/styles.css */
+:root {
+  --background: #f6e6dd;
+  --foreground: #16110d;
+  --card: #fdf7f3;
+  --card-foreground: #16110d;
+  --popover: #fdf7f3;
+  --popover-foreground: #16110d;
+  --primary: #0f0c0a;
+  --primary-foreground: #ffffff;
+  --secondary: #fbefe8;
+  --secondary-foreground: #16110d;
+  --muted: #f3e2d8;
+  --muted-foreground: #6f625a;
+  --accent: #e2650f;
+  --accent-foreground: #ffffff;
+  --destructive: #d4321f;
+  --destructive-foreground: #ffffff;
+  --border: #ead6c9;
+  --input: #e4cdbf;
+  --ring: #e2650f;
+  --chart-1: #e2650f;
+  --chart-2: #f39a3c;
+  --chart-3: #f6d816;
+  --chart-4: #15924a;
+  --chart-5: #0f0c0a;
+  --sidebar: #fbf1ec;
+  --sidebar-foreground: #16110d;
+  --sidebar-primary: #0f0c0a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3e2d8;
+  --sidebar-accent-foreground: #16110d;
+  --sidebar-border: #ead6c9;
+  --sidebar-ring: #e2650f;
+  --radius: 2rem;
+}
+
+.dark {
+  --background: #120d0a;
+  --foreground: #f8efe9;
+  --card: #1d1612;
+  --card-foreground: #f8efe9;
+  --popover: #1d1612;
+  --popover-foreground: #f8efe9;
+  --primary: #ffffff;
+  --primary-foreground: #0f0c0a;
+  --secondary: #2a211c;
+  --secondary-foreground: #f8efe9;
+  --muted: #241c17;
+  --muted-foreground: #b7a69b;
+  --accent: #f07a22;
+  --accent-foreground: #ffffff;
+  --destructive: #ff7a66;
+  --destructive-foreground: #0f0c0a;
+  --border: #2b221d;
+  --input: #3a2f28;
+  --ring: #f07a22;
+  --chart-1: #f07a22;
+  --chart-2: #f7a24c;
+  --chart-3: #f6d816;
+  --chart-4: #3ccf7f;
+  --chart-5: #ffffff;
+  --sidebar: #17110d;
+  --sidebar-foreground: #f8efe9;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #0f0c0a;
+  --sidebar-accent: #241c17;
+  --sidebar-accent-foreground: #f8efe9;
+  --sidebar-border: #2b221d;
+  --sidebar-ring: #f07a22;
+}

@@ -1,0 +1,138 @@
+/*
+ * This component ships the source library's e-ink design system: a fixed
+ * black-ink-on-white-paper palette (hardcoded, not derived from the host
+ * app's light/dark theme), monospaced data, and hard 1-2px borders — the
+ * same look on every page it's dropped on. Tokens are scoped to `.eink-log`
+ * so they never leak into (or get overridden by) the surrounding app theme.
+ */
+
+.eink-log {
+  --eink-color-primary: #000000;
+  --eink-color-secondary: #ffffff;
+  --eink-color-background: #ffffff;
+
+  --eink-size-2: 2px;
+  --eink-size-6: 6px;
+  --eink-size-8: 8px;
+  --eink-size-12: 12px;
+  --eink-size-16: 16px;
+  --eink-size-20: 20px;
+
+  --eink-border-width-thin: 1px;
+  --eink-border-width-medium: 2px;
+  --eink-border-style: solid;
+  --eink-border-color: var(--eink-color-primary);
+  --eink-border-thin: var(--eink-border-width-thin) var(--eink-border-style) var(--eink-border-color);
+  --eink-border-medium: var(--eink-border-width-medium) var(--eink-border-style) var(--eink-border-color);
+
+  --eink-font-family-main: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  --eink-font-family-secondary: system-ui, -apple-system, "Segoe UI", Inter, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--eink-size-16);
+  background: var(--eink-color-background);
+  color: var(--eink-color-primary);
+  font-family: var(--eink-font-family-secondary);
+}
+
+.eink-log__title {
+  font-weight: 700;
+  margin-bottom: var(--eink-size-8);
+}
+
+.eink-log__entries {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.eink-log__entries--bordered {
+  border: var(--eink-border-medium);
+}
+
+.eink-log-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--eink-size-20) 13ch 12ch 1fr max-content;
+  align-items: center;
+  column-gap: var(--eink-size-16);
+  padding: var(--eink-size-6) var(--eink-size-16) var(--eink-size-6) var(--eink-size-20);
+  box-sizing: border-box;
+}
+
+.eink-log__entries--bordered .eink-log-item {
+  border-top: var(--eink-border-thin);
+}
+
+.eink-log__entries--bordered .eink-log-item:first-child {
+  border-top: none;
+}
+
+.eink-log-item__marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: var(--eink-size-12);
+  height: 100%;
+  border-right: var(--eink-border-medium);
+  background: var(--eink-color-background);
+  color: var(--eink-color-primary);
+}
+
+.eink-log-item__marker--info {
+  border-right: none;
+}
+
+.eink-log-item__marker--warning,
+.eink-log-item__marker--error {
+  background: var(--eink-color-primary);
+}
+
+.eink-log-item__badge {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--eink-size-20);
+  height: var(--eink-size-20);
+  border: var(--eink-border-medium);
+  font-weight: 700;
+}
+
+.eink-log-item__badge--critical {
+  background: var(--eink-color-primary);
+  color: var(--eink-color-secondary);
+}
+
+.eink-log-item__time {
+  grid-column: 2;
+  font-family: var(--eink-font-family-main);
+  white-space: nowrap;
+}
+
+.eink-log-item__source {
+  grid-column: 3;
+  font-family: var(--eink-font-family-main);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.eink-log-item__description {
+  grid-column: 4;
+}
+
+.eink-log-item__ack {
+  grid-column: 5;
+  box-sizing: border-box;
+  padding: var(--eink-size-2) var(--eink-size-6);
+  border: var(--eink-border-thin);
+  font-family: var(--eink-font-family-main);
+  font-weight: 700;
+  font-size: 12px;
+}

@@ -1,0 +1,62 @@
+/**
+ * Cendriix Aurora Slate — 21st.dev community theme
+ *
+ * Generated from cendriixai-app's src/css/tokens.css (spec 006-design-system,
+ * "Aurora Slate" palette). Every value below is copied verbatim from that
+ * file's shipped light-dark() pairs — nothing here is invented or estimated.
+ * The 21st.dev theme-publish endpoint requires separate non-empty :root and
+ * .dark blocks (it does not parse the modern light-dark() CSS function our
+ * app actually ships), so this file exists only to satisfy that format; the
+ * app's own tokens.css remains the single source of truth.
+ *
+ * One deliberate correction versus a naive value carry-over: --primary in
+ * dark mode is a LIGHT lavender (#A39BFF), so its foreground uses the app's
+ * own --color-text-on-accent dark value (#202432, a dark slate) rather than
+ * white — white-on-light-lavender would fail contrast. Same reasoning for
+ * --destructive-foreground via --color-text-on-danger.
+ */
+
+:root {
+  --background: #F7F8FC;          /* --color-background-body (light) */
+  --foreground: #171A22;          /* --color-text-primary (light) */
+  --card: #FFFFFF;                /* --color-background-surface (light) */
+  --card-foreground: #171A22;
+  --popover: #FFFFFF;
+  --popover-foreground: #171A22;
+  --primary: #4F46E5;             /* --accent (light) — the frozen brand token */
+  --primary-foreground: #FFFFFF;  /* --color-text-on-accent (light) */
+  --secondary: #EEF1F7;           /* --color-background-raised (light) */
+  --secondary-foreground: #171A22;
+  --muted: #EEF1F7;               /* --color-background-raised-2 (light; == raised in light mode) */
+  --muted-foreground: #5F6779;    /* --color-text-muted (light) */
+  --accent: #EEF1F7;              /* shadcn's own "accent" = subtle highlight bg, not our brand accent */
+  --accent-foreground: #171A22;
+  --destructive: #B42318;         /* --color-text-red (light) */
+  --destructive-foreground: #FFFFFF; /* --color-text-on-danger (light) */
+  --border: #DDE2E8;              /* --color-border (light) */
+  --input: #DDE2E8;
+  --ring: #4F46E5;                /* --accent (light) */
+  --radius: 0.625rem;             /* between --radius-element (9px) and --radius-container (15px) */
+}
+
+.dark {
+  --background: #0B0D12;          /* --color-background-body (dark) */
+  --foreground: #F5F7FA;          /* --color-text-primary (dark) */
+  --card: #11141B;                /* --color-background-surface (dark) */
+  --card-foreground: #F5F7FA;
+  --popover: #11141B;
+  --popover-foreground: #F5F7FA;
+  --primary: #A39BFF;             /* --accent (dark) */
+  --primary-foreground: #202432;  /* --color-text-on-accent (dark) — dark text, light fill */
+  --secondary: #181C26;           /* --color-background-raised (dark) */
+  --secondary-foreground: #F5F7FA;
+  --muted: #202532;               /* --color-background-raised-2 (dark) */
+  --muted-foreground: #929CAC;    /* --color-text-muted (dark) */
+  --accent: #202532;              /* subtle highlight bg (raised-2, dark) */
+  --accent-foreground: #F5F7FA;
+  --destructive: #F87171;         /* --color-text-red (dark) */
+  --destructive-foreground: #202432; /* --color-text-on-danger (dark) — dark text, light-ish fill */
+  --border: #2A3040;              /* --color-border (dark) */
+  --input: #2A3040;
+  --ring: #A39BFF;                /* --accent (dark) */
+}

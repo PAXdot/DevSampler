@@ -1,0 +1,1 @@
+export default { version: 1, wgsl: "// Composites the premultiplied MSAA planet over the HDR sky.\n\n@group(0) @binding(0) var planetTexture: texture_2d<f32>;\n@group(0) @binding(1) var samp: sampler;\n\n@fragment\nfn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {\n  return textureSampleLevel(planetTexture, samp, uv, 0.0);\n}\n", functionExports: [] };

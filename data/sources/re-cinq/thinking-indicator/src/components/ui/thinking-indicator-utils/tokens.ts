@@ -1,0 +1,62 @@
+// Every class string names one --bowman-* token with its fallback (docs/design-notes.md § Theming); internal, not exported from the barrel.
+export const ACCENT_BG =
+  "bg-(--bowman-accent,var(--color-blue-500)) dark:bg-(--bowman-accent-dark,var(--color-blue-600))";
+export const ACCENT_BG_HOVER =
+  "hover:bg-(--bowman-accent-hover,var(--color-blue-600)) dark:hover:bg-(--bowman-accent-hover-dark,var(--color-blue-500))";
+export const ACCENT_DOT = "bg-(--bowman-accent,var(--color-blue-500))";
+export const ACCENT_SOFT_SURFACE =
+  "border-(--bowman-accent-border,var(--color-blue-200)) bg-(--bowman-accent-soft,var(--color-blue-50)) dark:border-(--bowman-accent-border-dark,var(--color-blue-800)) dark:bg-(--bowman-accent-soft-dark,var(--color-blue-950))";
+export const FOCUS_RING_COLOR =
+  "focus:ring-(--bowman-focus-ring,var(--color-blue-500)) dark:focus:ring-(--bowman-focus-ring-dark,var(--color-blue-400))";
+export const FOCUS_VISIBLE_RING_COLOR =
+  "focus-visible:ring-(--bowman-focus-ring,var(--color-blue-500))";
+export const FOCUS_WITHIN_RING_COLOR =
+  "focus-within:ring-(--bowman-focus-ring,var(--color-blue-500))/50 focus-within:shadow-[0_0_0_4px_var(--bowman-accent-glow,rgba(59,130,246,0.1))] dark:focus-within:ring-(--bowman-focus-ring-dark,var(--color-blue-400))/50 dark:focus-within:shadow-[0_0_0_4px_var(--bowman-accent-glow-dark,rgba(96,165,250,0.1))]";
+export const ACTIVE_ROW_BG =
+  "bg-(--bowman-active,var(--color-slate-100)) dark:bg-(--bowman-active-dark,var(--color-slate-800))";
+export const ACTIVE_BG_DISABLED =
+  "disabled:bg-(--bowman-active,var(--color-slate-100)) dark:disabled:bg-(--bowman-active-dark,var(--color-slate-800))";
+export const SURFACE =
+  "bg-(--bowman-surface,var(--color-white)) dark:bg-(--bowman-surface-dark,var(--color-slate-900))";
+export const SURFACE_HOVER =
+  "hover:bg-(--bowman-surface-hover,var(--color-slate-50)) dark:hover:bg-(--bowman-surface-hover-dark,var(--color-slate-800))";
+export const CONTROL_HOVER =
+  "hover:bg-(--bowman-control-hover,var(--color-slate-100)) dark:hover:bg-(--bowman-control-hover-dark,var(--color-slate-800))";
+export const BORDER =
+  "border-(--bowman-border,var(--color-slate-200)) dark:border-(--bowman-border-dark,var(--color-slate-800))";
+export const RING_OFFSET =
+  "focus:ring-offset-(--bowman-ring-offset,var(--color-white)) dark:focus:ring-offset-(--bowman-ring-offset-dark,var(--color-slate-900))";
+export const TEXT_STRONG =
+  "text-(--bowman-text-strong,var(--color-slate-900)) dark:text-(--bowman-text-strong-dark,var(--color-slate-100))";
+export const TEXT_STRONG_HOVER =
+  "hover:text-(--bowman-text-strong,var(--color-slate-900)) dark:hover:text-(--bowman-text-strong-dark,var(--color-slate-100))";
+export const TEXT_STRONG_FOCUS =
+  "focus:text-(--bowman-text-strong,var(--color-slate-900)) dark:focus:text-(--bowman-text-strong-dark,var(--color-slate-100))";
+export const TEXT_BODY =
+  "text-(--bowman-text-body,var(--color-slate-700)) dark:text-(--bowman-text-body-dark,var(--color-slate-200))";
+export const TEXT_SECONDARY =
+  "text-(--bowman-text-secondary,var(--color-slate-600)) dark:text-(--bowman-text-secondary-dark,var(--color-slate-400))";
+export const TEXT_SECONDARY_HOVER =
+  "hover:text-(--bowman-text-secondary,var(--color-slate-600)) dark:hover:text-(--bowman-text-secondary-dark,var(--color-slate-400))";
+export const TEXT_MUTED =
+  "text-(--bowman-text-muted,var(--color-slate-500)) dark:text-(--bowman-text-muted-dark,var(--color-slate-400))";
+export const TEXT_SUBTLE =
+  "text-(--bowman-text-subtle,var(--color-slate-400)) dark:text-(--bowman-text-subtle-dark,var(--color-slate-500))";
+export const PLACEHOLDER_SUBTLE =
+  "placeholder-(--bowman-text-subtle,var(--color-slate-400)) dark:placeholder-(--bowman-text-subtle-dark,var(--color-slate-500))";
+export const TEXT_SUBTLE_DISABLED =
+  "disabled:text-(--bowman-text-subtle,var(--color-slate-400)) dark:disabled:text-(--bowman-text-subtle-dark,var(--color-slate-500))";
+export const TEXT_ON_ACCENT = "text-(--bowman-text-on-accent,var(--color-white))";
+export const DANGER =
+  "text-(--bowman-danger,var(--color-red-600)) dark:text-(--bowman-danger-dark,var(--color-red-400))";
+export const DANGER_HOVER =
+  "hover:text-(--bowman-danger,var(--color-red-600)) dark:hover:text-(--bowman-danger-dark,var(--color-red-400))";
+export const DANGER_SOFT =
+  "bg-(--bowman-danger-soft,var(--color-red-100)) dark:bg-[var(--bowman-danger-soft-dark,rgba(127,29,29,0.3))]";
+export const BORDER_MD = BORDER.split(" ")
+  .map((className) => `md:${className}`)
+  .join(" ");
+export const SUCCESS =
+  "text-(--bowman-success,var(--color-green-600)) dark:text-(--bowman-success-dark,var(--color-green-400))";
+export const SUCCESS_SOFT =
+  "bg-(--bowman-success-soft,var(--color-green-100)) dark:bg-(--bowman-success-soft-dark,rgba(20,83,45,0.3))";

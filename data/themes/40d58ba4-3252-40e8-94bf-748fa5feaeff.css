@@ -1,0 +1,111 @@
+/**
+ * Voyanta — shadcn-compatible theme export.
+ *
+ * The storefront's own tokens are named `--v-*` (see resources/css/voyanta.css).
+ * This file re-expresses the SAME palette under shadcn's standard token names so
+ * it previews correctly in theme galleries and applies cleanly in other shadcn
+ * projects. It is an export artifact -- the storefront does not read it.
+ *
+ * Dark is the primary theme; light is designed rather than inverted (the accent
+ * darkens so it still clears 4.5:1 on a bone ground, which the dark-mode
+ * turquoise would fail).
+ */
+
+/* Light — bone ground, warm ink, deepened Red Sea turquoise */
+:root {
+    --background: #fcfbf8;
+    --foreground: #141310;
+
+    --card: #ffffff;
+    --card-foreground: #141310;
+
+    --popover: #ffffff;
+    --popover-foreground: #141310;
+
+    /* Brand */
+    --primary: #0d827c;
+    --primary-foreground: #ffffff;
+
+    --secondary: #f4f1ea;
+    --secondary-foreground: #141310;
+
+    --muted: #f4f1ea;
+    --muted-foreground: #6a645b;
+
+    /* shadcn's --accent is the subtle hover surface, not the brand colour */
+    --accent: #eae5db;
+    --accent-foreground: #141310;
+
+    --destructive: #c4432a;
+    --destructive-foreground: #ffffff;
+
+    --border: #deddda;
+    --input: #deddda;
+    --ring: #0d827c;
+
+    --chart-1: #0d827c;
+    --chart-2: #1f6f65;
+    --chart-3: #c2762a;
+    --chart-4: #4a7c59;
+    --chart-5: #8a6a3e;
+
+    --sidebar: #f4f1ea;
+    --sidebar-foreground: #141310;
+    --sidebar-primary: #0d827c;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #eae5db;
+    --sidebar-accent-foreground: #141310;
+    --sidebar-border: #deddda;
+    --sidebar-ring: #0d827c;
+
+    --radius: 2px;
+}
+
+/* Dark — basalt ground (warm near-black with a green cast, deliberately not
+   navy) lit by Red Sea turquoise */
+.dark {
+    --background: #0d1211;
+    --foreground: #f2f0ec;
+
+    --card: #161c1a;
+    --card-foreground: #f2f0ec;
+
+    --popover: #1e2624;
+    --popover-foreground: #f2f0ec;
+
+    --primary: #3fd3c0;
+    --primary-foreground: #04100e;
+
+    --secondary: #161c1a;
+    --secondary-foreground: #f2f0ec;
+
+    --muted: #161c1a;
+    --muted-foreground: #a7afaa;
+
+    --accent: #1e2624;
+    --accent-foreground: #f2f0ec;
+
+    --destructive: #ff7a5c;
+    --destructive-foreground: #180b07;
+
+    --border: #323634;
+    --input: #323634;
+    --ring: #3fd3c0;
+
+    --chart-1: #3fd3c0;
+    --chart-2: #4ecb92;
+    --chart-3: #e0a338;
+    --chart-4: #6fb8d4;
+    --chart-5: #c48ad9;
+
+    --sidebar: #161c1a;
+    --sidebar-foreground: #f2f0ec;
+    --sidebar-primary: #3fd3c0;
+    --sidebar-primary-foreground: #04100e;
+    --sidebar-accent: #1e2624;
+    --sidebar-accent-foreground: #f2f0ec;
+    --sidebar-border: #323634;
+    --sidebar-ring: #3fd3c0;
+
+    --radius: 2px;
+}

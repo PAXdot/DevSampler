@@ -1,0 +1,157 @@
+'use client';
+import { animate, motion, useMotionValue } from 'motion/react';
+import React, { useEffect, useRef, useState } from 'react';
+
+export const items = [
+  {
+    id: 3,
+    url: 'https://cdn.21st.dev/assets/mirror/41/418af4c54ec899f6e14404033548eff30e17ac34f8a6ecd0fa386736664ab098.jpg',
+    title: 'AUSIZE MAM',
+  },
+  {
+    id: 2,
+    url: 'https://cdn.21st.dev/assets/mirror/a9/a95655f582827d22bb12101d1880394c78249f9057d12d043d7b3c1354c83025.jpg',
+    title: 'BOXIEN BAY',
+  },
+  {
+    id: 4,
+    url: 'https://cdn.21st.dev/assets/mirror/c7/c7f20f2629a31f8eed6f2f899ee64dbb41877d38685fffe5ac32bf84c8d3e16a.jpg',
+    title: 'RECLKTIKA',
+  },
+  {
+    id: 1,
+    url: 'https://cdn.21st.dev/assets/mirror/9f/9ff0e940308d62089e45cc7e886701c469b9d8bdefe1083ea4961f3afc5d8071.jpg',
+    title: 'MAXX PHAM',
+  },
+
+  {
+    id: 5,
+    url: 'https://cdn.21st.dev/assets/mirror/ed/ed52b4b14c1c72d64906e26b87ca6fe17c05ffcbc6f1acbde34e2b20eac0bb08.jpg',
+    title: 'SONYPOO',
+  },
+  {
+    id: 6,
+    url: 'https://cdn.21st.dev/assets/mirror/dd/dda80b9931d1000fe04a9d10825b26f793520ced11ae723cc58eefdc06737f8b.jpg',
+    title: 'DONM FLY',
+  },
+  {
+    id: 7,
+    url: 'https://cdn.21st.dev/assets/mirror/f7/f79f112518837fe538dc1b1efc0a3ff279a775fc4d718055b6b336025ffcaf6e.jpg',
+    title: 'Snowy Mountain Highway',
+  },
+  {
+    id: 8,
+    url: 'https://cdn.21st.dev/assets/mirror/5a/5adc94c01293cf73c8d91501c9ccc9adaff4dd7a89b147a18c8cb6c506015249.jpg',
+    title: 'FOGGY FOLS',
+  },
+  {
+    id: 9,
+    url: 'https://cdn.21st.dev/assets/mirror/05/05522fb6175f73d7dd288876f80520ea7cb93c38eded959ab917c5597250062d.jpg',
+    title: 'DIM DARKO',
+  },
+  {
+    id: 10,
+    url: 'https://cdn.21st.dev/assets/mirror/a4/a4f9f554055ad10c60c9eac9ec758197f508bb28cd2ad67b424afd5c3367683d.jpg',
+    title: 'BEALIVE',
+  },
+  {
+    id: 11,
+    url: 'https://cdn.21st.dev/assets/mirror/2d/2d2435801e1ceba95249f348f8338c7686f0e39f0d13232d2c2edcb2ef3aa1ca.jpg',
+    title: 'DOMEDOM ROME',
+  },
+  {
+    id: 12,
+    url: 'https://cdn.21st.dev/assets/mirror/72/726cc39ff592b894a8371166c54a3218a71f9ef320a5d29905480eb5aad919fe.jpg',
+    title: 'IKEIMON POVE',
+  },
+];
+
+export default function FramerCarousel() {
+  const [index, setIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const containerWidth = containerRef.current.offsetWidth || 1;
+      const targetX = -index * containerWidth;
+
+      animate(x, targetX, {
+        type: 'spring',
+        stiffness: 300,
+        damping: 30,
+      });
+    }
+  }, [index, x]);
+
+  return (
+    <div className='w-full lg:p-10 sm:p-4 p-2'>
+      <div className='flex flex-col gap-3'>
+        <div className='relative overflow-hidden rounded-lg' ref={containerRef}>
+          <motion.div className='flex' style={{ x }}>
+            {items.map((item) => (
+              <div key={item.id} className='shrink-0 w-full h-[400px]'>
+                <img
+                  src={item.url}
+                  alt={item.title}
+                  className='w-full h-full object-cover rounded-lg select-none pointer-events-none'
+                  draggable={false}
+                />
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Navigation Buttons */}
+          <motion.button
+            disabled={index === 0}
+            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform z-10
+              ${
+                index === 0
+                  ? 'opacity-40 cursor-not-allowed'
+                  : 'bg-white hover:scale-110 hover:opacity-100 opacity-70'
+              }`}
+          >
+            <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M15 19l-7-7 7-7'
+              />
+            </svg>
+          </motion.button>
+
+          {/* Next Button */}
+          <motion.button
+            disabled={index === items.length - 1}
+            onClick={() => setIndex((i) => Math.min(items.length - 1, i + 1))}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-transform z-10
+              ${
+                index === items.length - 1
+                  ? 'opacity-40 cursor-not-allowed'
+                  : 'bg-white hover:scale-110 hover:opacity-100 opacity-70'
+              }`}
+          >
+            <svg className='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+            </svg>
+          </motion.button>
+          {/* Progress Indicator */}
+          <div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2'>
+            {items.map((_, i) => (
+              <button
+                key={items[i]?.id ?? items[i]?.url ?? `dot-${i}`}
+                onClick={() => setIndex(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === index ? 'w-8 bg-white' : 'w-2 bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

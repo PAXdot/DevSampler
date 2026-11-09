@@ -1,0 +1,137 @@
+:root {
+  --background: #FBF8F5;
+  --foreground: #1D1514;
+  --card: #FFFFFF;
+  --card-foreground: #1D1514;
+  --popover: #FFFFFF;
+  --popover-foreground: #1D1514;
+  --primary: #B8223B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #B55608;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F4EFEA;
+  --muted-foreground: #807167;
+  --accent: #FFC62B;
+  --accent-foreground: #1D1514;
+  --destructive: #C4162F;
+  --destructive-foreground: #FFFFFF;
+  --border: #E7DFD8;
+  --input: #D2C6BC;
+  --ring: #DB6F0A;
+  --radius: 0.625rem;
+
+  --flame-50: #FFF1F2;
+  --flame-100: #FFE0E3;
+  --flame-200: #FFC2C9;
+  --flame-300: #FF93A0;
+  --flame-400: #F05A70;
+  --flame-500: #D6304A;
+  --flame-600: #B8223B;
+  --flame-700: #951A30;
+  --flame-800: #6F1424;
+  --flame-900: #470C17;
+
+  --ember-50: #FFF4E8;
+  --ember-100: #FFE5C7;
+  --ember-200: #FFC98A;
+  --ember-300: #FFA94D;
+  --ember-400: #F58A1F;
+  --ember-500: #DB6F0A;
+  --ember-600: #B55608;
+  --ember-700: #8C410A;
+  --ember-800: #63300C;
+  --ember-900: #3D1E08;
+
+  --gold-50: #FFFBE6;
+  --gold-100: #FFF3B8;
+  --gold-200: #FFE680;
+  --gold-300: #FFD84D;
+  --gold-400: #FFC62B;
+  --gold-500: #E6A800;
+  --gold-600: #B88200;
+  --gold-700: #8A6100;
+  --gold-800: #5E4200;
+  --gold-900: #382800;
+
+  --ash-0: #FFFFFF;
+  --ash-50: #FBF8F5;
+  --ash-100: #F4EFEA;
+  --ash-200: #E7DFD8;
+  --ash-300: #D2C6BC;
+  --ash-400: #A99B90;
+  --ash-500: #807167;
+  --ash-600: #62544C;
+  --ash-700: #473B35;
+  --ash-800: #2E2420;
+  --ash-900: #1D1514;
+  --ash-950: #120C0B;
+}
+
+.dark {
+  --background: #120C0B;
+  --foreground: #FBF8F5;
+  --card: #1D1514;
+  --card-foreground: #FBF8F5;
+  --popover: #1D1514;
+  --popover-foreground: #FBF8F5;
+  --primary: #D6304A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFA94D;
+  --secondary-foreground: #1D1514;
+  --muted: #2E2420;
+  --muted-foreground: #A99B90;
+  --accent: #FFC62B;
+  --accent-foreground: #1D1514;
+  --destructive: #FF8794;
+  --destructive-foreground: #120C0B;
+  --border: #473B35;
+  --input: #62544C;
+  --ring: #FFC62B;
+  --radius: 0.625rem;
+
+  --flame-50: #FFF1F2;
+  --flame-100: #FFE0E3;
+  --flame-200: #FFC2C9;
+  --flame-300: #FF93A0;
+  --flame-400: #F05A70;
+  --flame-500: #D6304A;
+  --flame-600: #B8223B;
+  --flame-700: #951A30;
+  --flame-800: #6F1424;
+  --flame-900: #470C17;
+
+  --ember-50: #FFF4E8;
+  --ember-100: #FFE5C7;
+  --ember-200: #FFC98A;
+  --ember-300: #FFA94D;
+  --ember-400: #F58A1F;
+  --ember-500: #DB6F0A;
+  --ember-600: #B55608;
+  --ember-700: #8C410A;
+  --ember-800: #63300C;
+  --ember-900: #3D1E08;
+
+  --gold-50: #FFFBE6;
+  --gold-100: #FFF3B8;
+  --gold-200: #FFE680;
+  --gold-300: #FFD84D;
+  --gold-400: #FFC62B;
+  --gold-500: #E6A800;
+  --gold-600: #B88200;
+  --gold-700: #8A6100;
+  --gold-800: #5E4200;
+  --gold-900: #382800;
+
+  --ash-0: #FFFFFF;
+  --ash-50: #FBF8F5;
+  --ash-100: #F4EFEA;
+  --ash-200: #E7DFD8;
+  --ash-300: #D2C6BC;
+  --ash-400: #A99B90;
+  --ash-500: #807167;
+  --ash-600: #62544C;
+  --ash-700: #473B35;
+  --ash-800: #2E2420;
+  --ash-900: #1D1514;
+  --ash-950: #120C0B;
+}

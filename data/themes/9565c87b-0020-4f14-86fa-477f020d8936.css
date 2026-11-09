@@ -1,0 +1,78 @@
+/* Review export for 21st.dev, not a runtime token owner.
+ * Canonical values come from packages/tokens/src/colors.css and spacing.css.
+ * This external shadcn adapter is a different contract from @ark/tokens and
+ * its Tailwind theme.css, so it lives with task evidence rather than app code.
+ * Relic Phosphor is dark only. Both selectors intentionally preserve that
+ * approved palette; no light-mode design is implied. Not published.
+ */
+:root {
+  --background: #050607;
+  --foreground: #dad1b9;
+  --card: #121212;
+  --card-foreground: #dad1b9;
+  --popover: #161616;
+  --popover-foreground: #dad1b9;
+  --primary: #dad1b9;
+  --primary-foreground: #050607;
+  --secondary: #161616;
+  --secondary-foreground: #dad1b9;
+  --muted: #161616;
+  --muted-foreground: #a6a398;
+  --accent: #79c4b7;
+  --accent-foreground: #050607;
+  --destructive: #c25b38;
+  --destructive-foreground: #050607;
+  --border: #262626;
+  --input: #333331;
+  --ring: #79c4b7;
+  --chart-1: #79c4b7;
+  --chart-2: #d98a63;
+  --chart-3: #c9a24b;
+  --chart-4: #8fae8c;
+  --chart-5: #dad1b9;
+  --sidebar: #121212;
+  --sidebar-foreground: #dad1b9;
+  --sidebar-primary: #dad1b9;
+  --sidebar-primary-foreground: #050607;
+  --sidebar-accent: #161616;
+  --sidebar-accent-foreground: #dad1b9;
+  --sidebar-border: #262626;
+  --sidebar-ring: #79c4b7;
+  --radius: 14px;
+}
+
+.dark {
+  --background: #050607;
+  --foreground: #dad1b9;
+  --card: #121212;
+  --card-foreground: #dad1b9;
+  --popover: #161616;
+  --popover-foreground: #dad1b9;
+  --primary: #dad1b9;
+  --primary-foreground: #050607;
+  --secondary: #161616;
+  --secondary-foreground: #dad1b9;
+  --muted: #161616;
+  --muted-foreground: #a6a398;
+  --accent: #79c4b7;
+  --accent-foreground: #050607;
+  --destructive: #c25b38;
+  --destructive-foreground: #050607;
+  --border: #262626;
+  --input: #333331;
+  --ring: #79c4b7;
+  --chart-1: #79c4b7;
+  --chart-2: #d98a63;
+  --chart-3: #c9a24b;
+  --chart-4: #8fae8c;
+  --chart-5: #dad1b9;
+  --sidebar: #121212;
+  --sidebar-foreground: #dad1b9;
+  --sidebar-primary: #dad1b9;
+  --sidebar-primary-foreground: #050607;
+  --sidebar-accent: #161616;
+  --sidebar-accent-foreground: #dad1b9;
+  --sidebar-border: #262626;
+  --sidebar-ring: #79c4b7;
+  --radius: 14px;
+}

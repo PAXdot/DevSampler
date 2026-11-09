@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/* HeroUI v3's @heroui/styles ships a NEUTRAL default accent (oklch 97%).
+ * heroui.com uses a blue accent — override the token here (unlayered :root
+ * beats the package's @layer theme tokens). */
+:root {
+  --accent: #0485f7;
+  --accent-hover: #0473d4;
+  --accent-foreground: #ffffff;
+}
+
+.dark {
+  --accent: #0485f7;
+  --accent-hover: #3197ff;
+  --accent-foreground: #ffffff;
+}

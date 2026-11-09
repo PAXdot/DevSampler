@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* HeroUI v3 default accent is neutral; heroui.com uses blue. */
+:root {
+  --accent: #0485f7;
+  --accent-hover: #0473d4;
+  --accent-foreground: #ffffff;
+}
+
+.dark {
+  --accent: #0485f7;
+  --accent-hover: #3197ff;
+  --accent-foreground: #ffffff;
+}

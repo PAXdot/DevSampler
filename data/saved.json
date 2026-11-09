@@ -1,0 +1,13 @@
+[
+  {
+    "id": "4051",
+    "type": "component",
+    "name": "Hero Section",
+    "description": "Hero component with sleek animation ",
+    "author": "reuno-ui",
+    "preview": "https://cdn.21st.dev/user_skiper-ui/hero-section/default/preview.1786398621832.webp",
+    "videoUrl": "https://cdn.21st.dev/user_skiper-ui/hero-section/default/video.1786398607433.mp4",
+    "url": "https://21st.dev/@reuno-ui/components/hero-section",
+    "install": "npx shadcn@latest add \"https://21st.dev/r/reuno-ui/hero-section?api_key=$API_KEY_21ST\""
+  }
+]

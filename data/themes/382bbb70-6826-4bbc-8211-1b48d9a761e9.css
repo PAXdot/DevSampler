@@ -1,0 +1,122 @@
+/*
+ * Lumina Study — exported from apps/web-app/src/styles.css.
+ * Sources: global light tokens (lines 4–145), dark tokens (655–694),
+ * monospace typography (498), serif study headings (12052).
+ * CSS color mixes are resolved to nearest 8-bit sRGB values; alpha is retained.
+ * Adaptations: .dark replaces the app's system media query; shadcn secondary,
+ * muted and accent map to surface-subtle, surface-muted and surface-accent.
+ * Ring uses the app's solid cyan focus border. Charts reuse brand/status colors.
+ * Three source shadow levels are repeated across the shadcn shadow scale.
+ * Spacing is Tailwind's default; tracking is normal. Local route themes and
+ * background gradients remain outside this global semantic theme.
+ */
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #10b981;
+  --primary-foreground: #0f172a;
+  --secondary: #eaf6f5;
+  --secondary-foreground: #0f172a;
+  --muted: #def5fa;
+  --muted-foreground: #747883;
+  --accent: #e4fafd;
+  --accent-foreground: #0f172a;
+  --destructive: #c13234;
+  --destructive-foreground: #ffffff;
+  --border: #d7dadf;
+  --input: #c0c4ca;
+  --ring: #22d3ee;
+  --chart-1: #10b981;
+  --chart-2: #22d3ee;
+  --chart-3: #6ee7b7;
+  --chart-4: #108867;
+  --chart-5: #d18b00;
+  --sidebar: #0f172a;
+  --sidebar-foreground: #f6fdfe;
+  --sidebar-primary: #10b981;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #112e42;
+  --sidebar-accent-foreground: #f6fdfe;
+  --sidebar-border: rgba(255, 255, 255, 0.16);
+  --sidebar-ring: #22d3ee;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --radius: 0.5rem;
+  --spacing: 0.25rem;
+  --tracking-normal: 0em;
+  --shadow-color: #0f172a;
+  --shadow-opacity: 0.06;
+  --shadow-blur: 28px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 12px;
+  --shadow-2xs: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-xs: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 18px 44px 0 rgba(15, 23, 42, 0.18);
+  --shadow-lg: 0 18px 44px 0 rgba(15, 23, 42, 0.18);
+  --shadow-xl: 0 24px 64px 0 rgba(15, 23, 42, 0.25);
+  --shadow-2xl: 0 24px 64px 0 rgba(15, 23, 42, 0.25);
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f2fcfe;
+  --card: #111827;
+  --card-foreground: #f2fcfe;
+  --popover: #1f2937;
+  --popover-foreground: #f2fcfe;
+  --primary: #10b981;
+  --primary-foreground: #0f172a;
+  --secondary: #112b32;
+  --secondary-foreground: #f2fcfe;
+  --muted: #204e5f;
+  --muted-foreground: #a4a7ae;
+  --accent: #143a4b;
+  --accent-foreground: #f2fcfe;
+  --destructive: #c13234;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.2);
+  --ring: #22d3ee;
+  --chart-1: #10b981;
+  --chart-2: #22d3ee;
+  --chart-3: #6ee7b7;
+  --chart-4: #108867;
+  --chart-5: #d18b00;
+  --sidebar: #0d1425;
+  --sidebar-foreground: #f6fefb;
+  --sidebar-primary: #10b981;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #123549;
+  --sidebar-accent-foreground: #f6fefb;
+  --sidebar-border: rgba(255, 255, 255, 0.16);
+  --sidebar-ring: #22d3ee;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --radius: 0.5rem;
+  --spacing: 0.25rem;
+  --tracking-normal: 0em;
+  --shadow-color: #0f172a;
+  --shadow-opacity: 0.06;
+  --shadow-blur: 28px;
+  --shadow-spread: 0px;
+  --shadow-offset-x: 0px;
+  --shadow-offset-y: 12px;
+  --shadow-2xs: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-xs: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-sm: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow: 0 12px 28px 0 rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 18px 44px 0 rgba(15, 23, 42, 0.18);
+  --shadow-lg: 0 18px 44px 0 rgba(15, 23, 42, 0.18);
+  --shadow-xl: 0 24px 64px 0 rgba(15, 23, 42, 0.25);
+  --shadow-2xl: 0 24px 64px 0 rgba(15, 23, 42, 0.25);
+}

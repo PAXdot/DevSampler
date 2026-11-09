@@ -1,0 +1,144 @@
+@layer umriss.tokens, umriss.base, umriss.components;
+
+@layer umriss.components {
+  .wrapper {
+    font-family: var(--u-font-sans);
+    font-size: var(--u-text-md);
+    line-height: var(--u-leading-normal);
+    color: var(--u-color-text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--u-space-2);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .box {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    border: none;
+    border-radius: var(--u-radius-xs);
+    background: var(--u-color-surface);
+    outline: 1px solid transparent;
+    box-shadow: var(--u-edge-strong);
+    color: var(--u-color-on-accent);
+    transition:
+      background-color var(--u-transition),
+      box-shadow var(--u-transition);
+  }
+
+  .check {
+    width: 10px;
+    height: 8px;
+    opacity: 0;
+  }
+
+  .check path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset var(--u-duration-draw) var(--u-ease-out) var(--u-delay-draw);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .check path {
+      transition: none;
+    }
+  }
+
+  .input:checked + .box .check path {
+    stroke-dashoffset: 0;
+  }
+
+  .input:checked + .box {
+    background: var(--u-color-accent);
+    box-shadow: 0 0 0 1px var(--u-color-accent);
+  }
+
+  .input:checked + .box .check {
+    opacity: 1;
+  }
+
+  .dash {
+    position: absolute;
+    width: 8px;
+    height: 1.8px;
+    border-radius: var(--u-radius-full);
+    background: currentColor;
+    opacity: 0;
+  }
+
+  .input:indeterminate + .box {
+    background: var(--u-color-accent);
+    box-shadow: 0 0 0 1px var(--u-color-accent);
+  }
+
+  .input:indeterminate + .box .dash {
+    opacity: 1;
+  }
+
+  .input:indeterminate + .box .check {
+    opacity: 0;
+  }
+
+  .wrapper:hover .input:not(:disabled):not(:checked):not(:indeterminate):not(:focus-visible) + .box {
+    box-shadow: 0 0 0 1px var(--u-color-edge-hover);
+  }
+
+  .wrapper:active .input:not(:disabled):not(:checked):not(:indeterminate) + .box {
+    background: var(--u-color-surface-pressed);
+  }
+
+  .input:focus-visible + .box {
+    outline: 2px solid transparent;
+    box-shadow: var(--u-focus-ring);
+  }
+
+  .wrapper:has(.input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .label {
+    font-size: var(--u-text-sm);
+    line-height: var(--u-leading-tight);
+  }
+
+  .wrapper:has(.label) .box {
+    margin-top: calc((var(--u-text-sm) * var(--u-leading-tight) - 16px) / 2);
+  }
+
+  .field {
+    --_line: 16px;
+    --_control: var(--u-control-height);
+    padding-block: calc((var(--_control) - var(--_line)) / 2);
+  }
+
+  .field:has(.label) {
+    --_line: calc(var(--u-text-sm) * var(--u-leading-tight));
+  }
+
+  .field.sm {
+    --_control: var(--u-control-height-sm);
+  }
+
+  @media (forced-colors: active) {
+    .dash {
+      background: CanvasText;
+    }
+  }
+}

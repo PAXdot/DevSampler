@@ -1,0 +1,114 @@
+/* ============================================================
+   ChemE PM Guide — Industrial Engineering Field Manual
+   21st.dev theme export
+   ============================================================
+   This file follows 21st's theme format:
+   - :root block of CSS custom properties (light)
+   - .dark block (dark variant, hand-mapped)
+   - shadcn-standard token names so it applies cleanly
+
+   Publish with:
+     21st publish-theme ./chemepm-industrial.css \
+       --name "ChemE PM — Industrial Field Manual" \
+       --tags industrial,blueprint,mono,engineering,field-manual
+   ============================================================ */
+
+:root {
+    /* core surfaces */
+    --background: 38 26% 92%;          /* warm cream "engineering paper" */
+    --foreground: 210 18% 7%;          /* near-black ink */
+    --card: 40 30% 88%;                /* paper-deep, slight lift */
+    --card-foreground: 210 18% 7%;
+    --popover: 38 26% 92%;
+    --popover-foreground: 210 18% 7%;
+
+    /* primary = blueprint blue (the signature accent) */
+    --primary: 209 53% 30%;            /* #1E4D7B */
+    --primary-foreground: 38 26% 92%;
+
+    /* secondary = the brass rule color */
+    --secondary: 38 35% 68%;           /* #C9B98F */
+    --secondary-foreground: 210 18% 7%;
+
+    /* muted = paper-edge (the softest brass) */
+    --muted: 38 30% 78%;               /* #D9CBA8 */
+    --muted-foreground: 210 12% 30%;
+
+    /* accent = the secondary lift color, for hover/focus */
+    --accent: 38 30% 78%;
+    --accent-foreground: 210 18% 7%;
+
+    --destructive: 16 53% 35%;         /* the warm "warn" rust */
+    --destructive-foreground: 38 26% 92%;
+
+    --border: 210 18% 7%;              /* ink-rule for sharp edges */
+    --input: 210 18% 7%;
+    --ring: 209 53% 30%;               /* matches primary */
+
+    /* charts — engineering-palette coherent */
+    --chart-1: 209 53% 30%;            /* blueprint */
+    --chart-2: 38 35% 55%;             /* brass */
+    --chart-3: 210 12% 30%;            /* ink-soft */
+    --chart-4: 209 40% 50%;            /* blueprint-2 */
+    --chart-5: 38 30% 78%;             /* rule-soft */
+
+    /* sidebar — same tokens, kept for completeness */
+    --sidebar: 38 26% 92%;
+    --sidebar-foreground: 210 18% 7%;
+    --sidebar-primary: 209 53% 30%;
+    --sidebar-primary-foreground: 38 26% 92%;
+    --sidebar-accent: 38 30% 78%;
+    --sidebar-accent-foreground: 210 18% 7%;
+    --sidebar-border: 210 18% 7%;
+    --sidebar-ring: 209 53% 30%;
+
+    /* radius = 0 — strict rectangles, no rounded AI-defaults */
+    --radius: 0;
+
+    /* type system (21st doesn't ship fonts, but set as fallbacks) */
+    --font-display: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.dark {
+    --background: 210 18% 7%;          /* ink as the page */
+    --foreground: 38 26% 92%;          /* paper for text on ink */
+    --card: 210 16% 11%;
+    --card-foreground: 38 26% 92%;
+    --popover: 210 18% 7%;
+    --popover-foreground: 38 26% 92%;
+
+    --primary: 209 53% 50%;            /* lifted blueprint for dark */
+    --primary-foreground: 210 18% 7%;
+
+    --secondary: 38 35% 55%;
+    --secondary-foreground: 210 18% 7%;
+
+    --muted: 210 12% 18%;
+    --muted-foreground: 38 26% 80%;
+
+    --accent: 210 12% 18%;
+    --accent-foreground: 38 26% 92%;
+
+    --destructive: 16 53% 50%;
+    --destructive-foreground: 210 18% 7%;
+
+    --border: 38 26% 80%;
+    --input: 38 26% 80%;
+    --ring: 209 53% 50%;
+
+    --chart-1: 209 53% 50%;
+    --chart-2: 38 35% 55%;
+    --chart-3: 38 26% 80%;
+    --chart-4: 209 40% 65%;
+    --chart-5: 210 12% 30%;
+
+    --sidebar: 210 18% 9%;
+    --sidebar-foreground: 38 26% 92%;
+    --sidebar-primary: 209 53% 50%;
+    --sidebar-primary-foreground: 210 18% 7%;
+    --sidebar-accent: 210 12% 18%;
+    --sidebar-accent-foreground: 38 26% 92%;
+    --sidebar-border: 38 26% 80%;
+    --sidebar-ring: 209 53% 50%;
+}

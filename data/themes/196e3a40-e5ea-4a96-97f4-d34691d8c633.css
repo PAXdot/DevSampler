@@ -1,0 +1,72 @@
+/* SOCIETY TRADES as a 21st.dev theme (shadcn token names), for `21st publish-theme`.
+   Mapped from the site's own tokens in src/assets/css/pp-ladders.css (--bb-*: dark lines 9-11, light lines 15-17)
+   plus --cy #3ee7ff / --bl #2f6bff / --bg #060a16. Nothing is published until Oscar says yes. */
+:root {
+  --background: #eef3ff;
+  --foreground: #0b1a40;
+  --card: #ffffff;
+  --card-foreground: #0b1a40;
+  --popover: #ffffff;
+  --popover-foreground: #0b1a40;
+  --primary: #0a7d9c;
+  --primary-foreground: #ffffff;
+  --secondary: #e8eef9;
+  --secondary-foreground: #0b1a40;
+  --muted: #e8eef9;
+  --muted-foreground: #485a80;
+  --accent: #2f6bff;
+  --accent-foreground: #ffffff;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #c9d4e8;
+  --input: #c3cde0;
+  --ring: #0a7d9c;
+  --chart-1: #0a7d9c;
+  --chart-2: #2f6bff;
+  --chart-3: #b7791f;
+  --chart-4: #15803d;
+  --chart-5: #7c3aed;
+  --sidebar: #e7eefc;
+  --sidebar-foreground: #0b1a40;
+  --sidebar-primary: #0a7d9c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dfe7f7;
+  --sidebar-accent-foreground: #0b1a40;
+  --sidebar-border: #c9d4e8;
+  --sidebar-ring: #0a7d9c;
+  --radius: 0.875rem;
+}
+.dark {
+  --background: #060a16;
+  --foreground: #ffffff;
+  --card: #121c3a;
+  --card-foreground: #ffffff;
+  --popover: #0a1124;
+  --popover-foreground: #ffffff;
+  --primary: #3ee7ff;
+  --primary-foreground: #04121a;
+  --secondary: #141c33;
+  --secondary-foreground: #ffffff;
+  --muted: #141c33;
+  --muted-foreground: #aab5ca;
+  --accent: #2f6bff;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #24304d;
+  --input: #2a3550;
+  --ring: #3ee7ff;
+  --chart-1: #3ee7ff;
+  --chart-2: #2f6bff;
+  --chart-3: #f2c14e;
+  --chart-4: #4ade80;
+  --chart-5: #a855f7;
+  --sidebar: #0a1124;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #3ee7ff;
+  --sidebar-primary-foreground: #04121a;
+  --sidebar-accent: #141c33;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #24304d;
+  --sidebar-ring: #3ee7ff;
+}

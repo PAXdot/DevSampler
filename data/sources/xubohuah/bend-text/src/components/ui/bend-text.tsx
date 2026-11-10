@@ -84,8 +84,8 @@ export function BendText() {
             return texture;
         };
 
-        const textTexture = createTextTexture('21st.dev');
-        const shadowTexture = createTextTexture('21st.dev', true);
+        const textTexture = createTextTexture('EZPZ Components');
+        const shadowTexture = createTextTexture('EZPZ Components', true);
 
         // Displacement shader material
         const shaderMaterial = new THREE.ShaderMaterial({

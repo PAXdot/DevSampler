@@ -71,7 +71,7 @@ function ElegantShape({
 }
 
 export default function HeroGeometric({
-  badge = "21st.dev",
+  badge = "EZPZ Components",
   title1 = "Elevate Your",
   title2 = "Digital Vision",
   rotate = 0,

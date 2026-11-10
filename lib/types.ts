@@ -14,7 +14,13 @@ export type Item = {
   description?: string;
   author?: string;
   preview?: string;
+  /** Grid-sized still. Same picture as `preview`, fewer bytes. */
+  thumb?: string;
+  /** Drawer-sized still. Same picture as `preview`, fewer bytes. */
+  still?: string;
   videoUrl?: string;
+  /** Card-sized silent loop. The drawer keeps `videoUrl`. */
+  clip?: string;
   url?: string;
   install?: string;
   repo?: string;
@@ -22,6 +28,10 @@ export type Item = {
   meta?: string;
   license?: string;
   swatch?: string;
+  about?: string;
+  demo?: string;
+  tags?: string[];
+  svg?: string;
 };
 
 export const ITEM_TYPES: ItemType[] = [

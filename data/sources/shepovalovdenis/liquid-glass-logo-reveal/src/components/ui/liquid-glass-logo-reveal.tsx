@@ -1100,7 +1100,7 @@ export function GlassReveal21st({ tuning, ...props }: GlassReveal21stProps) {
   return (
     <GlassIconReveal
       logo={MARK_21ST}
-      label="21st.dev"
+      label="EZPZ Components"
       look="light"
       logoColor="#0045ff"
       logoScale={0.6}

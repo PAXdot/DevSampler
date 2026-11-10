@@ -1,4 +1,4 @@
-# ANDA
+# EZPZ
 
 Local gallery: components, templates, themes, apps, icons and video.
 

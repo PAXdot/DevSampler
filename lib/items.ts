@@ -40,39 +40,3 @@ export function fromVideoBlock(raw: unknown, aspect?: string): Item | null {
   };
 }
 
-const FAMILY_LABEL: Record<string, string> = {
-  lucide: "Lucide",
-  tabler: "Tabler",
-  ph: "Phosphor",
-  hugeicons: "Hugeicons",
-  ri: "Remix",
-  heroicons: "Heroicons",
-  "line-md": "Material Line",
-};
-
-export function fromIcon(id: string): Item {
-  const [prefix = id, name = id] = id.split(":");
-  return {
-    id,
-    type: "icon",
-    name,
-    author: FAMILY_LABEL[prefix] ?? prefix,
-    preview: `https://api.iconify.design/${prefix}/${name}.svg?color=%23ffffff`,
-    meta: prefix,
-  };
-}
-
-export function reactImport(id: string): string | null {
-  const [prefix, rawName] = id.split(":");
-  if (!prefix || !rawName) return null;
-  const pascal = rawName
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("");
-  if (!pascal) return null;
-  if (prefix === "lucide") return `import { ${pascal} } from "lucide-react";`;
-  if (prefix === "tabler") return `import { Icon${pascal} } from "@tabler/icons-react";`;
-  if (prefix === "ph") return `import { ${pascal} } from "@phosphor-icons/react";`;
-  return null;
-}

@@ -1,6 +1,6 @@
 import type { ShelfId } from "@/lib/shelves";
 import type { Item } from "@/lib/types";
-import type { MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 
 type Layout = {
   grid: string;
@@ -11,33 +11,24 @@ type Layout = {
   scroll?: boolean;
 };
 
-const wide = "grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3";
+const board = "grid grid-cols-[repeat(auto-fill,minmax(188px,1fr))] gap-3";
 
 const LAYOUTS: Record<ShelfId, Layout> = {
-  components: {
-    grid: "-mx-1.5 grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
-    cell: "relative overflow-hidden p-1.5",
-    aspect: "aspect-[4/3]",
-    reveal: true,
-  },
-  themes: {
-    grid: "grid grid-cols-1 gap-x-4 gap-y-6 min-[420px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
-    cell: "",
-    aspect: "aspect-[1200/630]",
-  },
-  templates: { grid: wide, cell: "", aspect: "aspect-[16/10]", scroll: true },
-  apps: { grid: wide, cell: "", aspect: "aspect-[16/10]", scroll: true },
-  video: { grid: wide, cell: "", aspect: "aspect-video" },
+  components: { grid: board, cell: "", aspect: "aspect-[16/10]" },
+  themes: { grid: board, cell: "", aspect: "aspect-[16/10]" },
+  templates: { grid: board, cell: "", aspect: "aspect-[16/10]", scroll: true },
+  apps: { grid: board, cell: "", aspect: "aspect-[16/10]", scroll: true },
+  video: { grid: board, cell: "", aspect: "aspect-video" },
   icons: {
-    grid: "grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8",
-    cell: "",
+    grid: "grid grid-cols-[repeat(auto-fill,minmax(84px,1fr))] gap-x-2 gap-y-3",
+    cell: "min-w-0",
     aspect: "aspect-square",
     dense: true,
   },
 };
 
 const frame =
-  "squircle relative w-full overflow-hidden rounded-[14px] bg-card shadow-[0_1px_3px_rgb(0_0_0/0.25)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:shadow-[inset_0_0_0_1px_rgb(255_255_255/0.06)] group-focus-visible/open:outline-2 group-focus-visible/open:outline-offset-2 group-focus-visible/open:outline-primary";
+  "relative w-full overflow-hidden rounded-xl bg-[#161616] group-focus-visible/open:outline-2 group-focus-visible/open:outline-offset-2 group-focus-visible/open:outline-white";
 
 const badge =
   "absolute top-2.5 left-2.5 z-[1] rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm";
@@ -57,38 +48,35 @@ export function CardGrid({
 }) {
   const layout = LAYOUTS[shelf];
   return (
-    <ul className={layout.grid}>
+    <ul className={layout.dense ? "icon-board" : layout.grid}>
       {items.map((item, index) => {
         const key = `${item.type}:${item.id}`;
         const isSaved = saved.has(key);
         const price = typeof item.price === "number" && item.price > 0 ? `$${item.price}` : null;
         const fit = layout.dense ? "object-contain p-[28%]" : layout.scroll ? "object-cover object-top" : "object-cover";
         return (
-          <li key={key} className={`group/card list-none ${layout.cell}`}>
-            <div
-              className={`relative ${
-                layout.reveal
-                  ? "translate-y-[18px] transition-transform duration-300 ease-out-quint group-focus-within/card:translate-y-0 group-hover/card:translate-y-0 max-md:translate-y-0 [@media(hover:none)]:translate-y-0"
-                  : ""
-              }`}
-            >
+          <li key={key} className={`group/card relative list-none ${layout.cell}`}>
+            <div className="relative w-full">
               <button
                 type="button"
                 aria-label={item.name}
                 onClick={() => onOpen(item)}
                 onMouseEnter={playPreview}
                 onMouseLeave={stopPreview}
-                className="group/open block w-full text-left outline-none after:absolute after:inset-0 after:content-['']"
+                className="group/open relative block w-full text-left outline-none"
               >
-                <div className={`${frame} ${layout.aspect}`}>
-                  {item.preview ? (
+                <div className={layout.dense ? "icon-cell" : `${frame} ${layout.aspect}`}>
+                  {item.type === "icon" && item.svg ? (
+                    <span dangerouslySetInnerHTML={{ __html: item.svg }} />
+                  ) : item.preview ? (
                     // Previews are local files with mixed formats, so they stay as plain img tags.
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={item.preview}
+                      src={item.thumb || item.preview}
                       alt=""
                       loading={index < 8 ? "eager" : "lazy"}
                       decoding="async"
+                      fetchPriority={index < 4 ? "high" : "auto"}
                       className={`h-full w-full ${fit} ${
                         layout.scroll
                           ? "transition-[object-position] duration-[2400ms] ease-in-out group-hover/card:object-bottom motion-reduce:transition-none"
@@ -100,20 +88,11 @@ export function CardGrid({
                       {item.name}
                     </span>
                   )}
-                  {item.videoUrl ? (
-                    <video
-                      src={item.videoUrl}
-                      muted
-                      loop
-                      playsInline
-                      preload="none"
-                      className={`pointer-events-none absolute inset-0 h-full w-full opacity-0 transition-opacity duration-200 group-hover/card:opacity-100 ${fit}`}
-                    />
-                  ) : null}
+                  {item.videoUrl ? <PreviewVideo src={item.clip || item.videoUrl} className={fit} /> : null}
                   {item.type === "app" && item.author ? <span className={badge}>{item.author}</span> : null}
                   {price ? <span className={badge}>{price}</span> : null}
-                  {layout.reveal && isSaved ? (
-                    <span className="absolute top-2.5 right-2.5 z-[1] flex size-6 items-center justify-center rounded-md bg-black/70 text-white backdrop-blur-sm">
+                  {isSaved && !layout.dense ? (
+                    <span className="absolute top-2 right-2 z-[1] flex size-6 items-center justify-center rounded-md bg-black/70 text-white">
                       <Bookmark filled className="size-3" />
                       <span className="sr-only">Saved</span>
                     </span>
@@ -122,7 +101,8 @@ export function CardGrid({
               </button>
               {layout.dense ? (
                 <>
-                  <p className="mt-2 truncate px-0.5 text-[12px] text-muted">{item.name}</p>
+                  <p className="mt-2 truncate px-0.5 text-xs text-muted">{item.name}</p>
+                  {item.author ? <p className="truncate px-0.5 text-[11px] text-white/35">{item.author}</p> : null}
                   <SaveButton
                     item={item}
                     saved={isSaved}
@@ -133,22 +113,14 @@ export function CardGrid({
                   />
                 </>
               ) : (
-                <div
-                  className={`flex w-full items-center gap-2 px-1 pt-3 ${
-                    layout.reveal
-                      ? "translate-y-[30px] transition-transform duration-300 ease-out-quint group-focus-within/card:translate-y-0 group-hover/card:translate-y-0 max-md:translate-y-0 [@media(hover:none)]:translate-y-0"
-                      : ""
+                <SaveButton
+                  item={item}
+                  saved={isSaved}
+                  onToggle={onToggleSave}
+                  className={`absolute top-1.5 right-1.5 z-[2] bg-black/55 ${
+                    isSaved ? "" : "opacity-0 group-focus-within/card:opacity-100 group-hover/card:opacity-100 [@media(hover:none)]:opacity-100"
                   }`}
-                >
-                  <Lead item={item} />
-                  <h3 className="min-w-0 truncate text-[13px] leading-[18px] font-medium text-foreground/85">{item.name}</h3>
-                  {item.type === "video" && item.author ? (
-                    <span className="shrink-0 text-[11px] text-muted capitalize">{item.author}</span>
-                  ) : item.type === "app" && item.meta ? (
-                    <span className="shrink-0 text-[11px] text-muted">{item.meta}</span>
-                  ) : null}
-                  <SaveButton item={item} saved={isSaved} onToggle={onToggleSave} className="-my-1.5 -mr-1.5 ml-auto" />
-                </div>
+                />
               )}
             </div>
           </li>
@@ -164,40 +136,12 @@ export function CardGridSkeleton({ shelf }: { shelf: ShelfId }) {
     <ul className={layout.grid} aria-hidden="true">
       {Array.from({ length: layout.dense ? 24 : 8 }, (_, index) => (
         <li key={index} className={`list-none ${layout.cell}`}>
-          <div
-            className={`squircle animate-pulse rounded-[14px] bg-foreground/[0.05] ${layout.aspect} ${
-              layout.reveal ? "translate-y-[18px] max-md:translate-y-0 [@media(hover:none)]:translate-y-0" : ""
-            }`}
-          />
-          {layout.reveal ? (
-            <div className="h-[30px]" />
-          ) : layout.dense ? (
-            <div className="mt-2 h-[18px]" />
-          ) : (
-            <div className="flex items-center gap-2 px-1 pt-3">
-              <span className="size-[18px] rounded-[30%] bg-foreground/[0.06]" />
-              <span className="h-2.5 w-1/2 rounded-full bg-foreground/[0.06]" />
-            </div>
-          )}
+          <div className={`animate-pulse rounded-xl bg-white/[0.05] ${layout.aspect}`} />
+          {layout.dense ? <div className="mt-2 h-[18px]" /> : null}
         </li>
       ))}
     </ul>
   );
-}
-
-function Lead({ item }: { item: Item }) {
-  if (item.type === "theme") {
-    return item.swatch ? (
-      <span
-        className="size-2.5 shrink-0 rounded-full shadow-[inset_0_0_0_1px_rgb(255_255_255/0.15)]"
-        style={{ background: item.swatch }}
-      />
-    ) : null;
-  }
-  if (item.type === "video") return null;
-  const label = item.type === "app" ? item.name : item.author;
-  if (!label) return null;
-  return <Monogram label={label} />;
 }
 
 export function Monogram({ label, size = 18 }: { label: string; size?: number }) {
@@ -264,16 +208,68 @@ export function Bookmark({ filled, className }: { filled?: boolean; className?: 
   );
 }
 
+function PreviewVideo({ src, className }: { src: string; className: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    const hoverNone = window.matchMedia("(hover: none)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!hoverNone || reduce) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) void startVideo(video);
+        else stopVideo(video);
+      },
+      { rootMargin: "120px" },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [src]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      preload="none"
+      className={`pointer-events-none absolute inset-0 h-full w-full opacity-0 motion-safe:transition-opacity motion-safe:duration-200 motion-safe:group-hover/card:opacity-100 motion-safe:data-[playing=true]:opacity-100 ${className}`}
+    />
+  );
+}
+
 function playPreview(event: MouseEvent<HTMLButtonElement>) {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.matchMedia("(hover: none)").matches) return;
   const video = event.currentTarget.querySelector("video");
   if (!video) return;
-  video.play().catch(() => {});
+  void startVideo(video);
 }
 
 function stopPreview(event: MouseEvent<HTMLButtonElement>) {
+  if (window.matchMedia("(hover: none)").matches) return;
   const video = event.currentTarget.querySelector("video");
   if (!video) return;
+  stopVideo(video);
+}
+
+function startVideo(video: HTMLVideoElement) {
+  video
+    .play()
+    .then(() => {
+      if (!video.paused) video.dataset.playing = "true";
+    })
+    .catch(() => {
+      delete video.dataset.playing;
+    });
+}
+
+function stopVideo(video: HTMLVideoElement) {
   video.pause();
   video.currentTime = 0;
+  delete video.dataset.playing;
 }

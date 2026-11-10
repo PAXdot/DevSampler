@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 
-const DEFAULT_TEXT = "21ST.DEV";
+const DEFAULT_TEXT = "EZPZ Components";
 const DEFAULT_FONT_FAMILY = "'Roboto Mono', monospace";
 
 // --- Physics Parameters Object (defaults) ---

@@ -30,7 +30,7 @@ export interface WavesTextProps {
 }
 
 const WavesText: FC<WavesTextProps> = ({
-  text = "21st.dev",
+  text = "EZPZ Components",
   fontSize = 300,
   fontFamily = "Arial Black, Arial, system-ui, sans-serif",
   amplitude = 30,

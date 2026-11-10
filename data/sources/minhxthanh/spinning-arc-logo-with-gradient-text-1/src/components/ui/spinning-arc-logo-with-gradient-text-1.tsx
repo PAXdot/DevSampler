@@ -115,7 +115,7 @@ const Logo: React.FC<LogoProps> = ({ size = 500, className = '' }) => {
               fontWeight: 'bold',
             }}
           >
-            21ST.DEV
+            EZPZ Components
           </text>
         </g>
       </svg>

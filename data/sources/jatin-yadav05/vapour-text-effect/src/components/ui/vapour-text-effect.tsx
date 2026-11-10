@@ -6,7 +6,7 @@ export const Component = () => {
     return (
         <div className='bg-black h-screen w-screen flex justify-center items-center'>
             <VaporizeTextCycle
-                texts={["21st.dev", "Is", "Cool"]}
+                texts={["EZPZ Components", "Is", "Cool"]}
                 font={{
                     fontFamily: "Inter, sans-serif",
                     fontSize: "70px",

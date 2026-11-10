@@ -1,4 +1,4 @@
-# ANDA local gallery
+# EZPZ local gallery
 
 Local browser for the saved catalog. Run `npm run dev` and open http://localhost:3000. The gallery reads disk only. It does not call 21st.
 

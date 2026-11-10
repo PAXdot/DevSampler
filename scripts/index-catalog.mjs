@@ -1,6 +1,7 @@
-import { appendFileSync, createWriteStream, existsSync, mkdirSync, readFileSync } from "node:fs";
+import { appendFileSync, createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { appMeta, parseAppPage } from "../lib/parse-apps.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.join(root, "data");
@@ -79,6 +80,77 @@ async function readPreview(url, maxBytes = 16000) {
       /https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"\\\s]+preview[^"\\\s]+\.(?:webp|png|jpe?g)/,
     )?.[0] ?? ""
   );
+}
+
+function previewFrom(html) {
+  return (
+    html.match(
+      /https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"\\\s]+preview[^"\\\s]+\.(?:webp|png|jpe?g)/,
+    )?.[0] ?? ""
+  );
+}
+
+function slugFrom(pageUrl) {
+  try {
+    const parts = new URL(pageUrl).pathname.split("/").filter(Boolean);
+    return parts.at(-1) ?? "";
+  } catch {
+    return "";
+  }
+}
+
+// Newer pages embed the grid card next to its path:
+// "url":"/@author/components/slug","preview":"…","video":"….mp4" or "video":null.
+// Older pages embed the demo as "preview_url" / "video_url" on a path that contains the slug.
+// videoUrl is "" only when that record explicitly has no demo. Missing means retry.
+export function componentCard(html, pageUrl) {
+  let pathname = "";
+  try {
+    pathname = new URL(pageUrl).pathname;
+  } catch {
+    return null;
+  }
+  const plain = html.replace(/\\"/g, '"');
+  const token = `"url":"${pathname}"`;
+  let from = 0;
+  let preview = "";
+  while (from < plain.length) {
+    const at = plain.indexOf(token, from);
+    if (at === -1) break;
+    const next = plain.indexOf('"url":', at + token.length);
+    const end = next === -1 ? at + 2000 : Math.min(next, at + 2000);
+    const window = plain.slice(at, end);
+    const still = window.match(
+      /"preview":"(https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"]+\.(?:webp|png|jpe?g))"/,
+    );
+    if (still) preview = still[1];
+    const video = window.match(/"video":"(https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"]+\.mp4)"/);
+    if (video) return { preview: preview || still?.[1] || "", videoUrl: video[1] };
+    if (/"video":(?:null|"")/.test(window)) return { preview, videoUrl: "" };
+    from = at + token.length;
+  }
+
+  const slug = slugFrom(pageUrl);
+  if (!slug) return preview ? { preview } : null;
+  const needle = `/${slug}/`;
+  for (const match of plain.matchAll(/"video_url":"(https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"]+\.mp4)"/g)) {
+    if (!match[1].includes(needle)) continue;
+    const around = plain.slice(Math.max(0, match.index - 500), match.index);
+    const still = around.match(
+      /"preview_url":"(https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"]+\.(?:webp|png|jpe?g))"/,
+    );
+    if (!preview && still?.[1].includes(needle)) preview = still[1];
+    return { preview, videoUrl: match[1] };
+  }
+  for (const match of plain.matchAll(
+    /"preview_url":"(https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"]+\.(?:webp|png|jpe?g))"/g,
+  )) {
+    if (!match[1].includes(needle)) continue;
+    if (!preview) preview = match[1];
+    const window = plain.slice(match.index, match.index + 600);
+    if (/"video_url":(?:null|"")/.test(window)) return { preview, videoUrl: "" };
+  }
+  return preview ? { preview } : null;
 }
 
 function classify(loc) {
@@ -167,6 +239,12 @@ function parseTheme(html, page) {
   };
 }
 
+function isPaywalled(item) {
+  if (typeof item.price === "number" && item.price > 0) return true;
+  const text = `${item.name ?? ""}\n${item.description ?? ""}`;
+  return /to purchase the full source code|paid PRO upgrade/i.test(text);
+}
+
 function parseTemplate(html, page) {
   const window = slugWindow(html, page.slug);
   const price = Number(window.match(/price\\":(\d+)/)?.[1]);
@@ -192,24 +270,23 @@ function parseTemplate(html, page) {
 }
 
 function parseApp(html, page) {
-  const description = decode(html.match(/og:description" content="([^"]*)"/)?.[1] ?? "");
-  const images = [
-    ...html.matchAll(/https:\/\/cdn\.21st\.dev\/(?!cdn-cgi\/)[^"\\\s]+\.(?:webp|png|jpe?g)/g),
-  ].map((match) => match[0]);
-  const preview = images.find((url) => /\/preview[-.]/.test(url)) || images[0] || "";
-  const head = html.slice(0, 90000);
-  const stars = Number(head.match(/stars\\":(\d+)/)?.[1] ?? head.match(/"stars":(\d+)/)?.[1]);
-  const framework = head.match(/framework\\":\\"([^\\"]+)/)?.[1] || head.match(/"framework":"([^"]+)"/)?.[1] || "";
-  const repo = html.match(/codeRepository":"(https:[^"]+)"/)?.[1] || "";
+  const parsed = parseAppPage(html, page.slug);
+  if (!parsed) return stub(page);
+  const meta = appMeta(parsed);
   return {
     id: page.slug,
     type: "app",
-    name: titleFrom(html, page.slug),
-    description,
-    preview,
+    name: parsed.name || titleFrom(html, page.slug),
+    description: parsed.description,
+    about: parsed.about,
+    preview: parsed.poster,
+    videoUrl: parsed.video,
     url: page.url,
-    repo,
-    meta: [framework, Number.isFinite(stars) && stars > 0 ? `${stars} stars` : ""].filter(Boolean).join(" · "),
+    repo: parsed.repoUrl,
+    demo: parsed.demo,
+    license: parsed.license,
+    meta,
+    tags: parsed.tags,
     updated: page.updated || "",
   };
 }
@@ -228,14 +305,21 @@ function stub(page) {
 async function indexPage(page) {
   try {
     if (page.type === "component") {
-      const [markdown, preview] = await Promise.all([
+      const [markdown, pageHtml] = await Promise.all([
         getText(`${page.url}.md`, 20000, "text/markdown"),
-        readPreview(page.url).catch(() => ""),
+        getText(page.url).catch(() => ({ status: 0, text: "" })),
       ]);
       const item =
         markdown.status === 200 ? parseComponent(markdown.text, page) : null;
       const row = item ?? stub(page);
+      const card = pageHtml.status === 200 ? componentCard(pageHtml.text, page.url) : null;
+      const preview = card?.preview || previewFrom(pageHtml.text);
       if (preview) row.preview = preview;
+      else {
+        const fallback = await readPreview(page.url).catch(() => "");
+        if (fallback) row.preview = fallback;
+      }
+      if (card && Object.hasOwn(card, "videoUrl")) row.videoUrl = card.videoUrl;
       return row;
     }
     const pageHtml = await getText(page.url);
@@ -254,6 +338,19 @@ function writeRow(item) {
   return new Promise((resolve, reject) => {
     out.write(`${JSON.stringify(item)}\n`, (error) => (error ? reject(error) : resolve()));
   });
+}
+
+function rewriteCatalog(rows) {
+  const seen = new Set();
+  const lines = [];
+  for (const row of rows) {
+    if (!row.url || seen.has(row.url)) continue;
+    seen.add(row.url);
+    lines.push(JSON.stringify(row));
+  }
+  const temporary = `${catalogFile}.tmp`;
+  writeFileSync(temporary, `${lines.join("\n")}\n`);
+  renameSync(temporary, catalogFile);
 }
 
 async function fillPreviews() {
@@ -280,23 +377,81 @@ async function fillPreviews() {
     }
   }
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
-  const seen = new Set();
-  const lines = [];
-  for (const row of rows) {
-    if (!row.url || seen.has(row.url)) continue;
-    seen.add(row.url);
-    lines.push(JSON.stringify(row));
-  }
-  const { writeFileSync, renameSync } = await import("node:fs");
-  const temporary = `${catalogFile}.tmp`;
-  writeFileSync(temporary, `${lines.join("\n")}\n`);
-  renameSync(temporary, catalogFile);
+  rewriteCatalog(rows);
   console.log(`previews filled ${filled}`);
 }
 
-if (process.argv.includes("--fill-previews")) {
+async function readComponentPage(url) {
+  for (let attempt = 0; attempt < 4; attempt++) {
+    try {
+      const page = await getText(url, 25000);
+      if (page.status === 200) return page.text;
+      if (page.status !== 429 && page.status < 500) return "";
+    } catch {
+      // Retry a timed-out page on the next pass when it still has no videoUrl.
+    }
+    await sleep(1500 * (attempt + 1));
+  }
+  return "";
+}
+
+async function fillVideos() {
+  const rows = readFileSync(catalogFile, "utf8")
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+  const targets = rows.filter((row) => row.type === "component" && !Object.hasOwn(row, "videoUrl"));
+  console.log(`filling ${targets.length} videos`);
+  let cursor = 0;
+  let doneCount = 0;
+  let found = 0;
+  let empty = 0;
+  let missed = 0;
+  let sinceWrite = 0;
+
+  async function worker() {
+    while (cursor < targets.length) {
+      const row = targets[cursor];
+      cursor += 1;
+      const html = row.url ? await readComponentPage(row.url) : "";
+      if (!html) {
+        missed += 1;
+      } else if (html.includes("<title>Page not found")) {
+        row.videoUrl = "";
+        empty += 1;
+      } else {
+        const card = componentCard(html, row.url);
+        if (card && Object.hasOwn(card, "videoUrl")) {
+          row.videoUrl = card.videoUrl;
+          if (card.videoUrl) found += 1;
+          else empty += 1;
+        } else {
+          missed += 1;
+        }
+      }
+      doneCount += 1;
+      sinceWrite += 1;
+      if (sinceWrite >= 50) {
+        sinceWrite = 0;
+        rewriteCatalog(rows);
+      }
+      if (doneCount % 50 === 0 || doneCount === targets.length) {
+        const line = `${doneCount}/${targets.length} videos ${found} none ${empty} missed ${missed}`;
+        console.log(line);
+        appendFileSync(path.join(dataDir, "index-progress.txt"), `${line}\n`);
+      }
+    }
+  }
+
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  rewriteCatalog(rows);
+  console.log(`videos filled ${found} none ${empty} missed ${missed}`);
+}
+
+if (process.argv.includes("--fill-previews") || process.argv.includes("--fill-videos")) {
   await new Promise((resolve) => out.end(resolve));
-  await fillPreviews();
+  if (process.argv.includes("--fill-previews")) await fillPreviews();
+  if (process.argv.includes("--fill-videos")) await fillVideos();
   process.exit(0);
 }
 
@@ -337,6 +492,15 @@ async function worker() {
     const page = selected[cursor];
     cursor += 1;
     const item = await indexPage(page);
+    if (isPaywalled(item)) {
+      finished += 1;
+      if (finished % 50 === 0 || finished === selected.length) {
+        const line = `${finished}/${selected.length} skipped paywall ${item.type} ${item.name}`;
+        console.log(line);
+        appendFileSync(path.join(dataDir, "index-progress.txt"), `${line}\n`);
+      }
+      continue;
+    }
     await writeRow(item);
     finished += 1;
     if (finished % 50 === 0 || finished === selected.length) {

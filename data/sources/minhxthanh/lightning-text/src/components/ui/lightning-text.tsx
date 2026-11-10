@@ -11,7 +11,7 @@ class Text {
     buffer.fillRect(0, 0, pool.width, pool.height);
 
     this.size = options.size || 100;
-    this.copy = (options.copy || `21ST.DEV`) + ' '; // Default text set to "21ST.DEV"
+    this.copy = (options.copy || `EZPZ Components`) + ' ';
     this.color = options.color || '#cd96fe';
     this.delay = options.delay || 2; // Faster animation
     this.basedelay = this.delay;
@@ -236,7 +236,7 @@ const LightningText = () => {
     canvas.height = h;
     
     // Initialize text with default value
-    textRef.current = new Text({ copy: '21ST.DEV' }, w, h);
+    textRef.current = new Text({ copy: 'EZPZ Components' }, w, h);
 
     const loop = () => {
       // Update
@@ -269,7 +269,7 @@ const LightningText = () => {
       
       // Recreate text with new dimensions to maintain center
       if (textRef.current) {
-        textRef.current = new Text({ copy: '21ST.DEV' }, newWidth, newHeight);
+        textRef.current = new Text({ copy: 'EZPZ Components' }, newWidth, newHeight);
       }
     };
 

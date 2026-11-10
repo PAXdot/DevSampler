@@ -9,9 +9,12 @@
     "lint": "eslint",
     "index": "node scripts/index-catalog.mjs",
     "assets": "node scripts/fetch-assets.mjs",
+    "previews": "node scripts/optimize-previews.mjs",
     "sources": "node scripts/fetch-sources.mjs",
     "themes": "node scripts/fetch-themes.mjs",
-    "video": "node scripts/fetch-video.mjs"
+    "video": "node scripts/fetch-video.mjs",
+    "icons": "node scripts/fetch-icons.mjs",
+    "apps": "node scripts/fetch-apps.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
@@ -19,6 +22,7 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -12,7 +12,7 @@ export interface CurvedLoopProps {
 }
 
 export const CurvedLoop: FC<CurvedLoopProps> = ({
-  marqueeText = 'CURVED MARQUEE • INTERACTIVE LOOP • 21ST.DEV • ',
+  marqueeText = 'CURVED MARQUEE • INTERACTIVE LOOP • EZPZ COMPONENTS • ',
   speed = 2,
   className,
   curveAmount = 250,

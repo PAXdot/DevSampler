@@ -1,52 +1,36 @@
-import { fromIcon, reactImport } from "@/lib/items";
-import { ICON_FAMILIES } from "@/lib/shelves";
+import { iconById, queryIcons } from "@/lib/icons";
 import { NextResponse } from "next/server";
 
-const ICON_ID = /^[a-z0-9-]+:[a-z0-9-]+$/i;
+const ICON_ID = /^[0-9a-f-]{36}$/i;
 
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
   const id = params.get("id")?.trim() ?? "";
-  if (id) return iconSource(id);
+  if (id) {
+    if (!ICON_ID.test(id)) {
+      return NextResponse.json({ error: "Unknown icon." }, { status: 400 });
+    }
+    const icon = iconById(id);
+    if (!icon) return NextResponse.json({ error: "Icon SVG was not found." }, { status: 404 });
+    return NextResponse.json({ svg: icon.svg, react: icon.react });
+  }
 
-  const family = params.get("family") ?? "all";
-  const q = params.get("q")?.trim() ?? "";
-  const known = ICON_FAMILIES.find((item) => item.id === family) ?? ICON_FAMILIES[0];
-  const query = q || "user";
-  const url = new URL("https://api.iconify.design/search");
-  url.searchParams.set("query", query);
-  url.searchParams.set("limit", "48");
-  if (known.prefixes) url.searchParams.set("prefixes", known.prefixes);
-
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Iconify returned ${response.status}`);
-    const data = (await response.json()) as { icons?: unknown };
-    const icons = Array.isArray(data.icons)
-      ? data.icons.filter((icon): icon is string => typeof icon === "string")
-      : [];
+  const offset = Number(params.get("offset") ?? "0");
+  const local = queryIcons({
+    q: params.get("q") ?? "",
+    category: params.get("cat") ?? "",
+    set: params.get("set") || params.get("family") || "",
+    style: params.get("style") ?? "",
+    animated: params.get("motion") === "animated",
+    offset: Number.isFinite(offset) ? offset : 0,
+    limit: 48,
+  });
+  if (!local) {
     return NextResponse.json({
-      items: icons.map(fromIcon),
-      note: q ? undefined : "Showing “user”. Type what the icon means.",
+      items: [],
+      total: 0,
+      error: "The icon catalog is not on disk yet.",
     });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Icon search failed.";
-    return NextResponse.json({ error: message, items: [] }, { status: 502 });
   }
-}
-
-async function iconSource(id: string) {
-  if (!ICON_ID.test(id)) {
-    return NextResponse.json({ error: "Unknown icon." }, { status: 400 });
-  }
-  const [prefix, name] = id.split(":");
-  const response = await fetch(
-    `https://api.iconify.design/${prefix}/${name}.svg?color=%23ffffff`,
-    { cache: "no-store" },
-  );
-  if (!response.ok) {
-    return NextResponse.json({ error: "Icon SVG was not found." }, { status: 502 });
-  }
-  const svg = await response.text();
-  return NextResponse.json({ svg, react: reactImport(id) });
+  return NextResponse.json({ items: local.items, total: local.total, facets: local.facets });
 }

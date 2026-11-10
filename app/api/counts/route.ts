@@ -1,4 +1,5 @@
 import { catalogCounts } from "@/lib/catalog";
+import { outlineCount } from "@/lib/icons";
 import { fromVideoBlock } from "@/lib/items";
 import type { ShelfId } from "@/lib/shelves";
 import { existsSync, readFileSync, statSync } from "node:fs";
@@ -15,6 +16,7 @@ export async function GET() {
     templates: catalog?.types.template,
     themes: catalog?.types.theme,
     apps: catalog?.types.app,
+    icons: outlineCount(),
     video: videoCount(),
   };
   return NextResponse.json({ shelves, categories: catalog?.categories ?? {} });

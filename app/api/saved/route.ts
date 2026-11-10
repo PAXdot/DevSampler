@@ -27,7 +27,7 @@ export async function POST(request: Request) {
     ...items.filter((saved) => !(saved.id === item.id && saved.type === item.type)),
   ];
   await writeSaved(next);
-  return NextResponse.json({ items: next });
+  return NextResponse.json({ items: next.map((item) => presentItem(item)) });
 }
 
 export async function DELETE(request: Request) {
@@ -39,7 +39,7 @@ export async function DELETE(request: Request) {
   }
   const next = (await readSaved()).filter((item) => !(item.id === id && item.type === type));
   await writeSaved(next);
-  return NextResponse.json({ items: next });
+  return NextResponse.json({ items: next.map((item) => presentItem(item)) });
 }
 
 function isType(value: string): value is ItemType {

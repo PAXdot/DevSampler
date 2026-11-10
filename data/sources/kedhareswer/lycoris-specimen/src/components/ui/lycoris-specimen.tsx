@@ -613,7 +613,7 @@ export default function LycorisSpecimen({
   multilingual = "Múl·tî·lĺn·güål",
   ligatureWord = "Affluent",
   links = [
-    { label: "21ST.DEV / KEDHARESWER", href: "https://21st.dev/@kedhareswer" },
+    { label: "EZPZ Components / KEDHARESWER", href: "https://21st.dev/@kedhareswer" },
     { label: "GITHUB @ KEDHARESWER", href: "https://github.com/kedhareswer" },
   ],
   fontFamily = DISPLAY,

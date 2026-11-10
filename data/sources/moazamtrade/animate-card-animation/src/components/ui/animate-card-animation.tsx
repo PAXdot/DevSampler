@@ -20,7 +20,7 @@ const cardData = {
     image: "https://cdn.21st.dev/assets/mirror/d0/d059ff68ec2fd8f5e551482d6ab185888ffa3edf588a90bc6322ab19d1757dc4.png",
   },
   3: {
-    title: "21st.dev",
+    title: "EZPZ Components",
     description: "Vibe Crafting Platform",
     image: "https://21st.dev/opengraph-image.png",
   },

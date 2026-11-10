@@ -1,5 +1,25 @@
 [
   {
+    "id": "/@cult-ui/templates/cult-directory-template",
+    "type": "template",
+    "name": "Directory",
+    "description": "Dominate search rankings and monetize traffic with this SEO powerhouse. Our full-stack Next.js, Shadcn, and Supabase directory template features a 3-stage scraping and AI enrichment pipeline. Build your backlink empire and ad revenue stream on autopilot.",
+    "author": "cult-ui",
+    "preview": "/media/94/944881f7670fea42ae6f.png",
+    "meta": "Free",
+    "price": 0
+  },
+  {
+    "id": "mg-food-street-poster",
+    "type": "video",
+    "name": "Burger Stack Poster",
+    "description": "motion-gallery · cta · layers-drop-stack-burst · restaurant · promo · poster",
+    "author": "scene",
+    "preview": "/media/f8/f8f578be5fc0f5d1fd19.jpg",
+    "videoUrl": "/media/9f/9faf801ae4f0fa44fdad.mp4",
+    "meta": "scene · cta"
+  },
+  {
     "id": "4051",
     "type": "component",
     "name": "Hero Section",

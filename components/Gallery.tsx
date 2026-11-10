@@ -1,11 +1,16 @@
 "use client";
 
+import { AppSections } from "@/components/AppSections";
 import { CardGrid, CardGridSkeleton } from "@/components/CardGrid";
 import { ItemDrawer } from "@/components/ItemDrawer";
 import { LibraryShell, SearchIcon } from "@/components/LibraryShell";
+import { Mark } from "@/components/Marks";
+import { APP_GROUPS, appSection, type AppFacets } from "@/lib/apps";
 import {
   COMPONENT_CATEGORIES,
-  ICON_FAMILIES,
+  ICON_CATEGORIES,
+  ICON_SETS,
+  ICON_STYLES,
   SHELF_COPY,
   TEMPLATE_SORTS,
   THEME_COLORS,
@@ -30,13 +35,17 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
   const copy = SHELF_COPY[shelf];
   const q = params.get("q") ?? "";
   const cat = params.get("cat") ?? "all";
+  const group = params.get("group") ?? "";
   const sort = params.get("sort") ?? "";
   const color = params.get("color") ?? "";
   const free = params.get("free") ?? "";
   const kind = params.get("kind") ?? "";
   const job = params.get("job") ?? "";
   const aspect = params.get("aspect") ?? "";
-  const family = params.get("family") ?? "all";
+  const iconSet = params.get("set") || params.get("family") || "all";
+  const style = params.get("style") ?? "";
+  const motion = params.get("motion") ?? "";
+  const savedOnly = params.get("saved") === "1";
 
   const [draft, setDraft] = useState(q);
   const [trackedQ, setTrackedQ] = useState(q);
@@ -64,11 +73,16 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
       return `/api/video?${query}`;
     }
     if (shelf === "icons") {
-      if (family !== "all") query.set("family", family);
+      if (iconSet !== "all") query.set("set", iconSet);
+      if (cat !== "all") query.set("cat", cat);
+      if (style) query.set("style", style);
+      if (motion) query.set("motion", motion);
       return `/api/icons?${query}`;
     }
+    if (group) query.set("group", group);
+    if (cat !== "all") query.set("cat", cat);
     return `/api/apps?${query}`;
-  }, [shelf, q, cat, sort, color, free, kind, job, aspect, family]);
+  }, [shelf, q, cat, group, sort, color, free, kind, job, aspect, iconSet, style, motion]);
 
   const [offset, setOffset] = useState(0);
   const [trackedBase, setTrackedBase] = useState(requestBase);
@@ -78,7 +92,7 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
     setOffset(0);
   }
   const pageOffset = baseChanged ? 0 : offset;
-  const paged = shelf === "components" || shelf === "themes" || shelf === "templates" || shelf === "apps";
+  const paged = shelf === "components" || shelf === "themes" || shelf === "templates" || shelf === "apps" || shelf === "icons";
   const requestUrl =
     paged && pageOffset > 0
       ? `${requestBase}${requestBase.includes("?") ? "&" : "?"}offset=${pageOffset}`
@@ -99,6 +113,8 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
   const [saved, setSaved] = useState<Item[]>([]);
   const [open, setOpen] = useState<Item | null>(null);
   const [counts, setCounts] = useState<Counts | null>(cachedCounts);
+  const [iconFacets, setIconFacets] = useState<IconFacets | null>(null);
+  const [appFacets, setAppFacets] = useState<AppFacets | null>(null);
 
   useEffect(() => {
     if (draft === q) return;
@@ -116,7 +132,7 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
     const controller = new AbortController();
     fetch(requestUrl, { signal: controller.signal })
       .then((response) => response.json())
-      .then((data: { items?: Item[]; total?: number; error?: string; note?: string }) => {
+      .then((data: { items?: Item[]; total?: number; error?: string; note?: string; facets?: IconFacets | AppFacets }) => {
         if (controller.signal.aborted) return;
         setItems((current) =>
           pageOffset > 0 ? [...current, ...(data.items ?? [])] : (data.items ?? []),
@@ -124,6 +140,8 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
         setTotal(typeof data.total === "number" ? data.total : 0);
         setNote(data.note ?? "");
         setError(data.error ?? "");
+        if (data.facets && "sets" in data.facets) setIconFacets(data.facets);
+        if (data.facets && "groups" in data.facets) setAppFacets(data.facets);
         setLoadedUrl(requestUrl);
       })
       .catch((fetchError: Error) => {
@@ -201,18 +219,39 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
   }
 
   const savedKeys = new Set(saved.map((item) => `${item.type}:${item.id}`));
+  const shown = savedOnly ? saved : items;
+  const category = COMPONENT_CATEGORIES.find((item) => item.id === cat);
+  const iconCategory = ICON_CATEGORIES.find((item) => item.id === cat);
+  const iconCreator = ICON_SETS.find((item) => item.id === iconSet);
+  const selectedApp = shelf === "apps" ? appSection(cat) : undefined;
+  const selectedGroup = shelf === "apps" ? APP_GROUPS.find((item) => item.id === group) : undefined;
+  const heading =
+    shelf === "apps" && selectedApp
+      ? selectedApp.section.label
+      : shelf === "apps" && selectedGroup
+        ? selectedGroup.label
+        : shelf === "icons" && iconCategory
+          ? iconCategory.label
+          : shelf === "icons" && iconCreator
+            ? iconCreator.label
+            : category && category.id !== "all"
+              ? category.label
+              : copy.title;
+  const lede =
+    shelf === "apps" && selectedApp
+      ? selectedApp.group.label
+      : shelf === "apps" && selectedGroup
+        ? `${(appFacets?.groups[selectedGroup.id] ?? shown.length).toLocaleString("en")} apps`
+        : copy.lede;
+  const appGrouped = shelf === "apps" && !savedOnly && cat === "all";
 
   return (
     <LibraryShell
       shelf={shelf}
-      eyebrow={copy.eyebrow}
-      title={copy.title}
-      lede={copy.lede}
-      counts={counts?.shelves}
       search={
         <form
           role="search"
-          className="relative ml-auto w-full sm:w-[280px]"
+          className="relative w-full"
           onSubmit={(event) => {
             event.preventDefault();
             write({ q: draft });
@@ -233,26 +272,34 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
                 setDraft("");
               }
             }}
-            placeholder={copy.placeholder}
+            placeholder="Search"
             autoComplete="off"
-            className="h-9 w-full rounded-[10px] border border-transparent bg-foreground/[0.06] pr-3 pl-9 text-[16px] text-foreground transition-[border-color,background-color] outline-none placeholder:text-muted/80 hover:bg-foreground/[0.08] focus:border-primary/60 focus:bg-foreground/[0.04] md:text-[14px] [&::-webkit-search-cancel-button]:hidden"
+            className="h-8 w-full rounded-md border border-white/[0.08] bg-white/[0.04] pr-8 pl-8 text-[13px] text-white outline-none placeholder:text-white/35 focus-visible:border-white/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white [&::-webkit-search-cancel-button]:hidden"
           />
+          <span className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-[11px] text-white/30">⌘K</span>
         </form>
       }
       filters={
-        <Filters
-          shelf={shelf}
-          counts={counts?.categories}
-          cat={cat}
-          sort={sort}
-          color={color}
-          free={free}
-          kind={kind}
-          job={job}
-          aspect={aspect}
-          family={family}
-          onChange={write}
-        />
+        savedOnly ? null : (
+          <Filters
+            shelf={shelf}
+            counts={counts?.categories}
+            cat={cat}
+            sort={sort}
+            color={color}
+            free={free}
+            kind={kind}
+            job={job}
+            aspect={aspect}
+            group={group}
+            iconSet={iconSet}
+            style={style}
+            motion={motion}
+            iconFacets={iconFacets}
+            appFacets={appFacets}
+            onChange={write}
+          />
+        )
       }
     >
       <p className="sr-only" aria-live="polite">
@@ -279,9 +326,9 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
           {error}
         </p>
       ) : null}
-      {loading && pageOffset === 0 ? (
+      {loading && pageOffset === 0 && !savedOnly ? (
         <CardGridSkeleton shelf={shelf} />
-      ) : items.length === 0 ? (
+      ) : shown.length === 0 ? (
         error ? null : (
           <div className="flex flex-col items-center py-24 text-center">
             <p className="text-[15px] font-medium">Nothing matched</p>
@@ -300,9 +347,33 @@ export function Gallery({ shelf }: { shelf: ShelfId }) {
           </div>
         )
       ) : (
-        <CardGrid shelf={shelf} items={items} saved={savedKeys} onOpen={setOpen} onToggleSave={toggleSave} />
+        <>
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <h1 className="text-[15px] font-semibold">{savedOnly ? "Bookmarks" : heading}</h1>
+              <p className="text-[13px] text-white/45">
+                {savedOnly
+                  ? "Pieces you saved on this machine."
+                  : shelf === "icons" && total > 0
+                    ? `${total.toLocaleString("en")} icons`
+                    : lede}
+              </p>
+            </div>
+          </div>
+          {appGrouped ? (
+            <AppSections
+              items={shown}
+              heading={heading}
+              saved={savedKeys}
+              onOpen={setOpen}
+              onToggleSave={toggleSave}
+            />
+          ) : (
+            <CardGrid shelf={shelf} items={shown} saved={savedKeys} onOpen={setOpen} onToggleSave={toggleSave} />
+          )}
+        </>
       )}
-      {items.length > 0 && total > items.length ? (
+      {!savedOnly && !appGrouped && items.length > 0 && total > items.length ? (
         <div className="mt-12 flex flex-col items-center gap-3">
           <button
             type="button"
@@ -337,7 +408,12 @@ function Filters({
   kind,
   job,
   aspect,
-  family,
+  group,
+  iconSet,
+  style,
+  motion,
+  iconFacets,
+  appFacets,
   onChange,
 }: {
   shelf: ShelfId;
@@ -349,16 +425,22 @@ function Filters({
   kind: string;
   job: string;
   aspect: string;
-  family: string;
+  group: string;
+  iconSet: string;
+  style: string;
+  motion: string;
+  iconFacets: IconFacets | null;
+  appFacets: AppFacets | null;
   onChange: (patch: Record<string, string>) => void;
 }) {
   if (shelf === "components") {
     return (
       <ChipRow>
-        <ChipGroup label="Categories">
+        <ChipGroup label="Categories" bare>
           {COMPONENT_CATEGORIES.map((item) => (
             <Chip
               key={item.id}
+              mark={item.id === "all" ? undefined : item.id}
               active={cat === item.id}
               count={formatCount(counts?.[item.id])}
               onClick={() => onChange({ cat: item.id === "all" ? "" : item.id })}
@@ -381,13 +463,12 @@ function Filters({
             </Chip>
           ))}
         </ChipGroup>
-        <Divider />
         <ChipGroup label="Color">
           <Chip active={!color} onClick={() => onChange({ color: "" })}>
             All colors
           </Chip>
           {THEME_COLORS.map((item) => (
-            <Chip key={item} active={color === item} onClick={() => onChange({ color: item })}>
+            <Chip key={item} mark={item} active={color === item} onClick={() => onChange({ color: item })}>
               {label(item)}
             </Chip>
           ))}
@@ -406,7 +487,6 @@ function Filters({
             </Chip>
           ))}
         </ChipGroup>
-        <Divider />
         <ChipGroup label="Price">
           <Chip active={!free} onClick={() => onChange({ free: "" })}>
             Any price
@@ -422,12 +502,96 @@ function Filters({
     );
   }
 
-  if (shelf === "icons") {
+  if (shelf === "apps") {
+    const appTotal = appFacets
+      ? Object.values(appFacets.groups).reduce((sum, count) => sum + count, 0)
+      : undefined;
     return (
       <ChipRow>
-        <ChipGroup label="Families">
-          {ICON_FAMILIES.map((item) => (
-            <Chip key={item.id} active={family === item.id} onClick={() => onChange({ family: item.id === "all" ? "" : item.id })}>
+        <Chip active={!group && cat === "all"} count={exactCount(appTotal)} onClick={() => onChange({ group: "", cat: "" })}>
+          All apps
+        </Chip>
+        {APP_GROUPS.map((item) => (
+          <div key={item.id} role="group" aria-label={item.label} className="mt-2 border-t border-white/10 pt-2">
+            <Chip
+              mark={item.id}
+              active={group === item.id && cat === "all"}
+              count={exactCount(appFacets?.groups[item.id])}
+              onClick={() => onChange({ group: item.id, cat: "" })}
+            >
+              {item.label}
+            </Chip>
+            <div className="ml-2 border-l border-white/10 pl-1">
+              {item.sections.map((section) => (
+                <Chip
+                  key={section.id}
+                  mark={section.id}
+                  active={cat === section.id}
+                  count={exactCount(appFacets?.sections[section.id])}
+                  onClick={() => onChange({ group: item.id, cat: section.id })}
+                >
+                  {section.label}
+                </Chip>
+              ))}
+            </div>
+          </div>
+        ))}
+      </ChipRow>
+    );
+  }
+
+  if (shelf === "icons") {
+    const activeStyle = style || "outline";
+    return (
+      <ChipRow>
+        <ChipGroup label="Style">
+          {ICON_STYLES.map((item) => (
+            <Chip
+              key={item.id}
+              mark={item.id}
+              active={activeStyle === item.id}
+              count={exactCount(iconFacets?.styles[item.id])}
+              onClick={() => onChange({ style: item.id === "outline" ? "" : item.id })}
+            >
+              {item.label}
+            </Chip>
+          ))}
+          <Chip active={style === "all"} count={exactCount(styleTotal(iconFacets))} onClick={() => onChange({ style: "all" })}>
+            All styles
+          </Chip>
+        </ChipGroup>
+        <ChipGroup label="Creators">
+          <Chip active={iconSet === "all"} onClick={() => onChange({ set: "" })}>
+            All creators
+          </Chip>
+          {ICON_SETS.map((item) => (
+            <Chip
+              key={item.id}
+              active={iconSet === item.id}
+              count={exactCount(iconFacets?.sets[item.id])}
+              onClick={() => onChange({ set: item.id })}
+            >
+              {item.label}
+            </Chip>
+          ))}
+        </ChipGroup>
+        <ChipGroup label="Motion">
+          <Chip mark="animated" active={motion === "animated"} count={exactCount(iconFacets?.animated)} onClick={() => onChange({ motion: motion === "animated" ? "" : "animated" })}>
+            Animated
+          </Chip>
+        </ChipGroup>
+        <ChipGroup label="Categories">
+          <Chip active={cat === "all"} onClick={() => onChange({ cat: "" })}>
+            All categories
+          </Chip>
+          {ICON_CATEGORIES.map((item) => (
+            <Chip
+              key={item.id}
+              mark={item.id}
+              active={cat === item.id}
+              count={exactCount(iconFacets?.categories[item.id])}
+              onClick={() => onChange({ cat: item.id })}
+            >
               {item.label}
             </Chip>
           ))}
@@ -444,12 +608,11 @@ function Filters({
             All kinds
           </Chip>
           {VIDEO_KINDS.map((item) => (
-            <Chip key={item} active={kind === item} onClick={() => onChange({ kind: item })}>
+            <Chip key={item} mark={item} active={kind === item} onClick={() => onChange({ kind: item })}>
               {label(item)}
             </Chip>
           ))}
         </ChipGroup>
-        <Divider />
         <ChipGroup label="Aspect">
           <Chip active={!aspect} onClick={() => onChange({ aspect: "" })}>
             Any aspect
@@ -460,44 +623,59 @@ function Filters({
             </Chip>
           ))}
         </ChipGroup>
-        <Divider />
-        <label className="sr-only" htmlFor="video-job">
-          Job
-        </label>
-        <span className="relative shrink-0">
-          <select
-            id="video-job"
-            value={job}
-            onChange={(event) => onChange({ job: event.target.value })}
-            className={`h-7 appearance-none rounded-full pr-7 pl-3 text-[12px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-              job ? "bg-foreground text-background" : "bg-foreground/[0.07] text-muted hover:text-foreground"
-            }`}
-          >
-            <option value="">Any job</option>
-            {VIDEO_JOBS.map((item) => (
-              <option key={item} value={item}>
-                {label(item)}
-              </option>
-            ))}
-          </select>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            className={`pointer-events-none absolute top-1/2 right-2.5 size-3 -translate-y-1/2 ${job ? "text-background" : "text-muted"}`}
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </span>
+        <ChipGroup label="Job">
+          <label className="sr-only" htmlFor="video-job">
+            Job
+          </label>
+          <span className="relative">
+            <select
+              id="video-job"
+              value={job}
+              onChange={(event) => onChange({ job: event.target.value })}
+              className="h-7 w-full appearance-none rounded-md bg-transparent pr-7 pl-2 text-[12px] text-white/70 outline-none hover:bg-white/[0.05] hover:text-white focus-visible:outline-2 focus-visible:outline-white"
+            >
+              <option value="">Any job</option>
+              {VIDEO_JOBS.map((item) => (
+                <option key={item} value={item}>
+                  {label(item)}
+                </option>
+              ))}
+            </select>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 right-3 size-3 -translate-y-1/2 text-[#9b9b9b]"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </span>
+        </ChipGroup>
       </ChipRow>
     );
   }
 
   return null;
+}
+
+type IconFacets = {
+  styles: Record<string, number>;
+  sets: Record<string, number>;
+  categories: Record<string, number>;
+  animated: number;
+};
+
+function exactCount(value: number | undefined): string | null {
+  return typeof value === "number" ? value.toLocaleString("en") : null;
+}
+
+function styleTotal(facets: IconFacets | null) {
+  if (!facets) return undefined;
+  return Object.values(facets.styles).reduce((sum, count) => sum + count, 0);
 }
 
 function label(value: string) {
@@ -509,29 +687,28 @@ function label(value: string) {
 }
 
 function ChipRow({ children }: { children: ReactNode }) {
-  return <div className="chip-row edge-fade mt-3 flex items-center gap-1.5 overflow-x-auto pr-12 pb-0.5">{children}</div>;
+  return <div className="flex flex-col">{children}</div>;
 }
 
-function ChipGroup({ label, children }: { label: string; children: ReactNode }) {
+function ChipGroup({ label, bare = false, children }: { label: string; bare?: boolean; children: ReactNode }) {
   return (
-    <div role="group" aria-label={label} className="flex shrink-0 items-center gap-1.5">
+    <div role="group" aria-label={label} className="flex flex-col">
+      {bare ? null : <p className="px-2 pt-2 pb-1 text-[11px] text-white/35">{label}</p>}
       {children}
     </div>
   );
 }
 
-function Divider() {
-  return <span aria-hidden="true" className="mx-1 h-4 w-px shrink-0 bg-line" />;
-}
-
 function Chip({
   active,
   count,
+  mark,
   onClick,
   children,
 }: {
   active: boolean;
   count?: string | null;
+  mark?: string;
   onClick: () => void;
   children: ReactNode;
 }) {
@@ -540,12 +717,15 @@ function Chip({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`inline-flex h-7 shrink-0 items-center gap-1.5 rounded-full px-3 text-[12px] font-medium transition-[background-color,color,scale] outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-[0.97] ${
-        active ? "bg-foreground text-background" : "bg-foreground/[0.07] text-muted hover:bg-foreground/10 hover:text-foreground"
+      className={`flex h-7 w-full items-center justify-between gap-2 rounded-md px-2 text-left text-[12px] outline-none focus-visible:outline-2 focus-visible:outline-white ${
+        active ? "bg-white/[0.08] text-white" : "text-white/55 hover:bg-white/[0.05] hover:text-white"
       }`}
     >
-      {children}
-      {count ? <span className={`tabular-nums ${active ? "text-background/55" : "text-muted/70"}`}>{count}</span> : null}
+      <span className="flex min-w-0 items-center gap-1.5">
+        {mark ? <Mark name={mark} /> : null}
+        <span className="truncate">{children}</span>
+      </span>
+      {count ? <span className="shrink-0 tabular-nums text-white/35">{count}</span> : null}
     </button>
   );
 }

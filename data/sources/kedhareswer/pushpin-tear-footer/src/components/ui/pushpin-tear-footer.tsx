@@ -514,7 +514,7 @@ const HOME = "https://21st.dev/@" + ME
 
 const DEFAULT_SOCIALS: IconLink[] = [
   { icon: "github", label: "GitHub", href: "https://github.com/" + ME },
-  { icon: "21st", label: "21st.dev", href: HOME },
+  { icon: "21st", label: "EZPZ Components", href: HOME },
 ]
 
 const DEFAULT_COLUMNS: FooterColumn[] = [
@@ -531,7 +531,7 @@ const DEFAULT_COLUMNS: FooterColumn[] = [
     title: "elsewhere",
     links: [
       { label: "GitHub", href: "https://github.com/" + ME },
-      { label: "21st.dev", href: HOME },
+      { label: "EZPZ Components", href: HOME },
       { label: "Source", href: "https://github.com/" + ME + "/21stdev-my-components" },
     ],
   },

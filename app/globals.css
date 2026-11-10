@@ -1,14 +1,22 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Archivo Black";
+  src: url("/fonts/ArchivoBlack-Regular.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: oklch(0.141 0.004 285.824);
-  --foreground: oklch(0.975 0.002 286);
-  --muted: oklch(0.68 0.008 286);
-  --line: oklch(0.24 0.004 286);
-  --card: oklch(0.2 0.005 286);
-  --surface: oklch(0.165 0.004 286);
-  --primary: oklch(0.485 0.291 264.121);
-  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #9b9b9b;
+  --line: #272727;
+  --card: #181818;
+  --surface: #181818;
+  --primary: #ffffff;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
 
@@ -20,7 +28,7 @@
   --color-card: var(--card);
   --color-surface: var(--surface);
   --color-primary: var(--primary);
-  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, sans-serif;
   --ease-out-quint: var(--ease-out-quint);
 }
 
@@ -30,13 +38,23 @@ body {
   color: var(--foreground);
 }
 
+.library-aside {
+  width: 300px;
+}
+
+@media (min-width: 768px) {
+  .library-main {
+    padding-left: 300px;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }
 
 body {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-weight: 450;
+  font-family: var(--font-geist), ui-sans-serif, sans-serif;
+  font-weight: 400;
   letter-spacing: -0.011em;
 }
 
@@ -62,6 +80,48 @@ body {
   mask-image: linear-gradient(to right, black calc(100% - 48px), transparent);
 }
 
+.icon-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 10px 8px;
+}
+
+.icon-cell {
+  display: flex;
+  aspect-ratio: 1;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #161616;
+  color: #fff;
+}
+
+.icon-preview {
+  display: flex;
+  width: min(100%, 180px);
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.icon-preview svg {
+  width: 64px !important;
+  height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
+}
+
+.icon-cell svg {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  flex: none;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -80,33 +140,37 @@ body {
 
 @layer base {
   dialog {
-    margin: 0;
-    margin-left: auto;
+    --drawer-max: calc(100dvh - 4.5rem);
+    margin: auto;
     padding: 0;
-    max-width: 480px;
-    width: min(480px, 100%);
-    height: 100%;
-    max-height: none;
+    width: min(960px, calc(100vw - 4.5rem));
+    max-width: none;
+    height: fit-content;
+    max-height: var(--drawer-max);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
     background: var(--surface);
     color: var(--foreground);
-    box-shadow: -24px 0 64px -24px rgb(0 0 0 / 0.6);
+    box-shadow: 0 32px 90px -28px rgb(0 0 0 / 0.75);
   }
 
   dialog::backdrop {
-    background: rgb(0 0 0 / 0.6);
-    backdrop-filter: blur(2px);
+    background: rgb(0 0 0 / 0.62);
+    backdrop-filter: blur(6px);
   }
 
   @media (max-width: 640px) {
     dialog {
-      max-width: none;
-      width: 100%;
+      --drawer-max: calc(100dvh - 1rem);
+      width: calc(100vw - 1rem);
+      border-radius: 16px;
     }
   }
 }
 
 dialog[open] {
-  animation: drawer-in 320ms var(--ease-out-quint);
+  animation: drawer-in 280ms var(--ease-out-quint);
 }
 
 dialog[open]::backdrop {
@@ -115,7 +179,7 @@ dialog[open]::backdrop {
 
 @keyframes drawer-in {
   from {
-    transform: translateX(24px);
+    transform: translateY(12px) scale(0.985);
     opacity: 0;
   }
 }

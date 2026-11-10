@@ -107,7 +107,7 @@ export default function FooterSection({
             <Image
               src="https://cdn.21st.dev/assets/mirror/71/71e262f23b9c732bc644519c1a9afad7ab88297df358f0b6262d2a6898eb226e.png"
               alt="21st.dev logo"
-              title="21st.dev"
+              title="EZPZ Components"
               width={100}
               height={100}
               className="h-auto w-12 mx-auto lg:mx-0 mb-4"

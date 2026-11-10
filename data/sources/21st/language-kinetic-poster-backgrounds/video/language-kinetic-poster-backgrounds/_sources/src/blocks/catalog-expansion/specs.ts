@@ -48,7 +48,7 @@ export const jobDefaults: Record<ExpansionJob, Record<string, unknown>> = {
  logos: { logos: [{name:"Web",image:TWENTY_FIRST_LOGO},{name:"MCP",image:TWENTY_FIRST_LOGO},{name:"CLI",image:TWENTY_FIRST_LOGO}], relationship: "One product. Three surfaces." },
  gallery: { items: [{text:"Pricing table", image:PRICING_COMPONENT_PREVIEW},{text:"Find with the CLI", value:1},{text:"Generate with 21st AI", value:2}] },
  testimonials: { quote: "Blocks should differ in what the brand does not change.", author: "Video catalog research", source: "Design principle, not a customer testimonial" },
- cta: { action:"Find your next component", url:"21st.dev", logo:TWENTY_FIRST_LOGO },
+ cta: { action:"Find your next component", url:"EZPZ Components", logo:TWENTY_FIRST_LOGO },
  backgrounds: { density: 7 },
 };
 /** Looks change content or arrangement, never just a palette. */

@@ -83,7 +83,7 @@ export function NeonRGBTextEffect() {
         textCtx.font = '140px serif'
         textCtx.textAlign = 'center'
         textCtx.textBaseline = 'middle'
-        textCtx.fillText('21st.dev', textCanvas.width / 2, textCanvas.height / 2)
+        textCtx.fillText('EZPZ Components', textCanvas.width / 2, textCanvas.height / 2)
 
         // 创建纹理
         const texture = gl.createTexture()

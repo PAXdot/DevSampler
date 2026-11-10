@@ -21,13 +21,58 @@ export function localAsset(url: string | undefined) {
   return existsSync(file.abs) ? file.rel : undefined;
 }
 
-export function presentItem<T extends { preview?: string; videoUrl?: string; url?: string; install?: string }>(
-  item: T,
-): T {
+const DERIVATIVE = {
+  thumb: ["card", "webp"],
+  still: ["still", "webp"],
+  clip: ["clip", "mp4"],
+} as const;
+
+export function derivativePath(rel: string, kind: keyof typeof DERIVATIVE) {
+  if (!rel.startsWith("/media/") || /^\/media\/(card|still|clip)\//.test(rel)) return undefined;
+  const file = rel.slice(rel.lastIndexOf("/") + 1);
+  const base = file.replace(/\.[^.]+$/, "");
+  if (!/^[0-9a-f]{8,}$/.test(base)) return undefined;
+  const [dir, ext] = DERIVATIVE[kind];
+  return `/media/${dir}/${base.slice(0, 2)}/${base}.${ext}`;
+}
+
+function readyDerivative(rel: string | undefined, kind: keyof typeof DERIVATIVE) {
+  if (!rel) return undefined;
+  const url = derivativePath(rel, kind);
+  if (!url) return undefined;
+  return existsSync(path.join(process.cwd(), "public", url.slice(1))) ? url : undefined;
+}
+
+export function presentItem<
+  T extends {
+    preview?: string;
+    videoUrl?: string;
+    url?: string;
+    install?: string;
+    thumb?: string;
+    still?: string;
+    clip?: string;
+    name?: string;
+    description?: string;
+    about?: string;
+    meta?: string;
+  },
+>(item: T): T {
   const next = { ...item };
   next.preview = localAsset(item.preview);
   next.videoUrl = localAsset(item.videoUrl);
+  next.thumb = readyDerivative(next.preview, "thumb");
+  next.still = readyDerivative(next.preview, "still");
+  next.clip = readyDerivative(next.videoUrl, "clip");
   if (next.url && /21st\.dev/i.test(next.url)) delete next.url;
   if (next.install && /21st\.dev/i.test(next.install)) delete next.install;
+  if ("name" in next && typeof next.name === "string") next.name = rebrand(next.name);
+  if ("description" in next && typeof next.description === "string") next.description = rebrand(next.description);
+  if ("about" in next && typeof next.about === "string") next.about = rebrand(next.about);
+  if ("meta" in next && typeof next.meta === "string") next.meta = rebrand(next.meta);
   return next;
+}
+
+function rebrand(value: string) {
+  return value.replace(/21st\.dev|21st\s+dev/gi, "EZPZ Components");
 }
